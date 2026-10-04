@@ -1,9 +1,25 @@
 #!/bin/bash
+#
+# Reference solution: log in as ctf over SSH and recover the flag.
+# Host, port and password come from the environment (CTF_HOST, CTF_PORT,
+# CTF_PASSWORD); the deployment sets them. Needs sshpass and an ssh client.
+set -uo pipefail
 
-password="CTF_PASSWORD"
-remote=ctf@CTF_HOST
-remote_port=2222
+host="${CTF_HOST:-localhost}"
+port="${CTF_PORT:-22}"
+password="${CTF_PASSWORD:-CTF_PASSWORD}"
 
-# Two ways to extract flag through SSH. That's how cool and smart we are.
-sshpass -p "$password" ssh -o StrictHostKeyChecking=no "$remote" -p "$remote_port" "tar xf /var/log/backup.tar.gz flag --to-stdout"
-expect -c 'spawn ssh '"$remote"' -p '"$remote_port"' "tar xf /var/log/backup.tar.gz flag --to-stdout"; expect "assword:"; send "'"$password"'\r"; interact'
+run() {
+    sshpass -p "$password" ssh -o StrictHostKeyChecking=no \
+        -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR \
+        -p "$port" "ctf@$host" "$1"
+}
+
+# The flag is in a world-readable backup archive; extract it to stdout.
+flag=$(run "tar xzf /var/log/backup.tar.gz flag -O 2>/dev/null")
+
+printf '%s\n' "$flag"
+case "$flag" in
+    *SSP\{*) exit 0 ;;
+    *) echo "no flag recovered" >&2; exit 1 ;;
+esac

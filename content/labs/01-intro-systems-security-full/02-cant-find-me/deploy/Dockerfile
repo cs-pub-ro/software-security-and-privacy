@@ -1,10 +1,23 @@
-# build: docker build -t sis-01_cant-find-me .
-# run: docker run -dit --name sis-01_cant-find-me -p CTF_PORT:22 sis-01_cant-find-me
-# stop: docker stop sis-01_cant-find-me
-FROM debian:11
+# Serves the 02-cant-find-me challenge over SSH.
+# build: docker build -f deploy/Dockerfile -t 02-cant-find-me-deploy ..
+# run:   docker run -d -p <host-port>:22 --cap-add=cap_dac_read_search \
+#            --name 02-cant-find-me-container 02-cant-find-me-deploy
+# (the capability is only needed by challenges whose setup grants a file one)
+FROM ubuntu:20.04
 
-RUN apt-get -y update; apt-get -y install ssh mlocate pwgen; apt-get -y update --fix-missing
-COPY flag setup /
-RUN /setup; rm /flag /setup
+RUN apt-get -y update \
+ && DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
+        ssh sudo libcap2-bin pwgen mlocate \
+ && rm -rf /var/lib/apt/lists/*
 
-ENTRYPOINT service ssh restart && /bin/bash
+# The flag and the setup script are planted, then removed from the image.
+# setup creates the ctf user, plants the flag and installs the weakness.
+COPY flag deploy/setup /
+RUN /setup && rm -f /flag /setup
+
+# Run sshd directly: the container has no init, so generate host keys and keep
+# sshd in the foreground.
+RUN mkdir -p /run/sshd && ssh-keygen -A
+
+EXPOSE 22
+CMD ["/usr/sbin/sshd", "-D", "-e"]

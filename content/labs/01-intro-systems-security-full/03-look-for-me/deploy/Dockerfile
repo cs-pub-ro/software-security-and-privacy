@@ -1,11 +1,23 @@
-# build: docker build -t sis-01_look-for-me .
-# run: docker run -dit --name sis-01_look-for-me -p CTF_PORT:22 sis-01_look-for-me
-# stop: docker stop sis-01_look-for-me
-FROM debian:11
+# Serves the 03-look-for-me challenge over SSH.
+# build: docker build -f deploy/Dockerfile -t 03-look-for-me-deploy ..
+# run:   docker run -d -p <host-port>:22 --cap-add=cap_dac_read_search \
+#            --name 03-look-for-me-container 03-look-for-me-deploy
+# (the capability is only needed by challenges whose setup grants a file one)
+FROM ubuntu:20.04
 
-RUN apt-get -y update; apt-get -y install ssh; apt-get -y update --fix-missing
+RUN apt-get -y update \
+ && DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
+        ssh sudo libcap2-bin \
+ && rm -rf /var/lib/apt/lists/*
 
-COPY flag setup /
-RUN /setup; rm /flag /setup
+# The flag and the setup script are planted, then removed from the image.
+# setup creates the ctf user, plants the flag and installs the weakness.
+COPY flag deploy/setup /
+RUN /setup && rm -f /flag /setup
 
-ENTRYPOINT service ssh restart && /bin/bash
+# Run sshd directly: the container has no init, so generate host keys and keep
+# sshd in the foreground.
+RUN mkdir -p /run/sshd && ssh-keygen -A
+
+EXPOSE 22
+CMD ["/usr/sbin/sshd", "-D", "-e"]
