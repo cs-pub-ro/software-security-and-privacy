@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sudo cp apparmor-exec /etc/apparmor.d/
+sudo aa-enforce /etc/apparmor.d/apparmor-exec

@@ -1,0 +1,14 @@
+#include <tunables/global>
+
+# Profiles the shellcode binary by its path. Adjust the path to wherever the
+# binary is deployed; AppArmor keys on the executable's path, so a copy at a
+# different path is not covered.
+/home/ctf/run-shellcode/exec {
+  #include <abstractions/base>
+  #include <abstractions/consoles>
+  #include <abstractions/nameservice>
+
+  /home/ctf/run-shellcode/exec mixr,
+  # a.txt is allowed (read + mmap); b.txt is denied by omission.
+  /home/ctf/run-shellcode/a.txt mr,
+}

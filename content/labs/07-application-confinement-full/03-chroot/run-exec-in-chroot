@@ -1,0 +1,14 @@
+#!/bin/bash
+
+jail_path="../../jail"
+exec_path="./exec"
+
+cp "$exec_path" "$jail_path"
+
+# Copy library files.
+for f in $(ldd "$exec_path" | grep -o '/[^ ]\+'); do
+    cp --parents "$f" "$jail_path"
+done
+
+# Run in jail.
+sudo chroot "$jail_path" ./exec
