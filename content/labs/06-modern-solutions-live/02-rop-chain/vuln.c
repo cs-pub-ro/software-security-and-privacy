@@ -16,6 +16,9 @@ static void checker(unsigned int a)
 
 int main(void)
 {
+	setvbuf(stdout, NULL, _IONBF, 0);
+	setvbuf(stderr, NULL, _IONBF, 0);
+
 	char name[32];
 
 	printf("Tell me your name: ");

@@ -9,6 +9,9 @@ static void make_it_easy(void)
 
 int main(void)
 {
+	setvbuf(stdout, NULL, _IONBF, 0);
+	setvbuf(stderr, NULL, _IONBF, 0);
+
 	char name[32];
 
 	printf("Tell me your name: ");
