@@ -1,18 +1,25 @@
 # Deploy
 
-Serves the webshop over HTTP, with the flag in `/flag` on the server.
+Serves the webshop over HTTP with its MariaDB database, through Docker Compose.
+The front end (`Dockerfile`, PHP 7.4 + `mysqli`) and the database
+(`db.Dockerfile`, MariaDB) come up together on one network.
 
-The database password in the app is a placeholder (`CTF_DB_PASSWORD`); set it, and a matching database, for the deployment.
-The flag is a build argument.
+The real flag is a UNIX file `/flag` on the **database** server, reached through
+the SQL injection with `LOAD_FILE`; the file served from the web root is a decoy.
+
+Pass this deployment's real flag and database password (the committed defaults
+are placeholders, rotated per deployment):
 
 ```console
-docker build -t webshop-deploy --build-arg FLAG='SSP{...}' .
-docker run -d --rm -p 8080:80 --name webshop-container webshop-deploy
+FLAG='SSP{...}' DB_PASSWORD='...' docker compose up --build -d
+curl 'http://localhost:8080/index.php?id=1'
 ```
 
-The database (`schema.sql`) must be loaded into a MySQL/MariaDB reachable by the app; wire it up with a second container or a compose file.
+The app reads its database host and credentials from the environment
+(`DB_HOST`, `DB_USER`, `DB_PASSWORD`), wired up in `docker-compose.yml`.
+The database is started with `--secure-file-priv=` so that `LOAD_FILE('/flag')`
+is allowed; this is deliberate and is what the challenge exploits.
 
-## Build verification owed
-
-The original app uses the removed `mysql_*` PHP API and a `php5` runtime.
-Either base the image on `php:5`, or port the app to `mysqli` (the connection in `index.php`), before this deploys.
+```console
+docker compose down -v
+```

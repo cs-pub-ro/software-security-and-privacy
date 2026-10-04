@@ -4,7 +4,7 @@ ARG CHALLENGE_NAME="01-use-shellcode"
 ARG EXEC_NAME="vuln"
 ARG FLAG="SSP{placeholder}"
 
-RUN set -xe; apt-get -yqq update; apt-get -yqq install xinetd
+RUN set -xe; apt-get -yqq update; apt-get -yqq install xinetd libc6-i386
 
 RUN useradd -m -d /home/ctf -s /bin/bash ctf
 RUN mkdir /home/ctf/${CHALLENGE_NAME}

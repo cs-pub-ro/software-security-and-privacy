@@ -1,14 +1,15 @@
 <?php
    ob_start();
    session_start();
-   $hostname="localhost";
-   $username="root";
-   $password="CTF_DB_PASSWORD";
+   // Deployment wires these through the environment; the committed defaults are
+   // placeholders (see deploy/). The injection below is the point of the task,
+   // so the product lookup is deliberately left unparameterised.
+   $hostname = getenv("DB_HOST") ?: "localhost";
+   $username = getenv("DB_USER") ?: "root";
+   $password = getenv("DB_PASSWORD") ?: "CTF_DB_PASSWORD";
 
-   $dbhandle=mysql_connect($hostname, $username, $password) or die("Unable to connect to MySQL");
-
-   $selected = mysql_select_db("products", $dbhandle) or die("Could not select db products");
-
+   $dbhandle = mysqli_connect($hostname, $username, $password, "products")
+       or die("Unable to connect to MySQL");
 ?>
 
 <html>
@@ -26,8 +27,8 @@ else echo "<p>You are no stranger to us. Please login <a href=\"login.php\">here
 
     <?php if(isset($_GET['id'])) {
         $query = "select * from products where id=".$_GET['id'];
-        $result=mysql_query($query);
-        $row = mysql_fetch_array($result);
+        $result = mysqli_query($dbhandle, $query);
+        $row = $result ? mysqli_fetch_array($result) : null;
         if (!$row) echo "<p> Unable to find product with ID ". $_GET['id'] ."</p>";
         else
             {
@@ -39,9 +40,9 @@ else echo "<p>You are no stranger to us. Please login <a href=\"login.php\">here
             <th>Description</th>
         </th>
         <tr>
-            <td> <?php echo $row{'name'}; ?></td>
-            <td> <?php echo $row{'PRICE'}."$"; ?></td>
-            <td> <?php echo $row{'description'} ?></td>
+            <td> <?php echo $row['name']; ?></td>
+            <td> <?php echo $row['PRICE']."$"; ?></td>
+            <td> <?php echo $row['description'] ?></td>
          <?php }
    } 
     else {
@@ -50,8 +51,8 @@ else echo "<p>You are no stranger to us. Please login <a href=\"login.php\">here
     <h2> Here are our products: </h2>
     <?php 
     $query = "select id, name from products";
-    $result=mysql_query($query);
-    while ($row = mysql_fetch_assoc($result)) {
+    $result = mysqli_query($dbhandle, $query);
+    while ($row = mysqli_fetch_assoc($result)) {
         echo "<a href=\"" .$_SERVER['PHP_SELF'] ."?id=" .$row['id']. "\">" . $row['name'] . "</a><br/>";
 
     }

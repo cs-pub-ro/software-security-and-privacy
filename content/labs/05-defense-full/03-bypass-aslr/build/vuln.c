@@ -17,6 +17,9 @@ static void reader(void)
 
 int main(void)
 {
+	setvbuf(stdout, NULL, _IONBF, 0);
+	setvbuf(stderr, NULL, _IONBF, 0);
+
 	puts("Greetings, your liege!");
 	puts("Check your stash");
 

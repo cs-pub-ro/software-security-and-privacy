@@ -1,0 +1,36 @@
+# Webshop deployment: a PHP front end and its MariaDB database.
+#
+# Pass this deployment's real flag and database password:
+#   FLAG='SSP{...}' DB_PASSWORD='...' docker compose up --build
+#
+# The committed defaults are placeholders; rotate them per deployment.
+services:
+  db:
+    build:
+      context: .
+      dockerfile: db.Dockerfile
+      args:
+        FLAG: "${FLAG:-SSP{placeholder}}"
+    environment:
+      MARIADB_ROOT_PASSWORD: "${DB_PASSWORD:-CTF_DB_PASSWORD}"
+    # Let LOAD_FILE read /flag: the default secure_file_priv would forbid it.
+    command: ["--secure-file-priv="]
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DB_HOST: db
+      DB_USER: root
+      DB_PASSWORD: "${DB_PASSWORD:-CTF_DB_PASSWORD}"
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8080:80"

@@ -4,7 +4,7 @@ LDFLAGS = -no-pie -m32
 
 all: vuln
 
-buffer_overflow: vuln.o
+vuln: vuln.o
 
 clean:
 	-rm -f *~
