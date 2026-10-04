@@ -1,11 +1,17 @@
-# build: docker build -t sis-02_awesome-password .
-# run: docker run -dit --cap-add=cap_dac_read_search --name sis-02_awesome-password -p CTF_PORT:22 sis-02_awesome-password
-# stop: docker stop sis-02_awesome-password
+# Serves the 01-aw3som3-passw0rd challenge over SSH.
+# build: docker build -f deploy/Dockerfile -t 01-aw3som3-passw0rd-deploy ..
+# run:   docker run -d -p <host-port>:22 --cap-add=cap_dac_read_search \
+#            --name 01-aw3som3-passw0rd-container 01-aw3som3-passw0rd-deploy
 FROM ubuntu:20.04
 
-RUN apt-get -y update; apt-get -y install ssh; apt-get install -y libcap2 libcap2-bin; apt-get -y update --fix-missing
+RUN apt-get -y update \
+ && DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
+        ssh sudo libcap2-bin \
+ && rm -rf /var/lib/apt/lists/*
 
-COPY flag setup /
-RUN /setup; rm /flag /setup
+COPY flag deploy/setup /
+RUN /setup && rm -f /flag /setup
 
-ENTRYPOINT service ssh restart && /bin/bash
+RUN mkdir -p /run/sshd && ssh-keygen -A
+EXPOSE 22
+CMD ["/usr/sbin/sshd", "-D", "-e"]

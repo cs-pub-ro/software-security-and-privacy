@@ -1,30 +1,32 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
+import os
 import sys
 from hashlib import sha256
 
+# The wordlist defaults to the challenge's, but can be pointed elsewhere.
+WORDLIST = os.environ.get("WORDLIST", "dict/words")
 
-hashes = []
+
+def words():
+    with open(WORDLIST) as f:
+        return [line.strip() for line in f]
 
 
-def hybrid_module():
-    global hashes
-    current = list(hashes)
-    for s in [line.strip() for line in open("../../public/password-breaking/dict/words")]:
-        s = ''.join(s)
-        s = s.replace('a', '@').replace('e', '3').replace('i', '!').replace('o', '0').replace('s', '$')
-        hash_to_match = sha256(s).hexdigest()
-        if hash_to_match in current:
-            print >> sys.stderr, "{} -> {}".format(hash_to_match, s)
-            hashes.remove(hash_to_match)
+def leet(s):
+    return s.replace('a', '@').replace('e', '3').replace('i', '!') \
+            .replace('o', '0').replace('s', '$')
 
 
 def main():
-    global hashes
-    # Read hashes from standard input.
     hashes = [line.strip() for line in sys.stdin]
-    hybrid_module()
-    print '\n'.join(h for h in hashes)
+    for s in words():
+        t = leet(s)
+        h = sha256(t.encode()).hexdigest()
+        if h in hashes:
+            print("{} -> {}".format(h, t), file=sys.stderr)
+            hashes.remove(h)
+    print('\n'.join(hashes))
 
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import sys
 from hashlib import sha256
@@ -20,7 +20,7 @@ def main():
     # Read hashes from standard input.
     hashes = [line.strip() for line in sys.stdin]
     extended_salt_module()
-    print '\n'.join(h for h in hashes)
+    print('\n'.join(h for h in hashes))
 
 
 if __name__ == "__main__":

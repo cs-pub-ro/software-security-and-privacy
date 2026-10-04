@@ -1,40 +1,40 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
+import os
 import sys
 from hashlib import sha256
 
+# The wordlist defaults to the challenge's, but can be pointed elsewhere.
+WORDLIST = os.environ.get("WORDLIST", "dict/words")
 
-hashes = []
+
+def words():
+    with open(WORDLIST) as f:
+        return [line.strip() for line in f]
 
 
-def extended_salt_module():
-    global hashes
-    current = list(hashes)
-    for s in [line.strip() for line in open("../../public/password-breaking/dict/words")]:
-        s = ''.join(s)
-        s = s.replace('a', '@').replace('e', '3').replace('i', '!').replace('o', '0').replace('s', '$')
-        for h in current:
-            if len(h) > 64:
-                prefix = h[0:10].decode("hex")
-                rest = h[10:]
-                hash_to_match = sha256(prefix+s).hexdigest()
-                if hash_to_match == rest:
-                    print >> sys.stderr, "{} -> {}".format(hash_to_match, s)
-                    hashes.remove(h)
-                suffix = h[64:].decode("hex")
-                rest = h[0:64]
-                hash_to_match = sha256(s+suffix).hexdigest()
-                if hash_to_match == rest:
-                    print >> sys.stderr, "{} -> {}".format(hash_to_match, s)
-                    hashes.remove(h)
+def leet(s):
+    return s.replace('a', '@').replace('e', '3').replace('i', '!') \
+            .replace('o', '0').replace('s', '$')
 
 
 def main():
-    global hashes
-    # Read hashes from standard input.
     hashes = [line.strip() for line in sys.stdin]
-    extended_salt_module()
-    print '\n'.join(h for h in hashes)
+    for s in words():
+        t = leet(s)
+        for h in list(hashes):
+            if len(h) <= 64:
+                continue
+            prefix = bytes.fromhex(h[0:10])
+            if sha256(prefix + t.encode()).hexdigest() == h[10:]:
+                print("{} -> {}".format(h, t), file=sys.stderr)
+                hashes.remove(h)
+                continue
+            suffix = bytes.fromhex(h[64:])
+            if sha256(t.encode() + suffix).hexdigest() == h[0:64]:
+                print("{} -> {}".format(h, t), file=sys.stderr)
+                hashes.remove(h)
+    print('\n'.join(hashes))
 
 
 if __name__ == "__main__":

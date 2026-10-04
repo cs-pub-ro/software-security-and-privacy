@@ -1,31 +1,28 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
+import itertools
+import os
 import sys
 from hashlib import sha256
-import itertools
-import string
 
-
-hashes = []
-
-
-def brute_force_module():
-    global hashes
-    current = list(hashes)
-    for s in itertools.product(string.printable, repeat=4):
-        s = ''.join(s)
-        hash_to_match = sha256(s).hexdigest()
-        if hash_to_match in current:
-            print >> sys.stderr, "{} -> {}".format(hash_to_match, s)
-            hashes.remove(hash_to_match)
+# Length and alphabet of the brute-force search; small by default because the
+# cost is alphabet**length. Override to widen (e.g. BRUTE_LEN=5).
+ALPHABET = os.environ.get("BRUTE_ALPHABET",
+                          "abcdefghijklmnopqrstuvwxyz0123456789")
+LENGTH = int(os.environ.get("BRUTE_LEN", "4"))
 
 
 def main():
-    global hashes
-    # Read hashes from standard input.
     hashes = [line.strip() for line in sys.stdin]
-    brute_force_module()
-    print '\n'.join(h for h in hashes)
+    for tup in itertools.product(ALPHABET, repeat=LENGTH):
+        if not hashes:
+            break
+        s = ''.join(tup)
+        h = sha256(s.encode()).hexdigest()
+        if h in hashes:
+            print("{} -> {}".format(h, s), file=sys.stderr)
+            hashes.remove(h)
+    print('\n'.join(hashes))
 
 
 if __name__ == "__main__":

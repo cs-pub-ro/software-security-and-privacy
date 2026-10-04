@@ -1,11 +1,19 @@
-# build: docker build -t sis-02_no-matter-what .
-# run: docker run -dit --name sis-02_no-matter-what -p CTF_PORT:22 sis-02_no-matter-what
-# stop: docker stop sis-02_no-matter-what
+# Serves the 02-no-matter-what challenge over SSH.
+# build: docker build -f deploy/Dockerfile -t 02-no-matter-what-deploy ..
+# run:   docker run -d -p <host-port>:22 --name 02-no-matter-what-container \
+#            02-no-matter-what-deploy
 FROM ubuntu:20.04
 
-RUN apt-get -y update; apt-get -y install ssh sudo; apt-get -y update --fix-missing
+RUN apt-get -y update \
+ && DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
+        ssh sudo \
+ && rm -rf /var/lib/apt/lists/*
 
-COPY O W A S P C T F setup /
-RUN /setup; rm /O /W /A /S /P /C /T /F /setup
+# The flag is split across eight files; setup moves them to /usr/local (root
+# only) and allows ctf to sha256sum them via sudo.
+COPY deploy/O deploy/W deploy/A deploy/S deploy/P deploy/C deploy/T deploy/F deploy/setup /
+RUN /setup && rm -f /O /W /A /S /P /C /T /F /setup
 
-ENTRYPOINT service ssh restart && /bin/bash
+RUN mkdir -p /run/sshd && ssh-keygen -A
+EXPOSE 22
+CMD ["/usr/sbin/sshd", "-D", "-e"]
