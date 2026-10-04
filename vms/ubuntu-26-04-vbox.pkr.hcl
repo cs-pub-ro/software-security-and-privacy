@@ -1,6 +1,6 @@
 variable "vm_name" {
   type    = string
-  default = "so"
+  default = "ssp"
 }
 
 variable "cpus" {
@@ -40,7 +40,7 @@ variable "headless" {
 
 variable "img_name" {
   type    = string
-  default = "SO"
+  default = "SSP"
 }
 
 variable "arch" {
