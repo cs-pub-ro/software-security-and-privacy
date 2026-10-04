@@ -1,0 +1,19 @@
+#!/bin/bash
+
+if [ $UID != 0 ]; then
+	echo "Must run as root!"
+	exit 1
+fi
+
+mkdir -p jail
+
+cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1 > /flag
+
+for afile in $(ls /); do
+	if [ -d "/$afile" ]; then
+	        mkdir -p "jail/$afile"
+		    mount | grep "jail/$afile" || mount --bind "/$afile" "jail/$afile"
+	fi
+done
+
+chroot jail/ /bin/bash

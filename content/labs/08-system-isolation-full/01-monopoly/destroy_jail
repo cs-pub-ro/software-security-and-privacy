@@ -1,0 +1,16 @@
+#!/bin/bash
+
+if [ $UID != 0 ]; then
+	echo "Must be run as root!"
+	exit 1
+fi
+
+for adir in $(ls jail); do
+	echo "Unmounting $adir"
+	while [ 1 ]; do
+        umount "jail/$adir"
+        mount | grep "jail/$adir" && break
+    done
+done
+
+rm -rf jail
