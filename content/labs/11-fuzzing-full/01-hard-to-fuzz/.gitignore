@@ -1,0 +1,5 @@
+*.o
+*.so
+fuzzy-fuzzer
+crash-me
+crash-*
