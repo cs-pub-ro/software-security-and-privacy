@@ -1,0 +1,96 @@
+#!/bin/bash
+
+#
+# cant-find-me (intro session)
+#
+# The flag is located in one out of 1000 * 1000 files. Use locate instead of find to find it.
+#
+
+password="CTF_PASSWORD"
+
+if test $(id -u) -ne 0; then
+    echo "You must run this script as root." 1>&2
+    exit 1
+fi
+
+create_ctf_user()
+{
+    # Create user if it does not exist.
+    if ! id ctf > /dev/null 2>&1; then
+        useradd -m -d /home/ctf -s /bin/bash ctf
+    fi
+    # TODO: Check if home is /home/ctf; if not, fail.
+    # Disable password for account (can't login with password).
+    passwd -l ctf > /dev/null
+    # Prevent password changing.
+    passwd -n 9999 ctf > /dev/null
+    # Prevent ctf user from writing to home folder.
+    chown -R root:ctf /home/ctf
+    chmod 750 /home/ctf
+}
+
+copy_flag_to_ctf_user()
+{
+    cp flag /home/ctf/flag
+    chown root:ctf /home/ctf/flag
+    chmod 440 /home/ctf/flag
+}
+
+# Create ctf user if it does not exist and update password.
+create_ctf_user
+echo "ctf:$password" | chpasswd
+passwd -u ctf > /dev/null
+
+
+random_size=12
+flag=$(cat flag)
+flag_size=${#flag}
+
+random_string()
+{
+    size=$1
+    pwgen $size 1
+}
+
+create_files()
+{
+    path=$1
+    num_files=$2
+
+    index=0
+    while ((index < "$num_files")); do
+        random_fname=$(random_string $random_size)
+        random_string "$flag_size" > "$path"/"$random_fname"
+        index=$((index+1))
+    done
+}
+
+# Cleanup.
+rm -fr /home/ctf/database
+
+# Create folder storing files.
+mkdir -p /home/ctf/database
+pushd /home/ctf/database
+
+for i in $(seq 1 1000); do
+    random=$(random_string $random_size)
+    mkdir -p "index-$random"
+    create_files "index-$random" 100 &
+done
+
+wait
+
+# This is where the flag is. Make sure this is not overridden by the randoms.
+rm -rf "index-vMjyx5JLW3Lm"
+mkdir -p "index-vMjyx5JLW3Lm"
+create_files "index-vMjyx5JLW3Lm" 999
+echo -n "$flag" > "index-vMjyx5JLW3Lm/77me03aYpDfK"
+
+popd
+
+updatedb
+
+# Announce removal of files.
+echo
+echo "IMPORTANT: Remove all deployed files (flag, setup)."
+echo

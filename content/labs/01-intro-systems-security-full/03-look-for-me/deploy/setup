@@ -1,0 +1,62 @@
+#!/bin/bash
+
+#
+# look-for-me (intro session)
+#
+# Create a world readable backup of the system that contains the flag.
+#
+
+backup_path=/var/log/backup.tar.gz
+password="CTF_PASSWORD"
+
+if test $(id -u) -ne 0; then
+    echo "You must run this script as root." 1>&2
+    exit 1
+fi
+
+create_ctf_user()
+{
+    # Create user if it does not exist.
+    if ! id ctf > /dev/null 2>&1; then
+        useradd -m -d /home/ctf -s /bin/bash ctf
+    fi
+    # TODO: Check if home is /home/ctf; if not, fail.
+    # Disable password for account (can't login with password).
+    passwd -l ctf
+    # Prevent password changing.
+    passwd -n 9999 ctf
+    # Prevent ctf user from writing to home folder.
+    chown -R root:ctf /home/ctf
+    chmod 750 /home/ctf
+}
+
+copy_flag_to_ctf_user()
+{
+    cp flag /home/ctf/flag
+    chown root:ctf /home/ctf/flag
+    chmod 440 /home/ctf/flag
+}
+
+# Create ctf user if it does not exist and update password.
+create_ctf_user
+echo "ctf:$password" | chpasswd
+passwd -u ctf
+
+# Flag must be unaccessible to ctf user.
+cp flag /flag
+chmod 400 /flag
+
+# Do cleanup: remove archive file.
+rm -f "$backup_path"
+
+# Create backup in archive file. Add flag. Exclude home, lib, proc.
+tar czf /home/backup.tar.gz /usr /var /bin /sbin /lib /etc /lib32 /lib64 /opt /flag
+mv /home/backup.tar.gz "$backup_path"
+
+# Make archive file accessible to all users (including ctf).
+chmod 644 "$backup_path"
+
+# Announce removal of files.
+echo
+echo "IMPORTANT: Remove all deployed files (flag, setup)."
+echo

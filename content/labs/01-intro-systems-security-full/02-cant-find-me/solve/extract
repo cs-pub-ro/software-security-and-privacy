@@ -1,0 +1,13 @@
+#!/bin/bash
+
+password="CTF_PASSWORD"
+remote=ctf@CTF_HOST
+remote_port=2242
+
+# Two ways to extract flag through SSH. That's how cool and smart we are.
+f=$(sshpass -p "$password" ssh -o StrictHostKeyChecking=no "$remote" -p "$remote_port" "locate secret")
+sshpass -p "$password" ssh -o StrictHostKeyChecking=no "$remote" -p "$remote_port" "cat \"$f\""
+f=$(expect -c 'spawn ssh '"$remote"' -p '"$remote_port"' "locate secret"; expect "assword:"; send "'"$password"'\r"; interact' | grep "^/home/ctf/database")
+echo "f: $f"
+# TODO: This doesn't work, the file name gets trimmed. To investigate.
+expect -c 'spawn ssh '"$remote"' -p '"$remote_port"' "cat '"$f"'"; expect "assword:"; send "'"$password"'\r"; interact'
