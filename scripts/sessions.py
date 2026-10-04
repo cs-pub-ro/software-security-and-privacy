@@ -13,8 +13,8 @@ A directory is published if it holds a `README.md`.  The website is not one
 tree but two -- a live view and a full view -- and the suffix of a session says
 which of them it belongs to, so the halves never appear side by side:
 
-    content/labs/01-software-stack-live/       ->  /live/labs/01-software-stack/
-    content/labs/01-software-stack-full/       ->  /full/labs/01-software-stack/
+    content/labs/03-exploit-app-live/       ->  /live/labs/03-exploit-app/
+    content/labs/03-exploit-app-full/       ->  /full/labs/03-exploit-app/
     content/lectures/03-memory-live/           ->  /live/lectures/03-memory/
     content/assignments/                       ->  /assignments/
 
@@ -39,9 +39,8 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 CONTENT_ROOT = REPO_ROOT / "content"
 
 # Directory names that are never part of the content tree, at any depth.
-# `utils` holds support code vendored into a task -- the mpaland/printf library
-# under `bonus-printf/utils/` -- which is packed with its task but is not a task
-# of its own, so it gets no page and no navigation entry.  `solutions` is the
+# `utils` holds support code vendored into a task, which is packed with its
+# task but is not a task of its own, so it gets no page and no navigation entry.  `solutions` is the
 # name the reference material used to live under, before it moved into the
 # `-full/` sessions; it is kept on the list so that such a directory reappearing
 # is skipped rather than published.  `old` is the staging area a session keeps
@@ -139,8 +138,8 @@ SECTION_DESCRIPTIONS = {
 }
 
 # Student archives are built from the live half of the labs, and from nothing
-# else: the `-full/` sessions hold the reference solutions, and for session 05
-# the challenge flags and the exploits that find them.
+# else: the `-full/` sessions hold the reference solutions, the exploits, and
+# the files that build and deploy the challenges.
 ARCHIVE_SECTION = "labs"
 ARCHIVE_VARIANT = "live"
 
@@ -148,11 +147,24 @@ ARCHIVE_VARIANT = "live"
 # directory name.
 ACRONYMS = {
     "os": "OS",
-    "io": "IO",
     "db": "DB",
     "gdb": "GDB",
     "json": "JSON",
-    "cylab": "CyLab",
+    "aslr": "ASLR",
+    "dep": "DEP",
+    "rop": "ROP",
+    "dop": "DOP",
+    "sql": "SQL",
+    "sqlinject": "SQLInject",
+    "xss": "XSS",
+    "ctf": "CTF",
+    "ssh": "SSH",
+    "php": "PHP",
+    "http": "HTTP",
+    "aw3som3": "Aw3som3",
+    "apparmor": "AppArmor",
+    "seccomp": "Seccomp",
+    "libfuzzer": "LibFuzzer",
 }
 
 # The `Session NN:` lead-in of a session README title, which the heading built
@@ -169,14 +181,14 @@ VARIANT_TITLE_SUFFIX = re.compile(
 
 
 def prettify(name):
-    """Turn a directory name such as `01-string-functions` into a label."""
+    """Turn a directory name such as `01-buffer-overflow` into a label."""
     without_prefix = re.sub(r"^(?:session-\d+|\d+|bonus|demo)[-_]", "", name)
     words = re.split(r"[-_]+", without_prefix.strip())
     return " ".join(ACRONYMS.get(word.lower(), word.title()) for word in words if word)
 
 
 def split_variant(name):
-    """Split `01-software-stack-live` into `01-software-stack` and `live`.
+    """Split `03-exploit-app-live` into `03-exploit-app` and `live`.
 
     A directory that carries no variant suffix -- anything under `assignments/`
     or `extra/`, which are not split into a live and a full half -- comes back
@@ -280,8 +292,8 @@ def walk_tasks(tasks):
 def session_title(session_dir):
     """The title of a session, from its README, without the `Session NN:` lead.
 
-    `01-software-stack-live/README.md` opens with `# Session 01: The Software
-    Stack`, so the title is `The Software Stack`.  A session without a README,
+    `03-exploit-app-live/README.md` opens with `# Session 03: Exploiting
+    Applications`, so the title is `Exploiting Applications`.  A session without a README,
     or one whose README has no heading, falls back to its directory name.
     """
     name, _ = split_variant(session_dir.name)
@@ -372,8 +384,8 @@ def task_urls(tasks, session_url, session_path):
     """A task tree with the URL of every page filled in, below the session.
 
     The URL of a task is its path below the session, so a task that sits inside
-    a directory which is not itself a page -- the three `demo-copy-file/`
-    variants of session 03 -- keeps that directory in its URL even though it is
+    a directory which is not itself a page -- the variants of a demo grouped
+    under one directory -- keeps that directory in its URL even though it is
     listed one level up.
     """
     located = []
@@ -395,7 +407,7 @@ def locate(section, prefix, sessions):
     `prefix` is the view the copy belongs to -- `live`, `full`, or nothing for a
     section that has no halves.  A session is published under its name without
     the variant suffix, because the view it is in already says which half it is:
-    `content/labs/01-software-stack-live/` becomes `/live/labs/01-software-stack/`.
+    `content/labs/03-exploit-app-live/` becomes `/live/labs/03-exploit-app/`.
     """
     section_url = f"{prefix}/{section['path'].name}" if prefix else section["path"].name
     located = []
@@ -469,8 +481,8 @@ def archive_sessions(content_root=CONTENT_ROOT):
     """The sessions packed into the archives handed to students.
 
     The live half of the labs, and nothing else.  The `-full/` sessions hold the
-    reference solutions, and for session 05 the challenge flags and the exploits
-    that find them, so they are never packed; `gen_zip.py` checks that again on
+    reference solutions, the exploits, and the files that build and deploy the
+    challenges, so they are never packed; `gen_zip.py` checks that again on
     every file it writes.
     """
     section_dir = Path(content_root) / ARCHIVE_SECTION
@@ -486,7 +498,7 @@ def archive_sessions(content_root=CONTENT_ROOT):
 def is_reference(path):
     """Whether a path belongs to the reference half of a session.
 
-    Such files -- reference solutions, and the session 05 flags and exploits --
+    Such files -- reference solutions, exploits and challenge deployment --
     must never appear in a student archive.  The path may be relative to the
     repository root or to `content/`; what is looked at is whether any part of
     it is a `-full` session directory, or the `solutions` directory that

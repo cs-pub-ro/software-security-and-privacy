@@ -14,7 +14,7 @@
 # Nothing is registered anywhere: a new deck is rendered because it is there.
 #
 #     ./scripts/render_slides.sh              render every deck
-#     ./scripts/render_slides.sh content/lectures/01-software-stack-live
+#     ./scripts/render_slides.sh content/lectures/03-exploit-app-live
 #                                             only the decks below that path
 #
 # Requires `quarto`.  The rendered files are ignored by git.

@@ -21,13 +21,13 @@ Everything published lives under `content/`, and the tree there is the whole spe
 ```text
 content/
 ├── lectures/
-│   ├── 01-software-stack-live/      the plan of the lecture, as one page
-│   └── 01-software-stack-full/      the full lecture, with a directory per part
+│   ├── 03-exploit-app-live/      the plan of the lecture, as one page
+│   └── 03-exploit-app-full/      the full lecture, with a directory per part
 ├── labs/
-│   ├── 01-software-stack-live/      what students work on during the lab
-│   │   ├── demo-printf-vs-write/
-│   │   └── 01-string-functions/
-│   └── 01-software-stack-full/      the reference solutions and tutorials
+│   ├── 03-exploit-app-live/      what students work on during the lab
+│   │   ├── demo-send-payload/
+│   │   └── 01-buffer-overflow/
+│   └── 03-exploit-app-full/      the reference solutions and tutorials
 ├── assignments/
 └── extra/
 ```
@@ -56,9 +56,9 @@ The view is the first part of the URL, which is why the variant suffix a directo
 
 | Directory | Page |
 | --- | --- |
-| `content/labs/01-software-stack-live/` | `/live/labs/01-software-stack/` |
-| `content/labs/01-software-stack-live/01-string-functions/` | `/live/labs/01-software-stack/01-string-functions/` |
-| `content/labs/01-software-stack-full/` | `/full/labs/01-software-stack/` |
+| `content/labs/03-exploit-app-live/` | `/live/labs/03-exploit-app/` |
+| `content/labs/03-exploit-app-live/01-buffer-overflow/` | `/live/labs/03-exploit-app/01-buffer-overflow/` |
+| `content/labs/03-exploit-app-full/` | `/full/labs/03-exploit-app/` |
 | `content/lectures/03-memory-live/` | `/live/lectures/03-memory/` |
 | `content/lectures/03-memory-full/` | `/full/lectures/03-memory/` |
 | `content/assignments/` | `/assignments/` |
@@ -80,11 +80,11 @@ What the split governs is the navigation and the generated contents lists, not a
 /info/how-the-lab-works/                 the guide for students
 /live/                                   what the live view holds
 /live/labs/                              content/labs/README.md
-/live/labs/01-software-stack/            content/labs/01-software-stack-live/README.md
-/live/labs/01-software-stack/01-string-functions/
-/live/lectures/01-software-stack/        the plan of that lecture
-/full/labs/01-software-stack/            content/labs/01-software-stack-full/README.md
-/full/lectures/01-software-stack/        the full lecture, with its own subpages
+/live/labs/03-exploit-app/            content/labs/03-exploit-app-live/README.md
+/live/labs/03-exploit-app/01-buffer-overflow/
+/live/lectures/03-exploit-app/        the plan of that lecture
+/full/labs/03-exploit-app/            content/labs/03-exploit-app-full/README.md
+/full/lectures/03-exploit-app/        the full lecture, with its own subpages
 /assignments/                            a section with no halves
 ```
 
@@ -98,10 +98,10 @@ The navigation sidebar is generated the same way, as a `SUMMARY.md` read back by
 
 * Directories named `solutions` are skipped, together with `.git`, `.github`, `docs`, `scripts` and `site`, and so is anything whose name starts with a dot.
   The list is the `EXCLUDED_DIRS` set in `sessions.py`.
-  `utils` is on it as well: support code vendored inside an exercise, such as the `bonus-printf/utils/printf/` tree, is packed with its exercise but is not an exercise itself, so it gets no page and no navigation entry.
+  `utils` is on it as well: support code vendored inside an exercise, such as a `utils/` tree, is packed with its exercise but is not an exercise itself, so it gets no page and no navigation entry.
 * The title shown for a page is the first level-one heading of its `README.md`.
   If the file has no heading, the directory name is used instead, and the heading is added to the page.
-* A session is listed under its index and the title of its `README.md`, not under its directory name: `01-software-stack-live/`, whose README opens with `# Session 01: The Software Stack`, is listed as `01: The Software Stack`.
+* A session is listed under its index and the title of its `README.md`, not under its directory name: `03-exploit-app-live/`, whose README opens with `# Session 03: Exploiting Applications`, is listed as `03: Exploiting Applications`.
   The index keeps the sessions in the order they are taken in.
   A trailing `— Full Contents` in a README title is dropped, because the view a page is in already says which half it is.
   The rules are `session_heading()` and `session_title()` in `sessions.py`.
@@ -150,8 +150,8 @@ Because the mirror keeps the paths, a relative link in a README already points a
 
 | In the repository | On the site |
 | --- | --- |
-| `content/lectures/01-software-stack-full/media/03-kernel/libc.svg` | `/full/lectures/01-software-stack/media/03-kernel/libc.svg` |
-| `content/lectures/01-software-stack-full/slides/software-stack.html` | `/full/lectures/01-software-stack/slides/software-stack.html` |
+| `content/lectures/03-exploit-app-full/media/02-stack/stack-frame.svg` | `/full/lectures/03-exploit-app/media/02-stack/stack-frame.svg` |
+| `content/lectures/03-exploit-app-full/slides/exploit-app.html` | `/full/lectures/03-exploit-app/slides/exploit-app.html` |
 
 A C source, a Makefile or a compiled binary is not an asset: it has no page, so a link to it is sent to GitHub as before.
 Directories the tree walk skips — `old/`, `utils/`, anything beginning with a dot — keep their files off the site as well.
@@ -179,8 +179,8 @@ Each deck sets `embed-resources: true`, so one `.qmd` becomes one self-contained
 
 ```console
 ./scripts/render_slides.sh                                  # every deck
-./scripts/render_slides.sh content/lectures/01-software-stack-live   # just these
-make -C content/lectures/01-software-stack-live/slides       # while writing one
+./scripts/render_slides.sh content/lectures/03-exploit-app-live   # just these
+make -C content/lectures/03-exploit-app-live/slides       # while writing one
 ```
 
 The Pages workflow runs `render_slides.sh` before `mkdocs build`, so whatever is on disk when `gen_pages.py` walks `content/` is what gets published.
@@ -205,7 +205,7 @@ The script only looks around, it installs nothing and changes nothing.
 It exits 0 when everything the checked sessions need is there, and 1 otherwise, so it can also be used in a setup check on a lab machine.
 
 * Tools needed only by a bonus exercise are reported apart, and do not fail the run.
-* Three checks are not a plain lookup of a command: the machine is x86-64, where session 02 and session 05 need it; `gcc -static` links, which session 01 needs and which not every distribution installs by default; and pwntools imports in the `python3` that will run the session 05 exploits.
+* Four checks are not a plain lookup of a command: the machine is x86-64, which the exploitation sessions need; `gcc -m32` builds and runs, because the challenges are 32-bit and no distribution installs the 32-bit C library by default; pwntools imports in the `python3` that will run the exploits; and the Docker daemon is reachable, not only installed.
 * The install command is written for the package manager the machine has, out of `apt-get`, `dnf`, `pacman` and `zypper`.
   The tool-to-package mapping is `package_for()`.
 
@@ -214,7 +214,7 @@ When a session's prerequisites change, the list to update is the `check_session_
 ## Lab archives
 
 Every lab session's `-live/` half is packed into one zip archive of its exercises, published on the `lab-archives` branch, which holds nothing else.
-The archives are what students download, so they contain the exercises and nothing more: the `NN-<name>-full/` reference material — solutions, and the session 05 flags and exploits — is never packed, and neither is anything outside `content/labs/`.
+The archives are what students download, so they contain the exercises and nothing more: the `NN-<name>-full/` reference material — solutions, exploits and the files that build and deploy the challenges — is never packed, and neither is anything outside `content/labs/`.
 `ARCHIVE_SECTION` and `ARCHIVE_VARIANT` in `sessions.py` are what say so.
 
 The `.github/workflows/lab-archive.yml` workflow rebuilds and republishes them on every push to `master` that touches a lab session, and can also be run by hand from the *Actions* tab.
@@ -224,15 +224,16 @@ The `.github/workflows/lab-archive.yml` workflow rebuilds and republishes them o
 An archive is named after the session with the `-live` suffix stripped, and unpacks into a single directory of that name:
 
 ```text
-03-memory-ops.zip
-└── 03-memory-ops/
-    ├── 01-in-memory-db/
-    ├── bonus-in-mem-database/
-    └── demo-copy-file/{global-buffer,malloc,mmap}/
+03-exploit-app.zip
+└── 03-exploit-app/
+    ├── demo-send-payload/
+    ├── 01-buffer-overflow/
+    ├── 02-integer-overflow/
+    └── 03-ret-to-libc/
 ```
 
 * An exercise is the same thing the website calls an exercise, decided by `sessions.py`: any directory below a session's `-live/` tree that has a `README.md`.
-  Support code vendored inside an exercise, such as the `bonus-printf/utils/printf/` tree, is packed with its exercise even though it gets no page.
+  Support code vendored inside an exercise, such as a `utils/` tree, is packed with its exercise even though it gets no page.
 * Only files tracked by git are packed, so an object file or a compiled binary left in the working tree is never shipped by accident.
   The archives are the same whether they are built from a clean checkout or from the tree you have been working in.
 * Files named `prompt.txt`, the notes the exercises were written from, are left out; several of them describe the solution.
@@ -252,7 +253,7 @@ Nothing has to be installed: the script only needs Python and git.
 Check what a student would get with:
 
 ```console
-unzip -l archives/03-memory-ops.zip
+unzip -l archives/03-exploit-app.zip
 ```
 
 ### Creating the branch for the first time
@@ -289,5 +290,5 @@ From here on the workflow keeps the branch up to date on its own.
 A file on a branch is served by GitHub at a URL of this shape:
 
 ```text
-https://github.com/<owner>/<repository>/raw/lab-archives/03-memory-ops.zip
+https://github.com/<owner>/<repository>/raw/lab-archives/03-exploit-app.zip
 ```

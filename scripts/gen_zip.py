@@ -5,7 +5,7 @@ These are the archives handed to students, so they hold the tasks and nothing
 else.  What is packed is `content/labs/NN-<name>-live/`, the half of a lab
 session students work on during it (see `sessions.py`, the same rule the
 website uses, so the two can never disagree).  Its `NN-<name>-full/` sibling --
-the reference solutions, and for session 05 the challenge flags and exploits --
+the reference solutions, exploits and challenge deployment files --
 is never packed, and neither is anything outside `content/labs/`.  The archive
 is named after the session with the `-live` suffix stripped, so students unzip
 a clean `NN-<name>/` directory.  As a last line of defence, packing aborts
@@ -84,7 +84,7 @@ def add_file(archive, source, arcname):
     info = zipfile.ZipInfo(arcname, date_time=FIXED_TIMESTAMP)
     info.compress_type = zipfile.ZIP_DEFLATED
     # Say the archive was built on a Unix system, so that the mode below is
-    # read back rather than ignored: the session 05 challenge binaries have to
+    # read back rather than ignored: the challenge binaries have to
     # come out of the archive executable.
     info.create_system = 3
     mode = 0o755 if source.stat().st_mode & stat.S_IXUSR else 0o644
@@ -110,9 +110,9 @@ def build_archive(session, tracked, output_dir, repo_root):
     """
     name = archive_name(session)
     # Keyed by archive name so a file reached through more than one task is
-    # packed exactly once.  The vendored `bonus-printf/utils/printf/` tree is
-    # support code inside the `bonus-printf` task rather than a task of its own,
-    # so it is packed with `bonus-printf` even though it gets no page.
+    # packed exactly once.  A vendored `utils/` tree is support code inside its
+    # task rather than a task of its own, so it is packed with that task even
+    # though it gets no page.
     entries = {}
     session_prefix = session["path"].relative_to(repo_root)
     for task in walk_tasks(session["tasks"]):

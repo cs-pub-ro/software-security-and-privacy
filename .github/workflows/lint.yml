@@ -12,7 +12,7 @@ permissions:
 
 env:
   # Third-party sources, imported as they are and not ours to reformat.
-  VENDORED: ':!content/labs/02-os-interface-live/bonus-printf/utils/printf'
+  VENDORED: ':(exclude,glob)content/**/utils/**'
 
 jobs:
   markdown:

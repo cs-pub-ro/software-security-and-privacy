@@ -6,8 +6,7 @@
 {
   "ignores": [
     // Third-party READMEs, imported as they are.
-    "content/labs/02-os-interface-live/bonus-printf/utils/printf/README.md",
-    "content/lectures/01-software-stack-full/demos/06-software-interaction/docker-wordpress-nginx/README.md",
+    "content/**/utils/**",
     // The previous version of a session's material, kept while it is being
     // rewritten and harvested from.  It is not published -- `old` is in
     // EXCLUDED_DIRS in scripts/sessions.py -- so it is not held to the style.
@@ -58,7 +57,7 @@
     "MD041": false,
 
     // Two quotes separated by a blank line are two quote blocks on purpose,
-    // such as the two lessons of the printf vs write demo.
+    // such as two lessons drawn from one demo.
     "MD028": false,
 
     // Table cells are not padded to a common width.

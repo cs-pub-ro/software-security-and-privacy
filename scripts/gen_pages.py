@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the MkDocs pages for the Operating Systems class.
+"""Generate the MkDocs pages for the Software Security and Privacy class.
 
 The plugin `mkdocs-gen-files` runs this script on every `mkdocs build` and on
 every reload of `mkdocs serve`.  Pages are written into the virtual docs tree,
@@ -13,11 +13,11 @@ belongs to, so the two are never listed side by side:
     index.md                                    front page
     live/index.md                               what the live view is
     live/labs/index.md                          content/labs/README.md
-    live/labs/01-software-stack/index.md        content/labs/01-software-stack-live/
-    live/labs/01-software-stack/01-string-functions/index.md
-    live/lectures/01-software-stack/index.md    the plan of that lecture
-    full/labs/01-software-stack/index.md        content/labs/01-software-stack-full/
-    full/lectures/01-software-stack/index.md    the full lecture, with its own subpages
+    live/labs/03-exploit-app/index.md        content/labs/03-exploit-app-live/
+    live/labs/03-exploit-app/01-buffer-overflow/index.md
+    live/lectures/03-exploit-app/index.md    the plan of that lecture
+    full/labs/03-exploit-app/index.md        content/labs/03-exploit-app-full/
+    full/lectures/03-exploit-app/index.md    the full lecture, with its own subpages
     assignments/index.md                        a section with no halves
 
 The view is the first path component, so the variant suffix a directory carries
@@ -61,8 +61,8 @@ from sessions import (  # noqa: E402  (the path has to be set up first)
     walk_tasks,
 )
 
-SITE_TITLE = "Operating Systems"
-SITE_TAGLINE = "Lecture and lab materials for the Operating Systems class"
+SITE_TITLE = "Software Security and Privacy"
+SITE_TAGLINE = "Lecture and lab materials for the Software Security and Privacy class"
 
 # What the front page is called in the navigation.  The tab bar already carries
 # the name of the site, so the entry that leads back to it says `Home` instead.
@@ -73,11 +73,11 @@ NAV_FILE = "SUMMARY.md"
 
 # Where links to files that are not pages -- source code, headers, Makefiles --
 # are sent instead.
-REPO_BLOB_URL = "https://github.com/cs-pub-ro/operating-systems-sessions/blob/master"
+REPO_BLOB_URL = "https://github.com/cs-pub-ro/software-security-and-privacy/blob/master"
 
-# The same, for a directory that is not a page: the vendored `utils/printf`
+# The same, for a directory that is not a page: a vendored `utils/`
 # tree, say, which is excluded from the site but still lives in the repository.
-REPO_TREE_URL = "https://github.com/cs-pub-ro/operating-systems-sessions/tree/master"
+REPO_TREE_URL = "https://github.com/cs-pub-ro/software-security-and-privacy/tree/master"
 
 # A Markdown link target: the `](target)` part, with an optional title.
 LINK_PATTERN = re.compile(r"(?<=\]\()([^)\s]+)(?=(?:\s+\"[^\"]*\")?\))")
@@ -185,7 +185,7 @@ def rewrite_target(target, readme_dir, root_prefix="", view=None):
         return f"{REPO_BLOB_URL}/{relative}{separator}{fragment}"
 
     # A directory in the repository that is not a page -- excluded support code
-    # such as `bonus-printf/utils/printf`, or `content/` itself -- has nowhere
+    # such as a task's `utils/`, or `content/` itself -- has nowhere
     # on the site to point to, so it is sent to GitHub like a file is.
     if resolved.is_dir():
         relative = resolved.relative_to(REPO_ROOT).as_posix()

@@ -13,7 +13,7 @@
 
 set -u
 
-readonly LAST_SESSION=5
+readonly LAST_SESSION=14
 
 # Terminal colours, but only when the output is a terminal: piping the report
 # into a file or a pager should not fill it with escape sequences.
@@ -145,19 +145,8 @@ check_command() {
 	return 1
 }
 
-# `time` is a shell keyword as well as a program, and the sessions use the
-# program, so look for the file rather than asking the shell.
-check_time() {
-	if [[ -x /usr/bin/time ]]; then
-		report ok "/usr/bin/time" "$(version_of /usr/bin/time)"
-	else
-		report missing "/usr/bin/time" "not installed -- the shell built-in is not enough"
-		remember_missing required /usr/bin/time
-	fi
-}
-
-# The inline assembly of session 02 and the exploits of session 05 are written
-# for x86-64 Linux, and will not work anywhere else.
+# The exploitation sessions work on 32-bit x86 binaries, built and run on an
+# x86-64 machine, and will not work anywhere else.
 check_arch() {
 	local machine
 	machine=$(uname -m)
@@ -170,10 +159,11 @@ check_arch() {
 	fi
 }
 
-# Not every distribution ships the static libc, and session 01 links against
-# it. Finding out during the lab is a waste of the lab.
-check_static_libc() {
-	local source=${TMPDIR:-/tmp}/os-prereq-$$.c
+# The challenges are 32-bit binaries: building them needs the 32-bit C
+# library and the multilib compiler support, which no distribution installs
+# by default. Finding out during the lab is a waste of the lab.
+check_multilib() {
+	local source=${TMPDIR:-/tmp}/ssp-prereq-$$.c
 	local binary=${source%.c}
 
 	if ! command -v gcc >/dev/null 2>&1; then
@@ -181,11 +171,11 @@ check_static_libc() {
 	fi
 
 	printf 'int main(void) { return 0; }\n' >"$source"
-	if gcc -static -o "$binary" "$source" >/dev/null 2>&1; then
-		report ok "static libc" "gcc -static works"
+	if gcc -m32 -o "$binary" "$source" >/dev/null 2>&1 && "$binary"; then
+		report ok "32-bit support" "gcc -m32 builds and runs"
 	else
-		report missing "static libc" "gcc -static fails -- the static C library is missing"
-		remember_missing required "static libc"
+		report missing "32-bit support" "gcc -m32 fails -- the 32-bit C library is missing"
+		remember_missing required "32-bit support"
 	fi
 	rm -f "$source" "$binary"
 }
@@ -206,53 +196,120 @@ check_pwntools() {
 	fi
 }
 
+# Docker is useless when the daemon is not reachable by this user.
+check_docker() {
+	if ! check_command docker; then
+		return
+	fi
+
+	if docker info >/dev/null 2>&1; then
+		report ok "docker daemon" "reachable"
+	else
+		report missing "docker daemon" "not reachable -- start it, or add yourself to the docker group"
+		remember_missing required "docker daemon"
+	fi
+}
+
 check_common() {
 	heading "Common (every session)"
 	check_command gcc
 	check_command make
+	check_command python3
+	check_command nc
+	check_command ssh
 }
 
 check_session_01() {
-	heading "Session 01 -- The Software Stack"
-	check_command ar
-	check_command nm
-	check_command objdump
-	check_command size
-	check_command ldd
-	check_command strace
-	check_time
-	check_static_libc
+	heading "Session 01 -- Introduction to Systems Security"
+	check_command checksec
+	check_command strings
+	check_command file
 }
 
 check_session_02() {
-	heading "Session 02 -- The Operating System Interface"
-	check_arch
-	check_command strace
+	heading "Session 02 -- Authentication"
+	check_command john optional "needed by the password-breaking task"
 }
 
 check_session_03() {
-	heading "Session 03 -- Memory Operations"
-	check_command valgrind
+	heading "Session 03 -- Exploiting Applications"
+	check_arch
+	check_multilib
+	check_command gdb
+	check_command objdump
+	check_pwntools
 }
 
 check_session_04() {
-	heading "Session 04 -- Memory Debugging"
-	check_command gdb
-	check_command valgrind
-	check_command objdump
-	check_command nm
-	check_command readelf
-	check_command python3 optional "needed by the binary-only bonus task"
+	heading "Session 04 -- Exploiting Web Applications and the OS"
+	check_command curl
+	check_command dirb
 }
 
 check_session_05() {
-	heading "Session 05 -- Memory Security"
+	heading "Session 05 -- Defense Mechanisms"
 	check_arch
+	check_multilib
 	check_command gdb
-	check_command objdump
-	check_command python3
+	check_command checksec
 	check_pwntools
-	check_command nc optional "needed to reach a challenge deployed over the network"
+}
+
+check_session_06() {
+	heading "Session 06 -- Modern Exploitation"
+	check_arch
+	check_multilib
+	check_command gdb
+	check_command ROPgadget
+	check_pwntools
+}
+
+check_session_07() {
+	heading "Session 07 -- Application Confinement"
+	check_arch
+	check_multilib
+	check_command strace
+	check_command aa-status optional "needed by the AppArmor task"
+}
+
+check_session_08() {
+	heading "Session 08 -- System Isolation"
+	check_docker
+}
+
+check_session_09() {
+	heading "Session 09 -- Software Security Assurance"
+	check_command cppcheck
+	check_command flawfinder
+	check_command clang-tidy
+}
+
+check_session_10() {
+	heading "Session 10 -- Supply Chain Security"
+	check_docker
+	check_command cosign
+}
+
+check_session_11() {
+	heading "Session 11 -- Fuzzing"
+	check_command clang
+	check_command afl-fuzz
+	check_docker
+}
+
+check_session_12() {
+	heading "Session 12 -- Information Flow"
+}
+
+check_session_13() {
+	heading "Session 13 -- Software Verification"
+	check_command gdb
+}
+
+check_session_14() {
+	heading "Session 14 -- System Auditing"
+	check_docker
+	check_command nmap
 }
 
 # The package that provides a tool, for the package manager this machine uses.
@@ -261,17 +318,8 @@ package_for() {
 	local manager=$1 tool=$2
 
 	case "$tool" in
-	ar | nm | objdump | size | readelf)
+	objdump | strings)
 		echo binutils
-		;;
-	ldd)
-		case "$manager" in
-		apt-get) echo libc-bin ;;
-		*) echo glibc ;;
-		esac
-		;;
-	/usr/bin/time)
-		echo time
 		;;
 	nc)
 		case "$manager" in
@@ -280,12 +328,39 @@ package_for() {
 		*) echo nmap-ncat ;;
 		esac
 		;;
-	"static libc")
+	ssh)
 		case "$manager" in
-		apt-get) echo libc6-dev ;;
-		pacman) echo glibc ;;
-		*) echo glibc-static ;;
+		apt-get) echo openssh-client ;;
+		*) echo openssh ;;
 		esac
+		;;
+	"32-bit support")
+		case "$manager" in
+		apt-get) echo gcc-multilib ;;
+		pacman) echo lib32-glibc ;;
+		*) echo glibc-devel.i686 ;;
+		esac
+		;;
+	afl-fuzz)
+		case "$manager" in
+		apt-get) echo afl++ ;;
+		*) echo aflplusplus ;;
+		esac
+		;;
+	aa-status)
+		echo apparmor-utils
+		;;
+	clang-tidy)
+		case "$manager" in
+		apt-get) echo clang-tidy ;;
+		*) echo clang-tools-extra ;;
+		esac
+		;;
+	ROPgadget)
+		echo ropgadget
+		;;
+	docker)
+		echo docker.io
 		;;
 	*)
 		echo "$tool"
@@ -325,9 +400,10 @@ suggest_install() {
 	for tool in "$@"; do
 		case "$tool" in
 		# Nothing to install: pwntools is a Python library, whose distribution
-		# package is usually far behind, and an architecture is not a package.
+		# package is usually far behind; cosign is a release binary; an
+		# architecture is not a package, and neither is a stopped daemon.
 		# The empty case is an empty list of optional tools.
-		"" | pwntools | "x86-64 machine")
+		"" | pwntools | cosign | "x86-64 machine" | "docker daemon")
 			continue
 			;;
 		esac
@@ -347,23 +423,22 @@ suggest_install() {
 }
 
 main() {
-	say "${BOLD}Operating Systems -- prerequisites${RESET}"
+	local n
 
+	say "${BOLD}Software Security and Privacy -- prerequisites${RESET}"
+
+	check_common
 	if [[ $session == all ]]; then
-		check_common
-		check_session_01
-		check_session_02
-		check_session_03
-		check_session_04
-		check_session_05
+		for ((n = 1; n <= LAST_SESSION; n++)); do
+			"check_session_$(printf '%02d' "$n")"
+		done
 	else
-		check_common
 		"check_session_$(printf '%02d' "$session")"
 	fi
 
 	echo ""
 	if ((${#missing_optional[@]})); then
-		echo "${YELLOW}Missing, needed only by bonus tasks:${RESET} $(join_list "${missing_optional[@]}")"
+		echo "${YELLOW}Missing, needed only by optional tasks:${RESET} $(join_list "${missing_optional[@]}")"
 	fi
 
 	if ((${#missing[@]} == 0)); then
@@ -385,15 +460,22 @@ main() {
 	if [[ " ${missing[*]} " == *" pwntools "* ]] ||
 		[[ " ${missing_optional[*]-} " == *" pwntools "* ]]; then
 		echo ""
-		echo "pwntools is a Python library, and can be install with pipx:"
+		echo "pwntools is a Python library, and can be installed with pipx:"
 		echo ""
 		echo "    pipx install pwntools"
 	fi
 
+	if [[ " ${missing[*]} " == *" cosign "* ]]; then
+		echo ""
+		echo "cosign is distributed as a release binary:"
+		echo ""
+		echo "    https://docs.sigstore.dev/cosign/system_config/installation/"
+	fi
+
 	if [[ " ${missing[*]} " == *" x86-64 machine "* ]]; then
 		echo ""
-		echo "Sessions 02 and 05 need an x86-64 machine: use a virtual machine,"
-		echo "a container, or one of the faculty's lab machines."
+		echo "The exploitation sessions need an x86-64 machine: use the class"
+		echo "virtual machine, or one of the faculty's lab machines."
 	fi
 
 	exit 1
