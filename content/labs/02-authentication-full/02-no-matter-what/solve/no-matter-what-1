@@ -1,0 +1,41 @@
+# Use ssh to connect to ctf@CTF_HOST. Use CTF_PASSWORD as the account
+# password. The task is to get the flag. The only info that you have is that
+# the flag is split and scattered inside the OS.
+#
+# First, we need to see what commands run with elevated priviledges:
+# 	sudo -l
+# This yields:
+# 	User ctf may run the following commands on ctf-08:
+#    		(root) NOPASSWD: /usr/bin/sha256sum
+#
+# Use the command:
+# ctf@owasp-ctf-08:~$ find / -mtime -360 2> /dev/null | grep /usr/local
+#
+# Keep in mind that `-mtime` takes days as input while `-mmin` takes minutes
+# as input. The values need to be adjusted so that students will find the files.
+
+#
+# And you get:
+#	/usr/local
+#	/usr/local/F
+#	/usr/local/T
+#	/usr/local/O
+#	/usr/local/P
+#	/usr/local/S
+#	/usr/local/W
+#	/usr/local/C
+#	/usr/local/A
+#
+# The order of the files is OWASPCTF. Use sha256sum on each of the files:
+#	ca15ebc05a3c5c1348753b209c4452c54022dbe565d9943b11c795e3af9eb0b0  /usr/local/O
+#	3cee866e173ffa8e53b92e561b7f93eb72a16dd62b73c8c6bc81814748a0cc4c  /usr/local/W
+#	420aa7a6632049fa1022755b2d02f8b8e36a1a359b1de06027068e92274d2633  /usr/local/A
+#	7ee3dcd7efbbf5330eff5eeff4afb45a15819de22990655d31997e0da960cd50  /usr/local/S
+#	dd70b2644358a5126df85404065475c7a0754e0b0c0fd2a9ac9bc6dc4d136232  /usr/local/P
+#	b9776d7ddf459c9ad5b0e1d6ac61e27befb5e99fd62446677600d7cacef544d0  /usr/local/C
+#	8a6c3e05e75e18344e66721ec285201b2872b4f394b6aa71c2d970715dd18c3d  /usr/local/T
+# 	e5a08ffd3d7509c66e79642edbdcd8ed889269a7164c718afca541304188423d  /usr/local/F
+#
+# Head over to crackstation.net and crack the hashes and concatenate them. The
+# flag will be:
+# 	Fortune_favors_the_bold

