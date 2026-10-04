@@ -1,0 +1,25 @@
+---
+title: "System Isolation"
+subtitle: "Software Security and Privacy --- Lecture 08 --- Full"
+format:
+  revealjs:
+    theme: default
+    slide-number: c/t
+    slide-level: 2
+    width: 1280
+    height: 720
+    embed-resources: true
+    link-external-newwindow: true
+  beamer:
+    aspectratio: 169
+    slide-level: 2
+---
+
+# System Isolation
+
+## Plan
+
+This is the thin, in-room deck: diagrams, demo results, and the questions to put to the room.
+
+The detailed slides are ported from the previous edition's Beamer deck
+(`sis-internal/08-system-isolation/slides/slides.tex`); see the full deck.

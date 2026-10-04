@@ -1,0 +1,25 @@
+---
+title: "Software Security Assurance"
+subtitle: "Software Security and Privacy --- Lecture 09 --- Full"
+format:
+  revealjs:
+    theme: default
+    slide-number: c/t
+    slide-level: 2
+    width: 1280
+    height: 720
+    embed-resources: true
+    link-external-newwindow: true
+  beamer:
+    aspectratio: 169
+    slide-level: 2
+---
+
+# Software Security Assurance
+
+## Plan
+
+This is the thin, in-room deck: diagrams, demo results, and the questions to put to the room.
+
+The detailed slides are ported from the previous edition's Beamer deck
+(`sis-internal/09-software-security-assurance/slides/slides.tex`); see the full deck.
