@@ -1,0 +1,4 @@
+build/vuln
+build/*.o
+publish/vuln
+publish/*.zip
