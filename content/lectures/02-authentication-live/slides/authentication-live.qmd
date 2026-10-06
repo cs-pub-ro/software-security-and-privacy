@@ -19,7 +19,70 @@ format:
 
 ## Plan
 
-This is the thin, in-room deck: diagrams, demo results, and the questions to put to the room.
+Who are you, and how does a system check it?
 
-The detailed slides are ported from the previous edition's Beamer deck
-(`sis-internal/02-authentication/slides/slides.tex`); see the full deck.
+* the model: subject, credentials, reference monitor, resource
+* credentials: who you are, what you have, what you know
+* storing passwords: plaintext, hashed, salted
+* attacks: rainbow tables, dictionary, hybrid, side channels
+
+## Access Control Terms
+
+> **TODO (figure):** diagram of authentication vs. authorization vs. access control (subject, reference monitor, resource, credentials database), from slides.tex ("Model").
+
+Question for the room: where does authentication end and authorization begin?
+
+## Three Kinds of Credentials
+
+* who you are
+* what you have
+* what you know
+
+Question for the room: name one example of each, and one way to defeat it.
+
+## Password Cracking Time
+
+> **TODO (figure):** time needed to crack passwords by length and charset, from slides.tex (img/password-cracking-time.png).
+
+Question for the room: why does length beat complexity?
+
+## Passphrase vs. Password
+
+> **TODO (figure):** xkcd 936, password strength, from slides.tex (img/password-strength.png).
+
+## Scenario 1: Plaintext
+
+* the attacker reads the database and is done
+* what should the defender do?
+
+## Scenario 2: Hashed Passwords
+
+> **TODO (figure):** rainbow table chains, from slides.tex (img/rainbow-table.png).
+
+Question for the room: why is a fast hash a bad idea for passwords?
+
+## Scenario 3: Salted Hashes
+
+* salt: one per password, concatenated before hashing
+* what is left for the attacker: dictionary, hybrid, brute force, side channels
+
+Demo result: crack a salted hash with a word list and mutation rules.
+
+## Hybrid Attack
+
+* word list plus mutations: `i` to `1`, `e` to `3`, case changes, `123` or `!` appended
+* Question for the room: does `P@ssw0rd!` help?
+
+## Side Channels
+
+> **TODO (figure):** xkcd 538, security (the wrench), from slides.tex (img/security-wrench.png).
+
+Question for the room: which side channel would you try first?
+
+## Recommendations
+
+* no unsafe hashes (MD5, SHA1)
+* passphrase over complex password
+* use and allow password managers
+* use 2FA / 3FA
+* secure side channels
