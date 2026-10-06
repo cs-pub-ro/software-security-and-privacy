@@ -23,3 +23,286 @@ This is the thin, in-room deck: diagrams, demo results, and the questions to put
 
 The detailed slides are ported from the previous edition's Beamer deck
 (`sis-internal/08-system-isolation/slides/slides.tex`); see the full deck.
+
+# System Isolation
+
+## Papers
+
+* [Application and analysis of the virtual machine approach to information system security and isolation](https://dl.acm.org/doi/abs/10.1145/800122.803961)
+* [My VM is Lighter (and Safer) than your Container](https://dl.acm.org/doi/10.1145/3132747.3132763)
+
+## Apple FaceID, TouchID, SEP
+
+* Application Processor (AP) versus Secure Enclave Processor (SEP).
+* The *Secure Enclave* is similar to Arm TrustZone.
+* It is hardware-based isolation.
+* Biometrics and keys are only handled by the SEP.
+* There is a specific interface between the AP and the SEP.
+
+## Apple SEP (2)
+
+> **TODO (figure):** Apple Secure Enclave Processor architecture (source: support.apple.com security guide) — from slides.tex
+
+# Confinement
+
+## Run Untrusted Code
+
+* Apps, plugins, codecs.
+* Software not written by you, not verified.
+* Damage control.
+* Kill it if it misbehaves.
+* Ensure a misbehaving app does not alter the system.
+
+## Confinement Types
+
+* hardware: different hardware systems, air gap
+* virtual machine: isolate OSes in a single machine
+* process: sandboxing, jailing
+* application: software fault isolation
+
+## Software Fault Isolation
+
+* Isolate components in their *fault domain*.
+* The components are part of the same address space.
+* It requires some OS or hardware support to separate addresses.
+* Mogoșanu et al.: MicroStache: A Lightweight Execution Context for In-Process Safe Region Isolation.
+
+## Reference Monitor
+
+* It mediates requests, implements policy, and enforces isolation and confinement.
+* It must always be invoked.
+* It must be tamperproof.
+* It must be validated.
+
+## Reference Monitor (2)
+
+> **TODO (figure):** reference monitor mediating access requests (source: Secure Information Flow in Mobile Bootstrapping Process) — from slides.tex
+
+# System Isolation. Trusted Computing Base
+
+## Principles and Goals
+
+* least privilege
+* privilege separation
+* safely execute a non-trusted program
+* harden a system that runs programs that increase its attack surface
+* isolate what can happen if a vulnerability is exploited
+
+## Mechanism and Policy
+
+* mechanism: how goals are achieved
+* policy: rules that achieve isolation goals
+* mechanism: mostly implementation
+* policy: mostly configuration
+
+## Mechanisms and Policies
+
+> **TODO (figure):** isolation mechanisms and policies (source: Rui Shu et al., A Study of Security Isolation Techniques) — from slides.tex
+
+## System Isolation
+
+* Isolate an app, a group of apps, or an entire OS.
+* Prevent it from hurting other components.
+* Mechanisms: virtual machines, library OS, containers.
+* We consider sandboxing, mandatory access control, and software fault isolation (SFI) to be app-centric mechanisms (not system-centric).
+
+## Trusted Computing Base (TCB)
+
+* The TCB holds the system components trusted by the reference monitor.
+* These are the critical parts of the system.
+* If exploited, they might jeopardize the security of the entire system.
+* The TCB is aimed to be small (reduced attack surface).
+
+# Hardware Components
+
+## Hardware Protection
+
+* Hardware provides security isolation for shared resources.
+* Passive components: TPM (*Trusted Platform Module*).
+* Active components: control critical system operations.
+
+## Trusted Execution Environment (TEE)
+
+* A TEE is a secure area on the CPU.
+* The code that runs in it is secure: confidentiality and integrity.
+* It runs in parallel with the OS.
+
+## TEE (2)
+
+> **TODO (figure):** normal world versus secure world (source: infosecinstitute, understanding iOS security) — from slides.tex
+
+## Intel TXT
+
+* Trusted eXecution Technology.
+* It attests the platform and operating system.
+* It uses the TPM and cryptography to validate and measure code that can be trusted.
+
+## Arm TrustZone
+
+* Arm TZ.
+* There are two worlds: secure and non-secure.
+* The rich OS runs in the non-secure world, security-specialized code in the secure world.
+* The aim is to reduce the attack surface.
+
+## Arm TrustZone (2)
+
+> **TODO (figure):** Arm TrustZone secure and non-secure worlds (source: Quarkslab) — from slides.tex
+
+## Intel SGX
+
+* Software Guard eXtensions.
+* Specialized instructions.
+* User-level code allocates enclaves.
+* Enclaves are protected from higher privilege level components.
+* Use case: secure remote computation.
+* Weakness: cache and DRAM side-channel attacks.
+
+## Secure Enclave
+
+* It is found on Apple iOS and watchOS devices.
+* Fingerprint data is completely walled off from the OS.
+* It uses a SEP (*Secure Enclave Processor*) and a SEP OS.
+* It is based on Arm TZ.
+
+# Virtualization
+
+## Virtualization
+
+> **TODO (figure):** virtualization (source: Rui Shu et al., A Study of Security Isolation Techniques) — from slides.tex
+
+## Virtual Machine
+
+* A VM runs an isolated OS instance on top of a supervisor component (hypervisor).
+* The supervisor is the hypervisor or VMM (*Virtual Machine Monitor*).
+* Malware in a VM cannot infect the host OS or other VMs.
+
+## Covert Channels
+
+* Side channels.
+* They use CPU, memory, and cache information from one VM to determine what is happening on the other VM.
+
+## VMM Detection
+
+* VM platforms emulate simple hardware.
+* The VMM introduces time latency variances.
+* The VMM shares the TLB (*Translation Lookaside Buffers*).
+
+## Type-1 vs Type-2
+
+* Type-2: additional flexibility.
+* Type-1: reduced TCB.
+* Type-1: efficiency.
+
+# Library OS
+
+## Library OS
+
+> **TODO (figure):** library OS (source: Rui Shu et al., A Study of Security Isolation Techniques) — from slides.tex
+
+## Library OS Characteristics
+
+* Also called a unikernel.
+* OS functionality is provided as user library or libraries.
+* It is a single-image app that can run on top of a hypervisor or hardware.
+* There is no need for user-level/kernel-level transitions.
+* It is difficult to run multiple instances: use a hypervisor.
+* It reduces the attack surface.
+
+## Implementations
+
+* ClickOS: virtualized software middle box.
+* LKL (*Linux Kernel Library*).
+* [My VM is Lighter (and Safer) than Your Container](http://cnp.neclab.eu/projects/lightvm/lightvm.pdf)
+* [Unikernel projects list](https://awesomeopensource.com/projects/unikernel)
+
+## Unikraft
+
+> **TODO (figure):** Unikraft build process (source: unikraft.org docs) — from slides.tex
+
+# Confidential Computing
+
+## Cloud Computing
+
+> **TODO (figure):** architecture of cloud computing (source: infosectrain) — from slides.tex
+
+## Security of Cloud Computing
+
+* Isolate the VM from the host.
+* Prevent the VM from tampering with the host.
+* What about the other way around?
+
+## Confidential (Cloud) Computing
+
+> **TODO (figure):** confidential computing (img/confidential-computing.png) — from slides.tex
+
+## Arm CCA
+
+> **TODO (figure):** Arm CCA architecture (img/arm-cca-arch.png) — from slides.tex
+
+## Arm CCA Technologies
+
+> **TODO (figure):** Arm CCA technologies (img/arm-cca-tech.png) — from slides.tex
+
+## AMD SEV
+
+> **TODO (figure):** AMD SEV architecture (img/amd-sev-arch.png) — from slides.tex
+
+# Containerization
+
+## Containers
+
+> **TODO (figure):** containers (source: Rui Shu et al., A Study of Security Isolation Techniques) — from slides.tex
+
+## Container
+
+* A container is a restricted environment.
+* It holds applications or application groups.
+* Sandboxing only provides a certain set of privileges.
+* Containers provide a dedicated isolated environment.
+
+## LXC/Docker
+
+* LXC: Linux Containers.
+* They use Linux namespaces: PID, network, IPC, mount, user, UTS.
+* Linux control groups (cgroups) limit, account, and isolate resource usage.
+
+## OS vs. Application Containers
+
+* OS containers provide an entire distro, similar to a virtual machine (LXC).
+* Application containers provide an environment for running a single service (Docker).
+
+## Containers vs. hypervisors
+
+* Containers are faster to create, deploy, and run.
+* Containers are lighter (reduced overhead).
+* Hypervisors are more secure: reduced TCB, no common kernel.
+
+# Summary
+
+## Keywords
+
+* confinement
+* isolation
+* resource monitor
+* TCB
+* TEE
+* Intel TXT
+* Intel SGX
+* Arm TZ
+* VMM
+* hypervisor
+* library OS
+* unikernel
+* Arm CCA
+* AMD SEV
+* container
+* LXC
+* Docker
+
+## Resources
+
+* [A Study of Security Isolation Techniques](https://dl.acm.org/citation.cfm?id=2988545)
+* [CS155: Computer and Network Security: Isolation and Sandboxing](https://cs155.stanford.edu/syllabus.html)
+* [Operating system containers vs. application containers](https://blog.risingstack.com/operating-system-containers-vs-application-containers/)
+* [Arm CCA](https://www.arm.com/architecture/security-features/arm-confidential-compute-architecture)
+* [AMD SEV](https://www.amd.com/en/developer/sev.html)

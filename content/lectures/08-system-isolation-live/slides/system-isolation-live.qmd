@@ -23,3 +23,56 @@ This is the thin, in-room deck: diagrams, demo results, and the questions to put
 
 The detailed slides are ported from the previous edition's Beamer deck
 (`sis-internal/08-system-isolation/slides/slides.tex`); see the full deck.
+
+## Confinement types
+
+* hardware, virtual machine, process, application (SFI)
+* question: which one would you use to run an untrusted codec?
+
+## Reference monitor
+
+> **TODO (figure):** reference monitor mediating access requests — from slides.tex
+
+Question: why must it always be invoked, be tamperproof and be validated?
+
+## Mechanism and policy
+
+> **TODO (figure):** isolation mechanisms and policies — from slides.tex
+
+Question: which part is implementation, and which part is configuration?
+
+## Trusted Execution Environment
+
+> **TODO (figure):** normal world versus secure world, Arm TrustZone — from slides.tex
+
+Question: why keep security-specialized code out of the rich OS?
+
+## Apple SEP
+
+> **TODO (figure):** Apple Secure Enclave Processor architecture — from slides.tex
+
+Question: why are biometrics and keys handled only by the SEP?
+
+## Virtualization
+
+> **TODO (figure):** virtualization and hypervisor — from slides.tex
+
+Question: what can a side channel between two VMs reveal?
+
+## Library OS and unikernels
+
+> **TODO (figure):** library OS and Unikraft build process — from slides.tex
+
+Question: why does dropping the user/kernel transition reduce the attack surface?
+
+## Confidential computing
+
+> **TODO (figure):** confidential computing, Arm CCA, AMD SEV — from slides.tex
+
+Question: the VM is isolated from the host; what about the host reading the VM?
+
+## Containers
+
+> **TODO (figure):** containers (namespaces and cgroups) — from slides.tex
+
+Question: containers or hypervisors, which is more secure, and why?
