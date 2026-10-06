@@ -38,5 +38,12 @@ int main(void)
   swap_xor(&a, &b);
   printf("After swap_xor: a = %lx, b = %lx\n", a, b);
 
+  /* The equational proof assumes a and b do not alias. When they do, the XOR
+   * swap destroys the value: *a = *a ^ *a = 0. This is the input that breaks it. */
+  long c = 0x1234;
+  printf("Aliasing: c = %lx\n", c);
+  swap_xor(&c, &c);
+  printf("After swap_xor(&c, &c): c = %lx\n", c);
+
   return 0;
 }
