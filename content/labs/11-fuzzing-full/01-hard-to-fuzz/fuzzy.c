@@ -24,9 +24,12 @@ unsigned short CheckByte(unsigned char *ptr, uint32_t len) {
 
 int checkcrc(uint32_t size, const uint8_t *data) {
 	char buf[MAX_BUF];
+	buf[0] = 0;
 	if (size < 20) return -1;
 	if (CheckByte((unsigned char *)data, size) == 0xAD6D) {
 		strcpy(buf, (char *)data);
 	}
-	return 0;
+	/* Return a byte of buf so the copy is observed: otherwise an optimising
+	 * compiler drops the dead store and the overflow never happens. */
+	return buf[0];
 }
