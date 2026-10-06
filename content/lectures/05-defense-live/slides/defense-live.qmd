@@ -17,9 +17,59 @@ format:
 
 # Defense and Mitigation
 
-## Plan
+## Attack and Defense
 
-This is the thin, in-room deck: diagrams, demo results, and the questions to put to the room.
+* the attacker needs one hole; the defender must cover all of them
+* every defense has an overhead
+* question: where does the cost of defense go, and who pays it?
 
-The detailed slides are ported from the previous edition's Beamer deck
-(`sis-internal/05-defense/slides/slides.tex`); see the full deck.
+## The Defensive Steps
+
+* prevent existence of bugs: development, before deployment
+* prevent exploitation: during deployment
+* confine and react: when the attack happens
+
+> **TODO (figure):** timeline of defensive steps (development, before deployment, deployment: prevent, react, confine), from slides.tex (no source image)
+
+## Question: Defense in Depth
+
+Your program has a stack buffer overflow.
+Which mitigations stand between the attacker and a shell?
+What does each one cost?
+
+## Stack Canary
+
+> **TODO (figure):** stack frame with a canary between the buffer and the return address, from slides.tex (no source image)
+
+* how can the attacker defeat it?
+* leak the canary and overwrite it with itself
+
+## DEP and ASLR
+
+* DEP: writable memory is not executable
+* ASLR: libraries are loaded at random addresses
+* question: how do you bypass each? (`mprotect()`, information leak)
+
+## CFI and SafeStack
+
+* CFI: keep the control flow graph unchanged
+* SafeStack: code pointers live on a separate stack
+* question: why is fine-grained CFI expensive?
+
+## Web Defense
+
+* HTTPS and downgrade attacks
+* secure headers: HSTS, CSP, X-Frame-Options
+* sanitize queries, twice
+
+## OS Defense
+
+* MAC: SELinux, AppArmor, SMACK, TOMOYO
+* seccomp
+* kernel hardening: KASLR, KASAN, UBSAN
+
+## Takeaways
+
+* prevent existence, prevent exploitation, confine, react
+* input is the root of all evil
+* look out for control flow hijacks, information leaks, malformed input
