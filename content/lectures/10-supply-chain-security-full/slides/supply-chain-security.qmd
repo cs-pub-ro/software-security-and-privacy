@@ -15,11 +15,343 @@ format:
     slide-level: 2
 ---
 
-# Software Supply Chain Security
+# Introduction
 
-## Plan
+## The Modern Software Ecosystem
 
-This is the thin, in-room deck: diagrams, demo results, and the questions to put to the room.
+* Modern software is rarely written from scratch.
+* It is **assembled** from open source libraries, frameworks, and containers.
+* **Statistic:** 70-90% of modern application code consists of open source components.
+* **The challenge:** you inherit the security posture of your dependencies (and their dependencies).
+* "It's turtles all the way down."
 
-The detailed slides are ported from the previous edition's Beamer deck
-(`sis-internal/09-supply-chain-security/slides/slides.tex`); see the full deck.
+## What is the Software Supply Chain?
+
+* Anything that goes into your software (code, binaries, libraries).
+* Who wrote it?
+* When was it contributed?
+* How was it reviewed?
+* How was it built?
+* How is it delivered?
+
+**Supply Chain Security** ensures the integrity and provenance of all these artifacts throughout the lifecycle.
+
+## Visualizing the Supply Chain
+
+> **TODO (figure):** supply chain pipeline Developer, Source Control (Git), Build System (CI/CD), Artifact Registry, Production, with attack vectors: compromised device, malicious commit / tag, compromised build environment, typosquatting — from slides.tex
+
+Every link in this chain is a potential attack vector.
+
+# Threat Landscape and Attacks
+
+## Attack Taxonomy
+
+1. **Upstream attacks:** malicious code injected into open source dependencies.
+    * *Typosquatting:* `request` vs `requests`.
+    * *Dependency confusion:* internal vs public package names.
+    * *Maintainer compromise:* stolen credentials.
+1. **Midstream attacks:** compromising the build pipeline.
+    * *SolarWinds:* injecting malware during the build process.
+    * *Codecov:* modifying the uploader script in CI.
+1. **Downstream attacks:** compromising update mechanisms or signing keys.
+
+## Case Study: SolarWinds (Sunburst)
+
+* **Target:** Orion Network Management System.
+* **Method:** attackers compromised the build system.
+* **Mechanism:** the build server was patched to include a malicious DLL (`SolarWinds.Orion.Core.BusinessLayer.dll`) into legitimate updates.
+* **Impact:** thousands of organizations, including US government agencies, installed the signed but backdoored update.
+
+## Case Study: SolarWinds (Sunburst) (2)
+
+> **TODO (figure):** Source Code, Malware Injection, Build Process, Signed Update, Customer — from slides.tex
+
+## Case Study: Log4Shell (Log4j)
+
+* **Vulnerability:** JNDI injection in `log4j-core`.
+* **Significance:**
+    * Ubiquity: used in millions of Java applications.
+    * Deep dependency: often included transitively (Dep A → Dep B → Log4j).
+* **Lesson:** you need to know what you are running.
+* **Challenge:** how do we find every instance of Log4j deep in our dependency graphs?
+
+## Dependency Confusion
+
+* Many companies use internal package registries mixed with public ones (e.g., PyPI, npm).
+* **Attack:** the attacker registers a public package with the *same name* as an internal private package but a *higher version number*.
+* **Result:** the package manager (pip, npm) defaults to the higher version from the public repository.
+* **Mitigation:** scoped packages (`@myorg/pkg`), strict registry configuration.
+
+# Frameworks and Standards
+
+## SLSA (Supply-chain Levels for Software Artifacts)
+
+* Pronounced "salsa".
+* A security framework for ensuring artifact integrity.
+* **Goal:** prevent tampering, improve integrity, and secure packages.
+
+## SLSA Levels
+
+* **Level 1:** the build process is scripted and version controlled.
+  Provenance exists.
+* **Level 2:** the build runs on a dedicated build service.
+  Provenance is authenticated.
+* **Level 3:** the build platform is hardened.
+  Provenance is non-falsifiable.
+
+## NIST SSDF (Secure Software Development Framework)
+
+* **SP 800-218**.
+* A set of fundamental, sound, and secure software development practices.
+* Four groups:
+    1. **Prepare the Organization (PO):** people, processes, technology.
+    1. **Protect the Software (PS):** tamper protection.
+    1. **Produce Well-Secured Software (PW):** minimal vulnerabilities.
+    1. **Respond to Vulnerabilities (RV):** remediation.
+* Often a requirement for US Federal Government software vendors (EO 14028).
+
+# SBOM: Software Bill of Materials
+
+## What is an SBOM?
+
+* A nested inventory (a list of ingredients) of the components that make up software.
+* It contains:
+    * Library names
+    * Versions
+    * License information
+    * Checksums / hashes
+    * Dependencies of dependencies
+* **Analogy:** the nutrition label on food packaging.
+
+## SBOM Formats
+
+* **SPDX (Software Package Data Exchange):**
+    * ISO/IEC 5962:2021 standard.
+    * Initially a heavy focus on license compliance, now security too.
+    * Linux Foundation.
+* **CycloneDX:**
+    * OWASP flagship project.
+    * Designed specifically for security contexts / application security.
+    * Lightweight, typically JSON/XML.
+
+## Tool: Syft (Generation)
+
+* CLI tool and library for generating SBOMs from container images and filesystems.
+* Developed by Anchore.
+* It can detect OS packages (APK, DEB, RPM) and language packages (gems, pip, npm, jars).
+
+```console
+# Generate SBOM for a docker image
+$ syft packages docker:alpine:latest -o cyclonedx-json > sbom.json
+
+# Scan a local directory
+$ syft packages dir:. -o spdx
+```
+
+## Tool: Grype (Vulnerability Scanning)
+
+* A vulnerability scanner for container images and filesystems.
+* It works best when paired with Syft (scan the SBOM, not just the image).
+* It outputs CVEs, severity, and fix versions.
+
+```console
+# Scan an SBOM generated by Syft
+$ grype sbom:sbom.json
+
+# Scan an image directly
+$ grype docker:nginx:latest
+```
+
+## Tool: Trivy (Comprehensive Scanner)
+
+* An all-in-one security scanner (filesystem, Git, container, Kubernetes).
+* Very popular in CI/CD pipelines due to ease of use.
+
+```console
+# Scan a container image
+$ trivy image python:3.4-alpine
+
+# Scan a filesystem for vulnerabilities & misconfigs
+$ trivy fs --scanners vuln,misconfig .
+
+# Scan a git repository
+$ trivy repo https://github.com/knqyf263/trivy-ci-test
+```
+
+## Automated Dependency Management (GitHub Dependabot)
+
+* **What is it?**
+  An automated bot that scans your dependency files for outdated or insecure requirements.
+* **How it works (behind the scenes):**
+    1. **Detection:** parses manifest files (e.g., `package.json`, `go.mod`) and checks against the *GitHub Advisory Database*.
+    1. **Resolution:** determines the "secure" version that is compatible with your version constraints.
+    1. **Action:** creates a new branch, updates the manifest / lock file, and opens a Pull Request (PR).
+    1. **CI/CD:** triggers your CI pipeline to ensure the update does not break tests.
+* **Impact:** significantly reduces the "Time to Remediate" for known CVEs.
+
+## The Problem of Noise: VEX
+
+* Scanners (like Grype) find *potential* vulnerabilities based on version matching.
+* **Reality:** is the vulnerable function actually called?
+  Is it reachable?
+* **VEX (Vulnerability Exploitability eXchange):**
+    * A machine-readable statement claiming whether a product is affected by a vulnerability.
+    * Statuses: *Not Affected*, *Affected*, *Fixed*, *Under Investigation*.
+* It allows vendors to suppress false positives in scanners.
+
+## Example: CycloneDX SBOM (JSON)
+
+`sbom.json` (snippet):
+
+```json
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.4",
+  "components": [
+    {
+      "type": "library",
+      "name": "requests",
+      "version": "2.25.1",
+      "purl": "pkg:pypi/requests@2.25.1",
+      "licenses": [ { "license": { "id": "Apache-2.0" } } ]
+    }
+  ]
+}
+```
+
+## Example: VEX Statement
+
+`vex.json` (snippet):
+
+```json
+{
+  "statements": [
+    {
+      "vulnerability": "CVE-2021-44228",
+      "status": "not_affected",
+      "justification": "code_not_reachable",
+      "impact": "Log4j is used only for testing, not in prod.",
+      "products": [ "pkg:docker/myapp@v1.0.0" ]
+    }
+  ]
+}
+```
+
+# Integrity and Signing (Cosign)
+
+## The Signing Problem
+
+* Historically, signing software (PGP) is hard.
+* Key management is painful (rotation, storage, revocation).
+* Developers lose keys or commit them to Git.
+* **Result:** nobody signs artifacts, or nobody verifies signatures.
+
+## Sigstore and Cosign
+
+* **Sigstore:** a project to make signing easy and transparent.
+* **Cosign:** a CLI tool to sign containers and blobs.
+
+## Keyless Signing (The Magic)
+
+Instead of managing long-lived keys:
+
+1. Authenticate via OIDC (Google, GitHub, Microsoft).
+1. Generate ephemeral keys.
+1. Sign the artifact with the ephemeral key.
+1. Record the signature and OIDC identity in a public **Transparency Log (Rekor)**.
+1. Discard the key.
+
+## Keyless Signing Flow
+
+> **TODO (figure):** keyless signing flow: Developer, OIDC Provider, Fulcio (CA), Rekor (Log); steps 1 login, 2 token, 3 send token + public key, 4 short-lived certificate, 5 sign artifact, 6 store entry — from slides.tex
+
+Verification checks the transparency log to prove that the certificate was valid at the time of signing.
+
+## Using Cosign: Signing a Container
+
+```console
+$ cosign sign --key cosign.key user/demo
+# Or Keyless (opens browser for OIDC)
+$ cosign sign user/demo
+```
+
+## Using Cosign: Verifying a Container
+
+```console
+$ cosign verify --key cosign.pub user/demo
+# Or Keyless
+$ cosign verify \
+    --certificate-identity=alice@example.com \
+    --certificate-oidc-issuer=https://accounts.google.com \
+    user/demo
+```
+
+# Build Security
+
+## Reproducible Builds
+
+* **Definition:** given the same source code, build environment, and instructions, any party can recreate bit-for-bit identical copies of all specified artifacts.
+* **Why?**
+    * It prevents the "compromised build server" attack (SolarWinds).
+    * If I build it and you build it, and the hashes match, we trust the compiler did not inject malware.
+* **Challenges:** timestamps, non-deterministic compiler outputs, file ordering.
+
+## Hermetic Builds
+
+* Builds that are isolated from the network and the host system.
+* **Rule:** all dependencies must be declared explicitly.
+* No fetching from the internet during `make`.
+* **Tools:** Bazel, Nix.
+* This ensures that the build is predictable and dependencies are pinned / hashed.
+
+## Attestations
+
+* An authenticated statement about a software artifact.
+* "I built this artifact from this Git commit on this runner."
+* It is stored in the container registry alongside the image.
+* **in-toto:** a framework to secure the integrity of the software supply chain.
+* It defines the layout of the pipeline and verifies that steps were carried out as intended.
+
+# Practical Scenarios
+
+## Demo Scenarios
+
+We will explore the following scenarios:
+
+1. **Vulnerability scanning:**
+    * Build a Docker image with known vulnerabilities (old Python).
+    * Generate an SBOM using `syft`.
+    * Scan the SBOM using `grype` and `trivy`.
+1. **Signing and verification:**
+    * Generate a key pair with `cosign`.
+    * Sign a local file / image.
+    * Verify the signature to ensure integrity.
+1. **Supply chain attack simulation:**
+    * Simulate a "typosquatting" attack in Python.
+    * Show how easy it is to install the wrong package.
+
+# Mitigation and Conclusion
+
+## Best Practices for Supply Chain Security
+
+1. **Know your dependencies:** generate SBOMs regularly.
+1. **Scan for vulnerabilities:** automate tools like Grype or Trivy in CI.
+1. **Pin dependencies:** use lock files (`package-lock.json`, `go.sum`).
+   Avoid generic versions like `latest` or `^1.2.3` in critical infrastructure.
+1. **Sign your artifacts:** use Cosign / Sigstore.
+1. **Secure the pipeline:** SLSA Level 2+ (hosted runners, ephemeral environments).
+1. **Monitor for new threats:** VEX and continuous scanning.
+
+## Future Trends
+
+* **Mandatory SBOMs:** government regulations (US EO 14028, EU Cyber Resilience Act).
+* **Chainguard / Distroless:** minimal images with zero known vulnerabilities.
+* **Graph-based analysis:** understanding "reachability" of vulnerabilities to reduce alert fatigue.
+* **Policy as code:** preventing unsigned or vulnerable images from running in Kubernetes (Kyverno, OPA Gatekeeper).
+
+## Summary
+
+* Supply chain security is about trust in the entire lifecycle, not just your code.
+* Attacks are shifting from run-time to build-time.
+* Tools like Syft, Grype, and Cosign form the modern defense stack.
+* Frameworks like SLSA provide the roadmap for maturity.

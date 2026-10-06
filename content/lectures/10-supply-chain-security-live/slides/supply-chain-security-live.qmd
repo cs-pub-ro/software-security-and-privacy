@@ -17,9 +17,87 @@ format:
 
 # Software Supply Chain Security
 
-## Plan
+## The supply chain
 
-This is the thin, in-room deck: diagrams, demo results, and the questions to put to the room.
+> **TODO (figure):** supply chain pipeline Developer, Source Control, Build System, Artifact Registry, Production, with attack vectors — from slides.tex
 
-The detailed slides are ported from the previous edition's Beamer deck
-(`sis-internal/09-supply-chain-security/slides/slides.tex`); see the full deck.
+Question: where in this chain would you attack first, and why?
+
+## Attack taxonomy
+
+* upstream: typosquatting, dependency confusion, maintainer compromise
+* midstream: SolarWinds, Codecov
+* downstream: update mechanisms, signing keys
+* question: which of these can a scanner on your own code catch?
+
+## SolarWinds (Sunburst)
+
+> **TODO (figure):** Source Code, Malware Injection, Build Process, Signed Update, Customer — from slides.tex
+
+Question: the update was signed; why did the signature not help?
+
+## Log4Shell
+
+* a deep, transitive dependency
+* question: how would you find every instance of Log4j in your dependency graph?
+
+## Dependency confusion
+
+* same name as the internal package, higher version on the public registry
+* question: why does the package manager pick the public one?
+
+## SLSA levels
+
+* level 1: scripted build, provenance exists
+* level 2: dedicated build service, authenticated provenance
+* level 3: hardened platform, non-falsifiable provenance
+* question: what does each level stop that the previous one does not?
+
+## Demo 1: SBOM and vulnerability scanning
+
+```console
+$ syft packages docker:alpine:latest -o cyclonedx-json > sbom.json
+$ grype sbom:sbom.json
+$ trivy image python:3.4-alpine
+```
+
+Question: is every reported CVE really exploitable?
+How does VEX help?
+
+## SBOM formats
+
+* SPDX versus CycloneDX
+* question: what would you check in an SBOM before shipping a product?
+
+## Keyless signing flow
+
+> **TODO (figure):** keyless signing: Developer, OIDC Provider, Fulcio (CA), Rekor (Log), steps 1-6 — from slides.tex
+
+Question: where does the trust come from if the key is thrown away?
+
+## Demo 2: sign and verify
+
+```console
+$ cosign sign user/demo
+$ cosign verify \
+    --certificate-identity=alice@example.com \
+    --certificate-oidc-issuer=https://accounts.google.com \
+    user/demo
+```
+
+Question: what happens if the identity or the issuer is wrong?
+
+## Demo 3: typosquatting
+
+* install the wrong package in Python
+* question: how easy was it, and what would have stopped it?
+
+## Reproducible and hermetic builds
+
+* same source, same environment, bit-for-bit identical output
+* question: how would reproducible builds have exposed SolarWinds?
+
+## Best practices
+
+* know, scan, pin, sign, secure the pipeline, monitor
+* question: which one would you adopt first in your own project?
