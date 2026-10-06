@@ -19,7 +19,68 @@ format:
 
 ## Plan
 
-This is the thin, in-room deck: diagrams, demo results, and the questions to put to the room.
+* limiting damage: isolate the system, confine the component, limit actions
+* access control and permissions
+* Linux kernel enforcement: LSM, SELinux, AppArmor, SMACK
+* sandboxing: seccomp, Android, Apple
 
-The detailed slides are ported from the previous edition's Beamer deck
-(`sis-internal/07-application-confinement/slides/slides.tex`); see the full deck.
+## Limiting Damage
+
+* the attacker may get in; the defender must limit what happens next
+* isolate the whole system, or confine one application
+
+> **TODO (figure):** whole-system isolation versus per-application confinement, from slides.tex (not in source; draw for the room)
+
+Question: what is the cost of confinement at application level instead of kernel level?
+
+## Access Control
+
+* subject: process (UID); object: file (UID, GID)
+* permissions and ACLs live on the file
+
+> **TODO (figure):** subject, object and the permission between them, from slides.tex (not in source; draw for the room)
+
+Question: malware needs no vulnerability, only a weak configuration; which permission would you remove first?
+
+## Per-App Permissions
+
+* Android: runtime requests, enforced at SDK level
+* iOS: privacy settings database
+* Linux capabilities: tokens on a process or executable
+
+Question: how do capabilities differ from the setuid bit?
+
+## Linux Security Modules
+
+* hooks in the kernel for system calls
+* SELinux and SMACK: inode based, labels
+* AppArmor: path based, profiles
+
+Question: why would path based and label based policies behave differently after a rename?
+
+## Seccomp
+
+* default allowed syscalls: `read`, `write`, `exit`, `sigreturn`
+* BPF filter installed by the developer
+
+Question: which syscalls does your program really need?
+
+## Breaking a Sandbox
+
+* faulty rules
+* faulty configuration
+* kernel vulnerability
+
+Question: where would you look first?
+
+## Apple Sandbox
+
+* profiles as binary blobs in the kernel image
+* the container profile covers all 3rd party apps
+* SandScout found collusion, device abuse and control bypass
+
+## Summary
+
+* confine to limit damage
+* kernel-enforced rules: capabilities, MAC, seccomp
+* sandboxes break through rules, configuration or the kernel

@@ -17,9 +17,202 @@ format:
 
 # Application Confinement
 
-## Plan
+## Papers
 
-This is the thin, in-room deck: diagrams, demo results, and the questions to put to the room.
+* [Efficient software-based fault isolation](https://dl.acm.org/doi/abs/10.1145/168619.168635)
+* [Boxify: Full-fledged App Sandboxing for Stock Android](https://www.usenix.org/conference/usenixsecurity15/technical-sessions/presentation/backes)
 
-The detailed slides are ported from the previous edition's Beamer deck
-(`sis-internal/07-application-confinement/slides/slides.tex`); see the full deck.
+## Story So Far
+
+* systems and system components have an attack surface
+* flaws in systems and system components may be exploited
+* input may be used maliciously
+* the defender must prevent the existence of vulnerabilities and prevent their exploitation
+* the defender also needs to limit the damage
+
+## Limiting Damage
+
+* isolate the entire system, e.g. virtualization
+* isolate or confine a system component (an application), e.g. sandboxing
+* limit possible actions and accessible resources
+* e.g. prevent an app from using the network
+* e.g. prevent an app from reading data from other apps
+
+## Application Confinement
+
+* what can an application do?
+* what can an application access?
+* access control: subject, object
+* typically enforced at kernel level
+* what if it were enforced by a library at application level?
+* that would add overhead
+* filesystem: users, file permissions, access control lists
+* configurable permissions: Android permissions, iOS Privacy Settings, Linux capabilities
+* sandboxing: jailing (filesystem), application sandboxing (kernel-enforced rules)
+
+## Remember: Malware
+
+* malware is an application deployed on the user device or workstation
+* it may abuse resource use and access
+* it doesn't require a vulnerability in an app, only a defect in the configuration or system
+* confining it reduces damage
+
+## Filesystem Access Control
+
+* subject: process (UID)
+* object: file (UID, GID)
+* permissions or access control lists (attached to a file)
+
+## Android Permissions
+
+* the app requests permissions at runtime
+* the permission is approved
+* enforcement is done at Android SDK level
+* signed permissions
+
+## iOS Privacy Settings
+
+* a database maps an app to a resource or service
+* the `Preferences` app writes to the database
+* access may be turned on or off
+
+## Linux Capabilities
+
+* security tokens providing privileges
+* attached to a given process
+* allow different permissions for processes belonging to the same user
+* may also be attached to an executable (similar to the setuid bit)
+
+# Confinement and Enforcement in the Linux Kernel
+
+## Linux Security Modules
+
+* a framework in the Linux kernel
+* hooks for user-level system calls
+* introduced in Linux kernel 2.6
+
+## MAC Implementations
+
+* SELinux (2.6.0)
+* AppArmor (2.6.36)
+* Smack (2.6.25)
+* TOMOYO (2.6.30)
+* Yama (3.4)
+
+## SELinux
+
+* inode based
+* uses labels: `user:role:type:mls`
+* policy based
+* modes: disabled, permissive, enforcing
+* other features: Role-Based Access Control (RBAC), Multi-Level Security (MLS), Multi-Category Security (MCS)
+
+## AppArmor
+
+* path based
+* filesystem agnostic
+* profile based
+* hybrid modes: per object mode, learning mode
+
+## SMACK
+
+* inode based
+* uses labels, most of which are kept in the extended attributes (`xattrs`)
+* policy based
+* access: `rwxa` is the same as DAC
+* access: `t` is transmutation
+* access: `b` is report in bringup mode
+* custom labels: `_` `^` `*` `?` `@`
+
+# Sandboxing
+
+## Assets to Protect
+
+* file descriptors
+* file system space
+* other processes
+* memory
+* network
+* everything else
+
+## Sandbox Implementations
+
+* capabilities
+* jail
+* rule based (MAC)
+* Java Virtual Machine
+* HTML5 iframe sandbox
+* .NET Code Access Security
+
+## Breaking Sandboxing
+
+* faulty sandbox rules
+* other faulty configuration
+* kernel vulnerability
+
+## Linux Seccomp
+
+* minimize the exposed kernel surface
+* to be used by developers
+* uses BPF (Berkeley Packet Filtering)
+* requires support in the kernel
+
+## Kernel Config
+
+```text
+CONFIG_HAVE_ARCH_SECCOMP_FILTER=y
+CONFIG_SECCOMP_FILTER=y
+CONFIG_SECCOMP=y
+```
+
+## Default Allowed Syscalls
+
+* `read`
+* `write`
+* `exit`
+* `sigreturn`
+
+## Android Application Sandbox
+
+* "The sandbox is simple, auditable, and based on decades-old UNIX-style user separation of processes and file permissions."
+* SELinux-based
+* uses the application UID to map the sandbox to the application
+
+# Apple Application Sandbox
+
+## Sandbox Profiles
+
+* a set of rules
+* sandbox operations and sandbox filters
+* provided as binary blobs in the kernel image
+* attached to an application
+* some apps may use the same sandbox profile
+* some system services use no sandbox profile
+* entitlement checks and sandbox extensions differentiate between apps using the same sandbox profile
+
+## container Sandbox Profile
+
+* the default sandbox profile for all 3rd party apps
+* the biggest sandbox profile
+
+## SandScout
+
+* <https://dl.acm.org/citation.cfm?id=2978336>
+* SandScout: Automatic Detection of Flaws in iOS Sandbox Profiles
+* a systematic analysis of the container sandbox profiles
+* found flaws: application collusion, device abuse, control bypass
+
+# Summary
+
+## Keywords
+
+* access control
+* Linux Security Module
+* subject, object, permission
+* capabilities
+* profiles
+* MAC
+* SELinux, AppArmor, SMACK
+* seccomp
+* iOS sandboxing
+* privacy settings
