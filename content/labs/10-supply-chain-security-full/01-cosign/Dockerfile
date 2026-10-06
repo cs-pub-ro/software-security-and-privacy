@@ -8,7 +8,7 @@ RUN gcc -Wall -o hello hello.c
 
 FROM scratch
 
-# Node binary
+# The compiled binary
 COPY --from=build /src/hello /hello
 
 # System libraries
