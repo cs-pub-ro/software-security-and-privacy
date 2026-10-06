@@ -30,7 +30,7 @@ string:
     db "Hello, World!", 10, 0
 fname1:
     call open1
-    db "../../../jail/a.txt", 0
+    db "a.txt", 0
 fname2:
     call open2
-    db "../../../b.txt", 0
+    db "b.txt", 0

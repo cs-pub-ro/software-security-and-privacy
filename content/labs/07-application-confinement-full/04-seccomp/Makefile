@@ -1,5 +1,5 @@
 CFLAGS = -Wall -m32
-LDFLAGS = -m32
+LDFLAGS = -m32 -zexecstack
 LDLIBS = -lseccomp
 
 .PHONY: all clean

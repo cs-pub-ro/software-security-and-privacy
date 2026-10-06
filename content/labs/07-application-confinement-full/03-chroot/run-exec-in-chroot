@@ -1,6 +1,6 @@
 #!/bin/bash
 
-jail_path="../../jail"
+jail_path="./jail"
 exec_path="./exec"
 
 cp "$exec_path" "$jail_path"

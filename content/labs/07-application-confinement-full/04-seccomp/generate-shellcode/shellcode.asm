@@ -36,3 +36,4 @@ write2:
 
     ; restore stack
     add esp, 4
+    ret
