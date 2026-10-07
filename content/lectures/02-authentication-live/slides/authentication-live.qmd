@@ -44,11 +44,15 @@ Question for the room: name one example of each, and one way to defeat it.
 
 ![Time needed to crack passwords by length and character set.](img/password-cracking-time.png){fig-align="center"}
 
+Source: <https://www.hivesystems.com/blog/are-your-passwords-in-the-green>
+
 Question for the room: why does length beat complexity?
 
 ## Passphrase vs. Password
 
 ![xkcd 936: password strength.](img/password-strength.png){fig-align="center"}
+
+Source: <http://xkcd.com/936/>
 
 ## Scenario 1: Plaintext
 
@@ -58,6 +62,8 @@ Question for the room: why does length beat complexity?
 ## Scenario 2: Hashed Passwords
 
 ![Rainbow table chains of hash and reduction steps.](img/rainbow-table.png){fig-align="center"}
+
+Source: <http://en.wikipedia.org/wiki/Rainbow_table>
 
 Question for the room: why is a fast hash a bad idea for passwords?
 
@@ -76,6 +82,8 @@ Demo result: crack a salted hash with a word list and mutation rules.
 ## Side Channels
 
 ![xkcd 538: security.](img/security-wrench.png){fig-align="center"}
+
+Source: <http://xkcd.com/538/>
 
 Question for the room: which side channel would you try first?
 

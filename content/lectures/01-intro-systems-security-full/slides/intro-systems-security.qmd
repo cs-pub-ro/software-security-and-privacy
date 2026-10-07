@@ -21,6 +21,8 @@ format:
 
 ![Screenshot of the unc0ver iOS jailbreak tool.](img/unc0ver-jailbreak-screenshot.png){fig-align="center"}
 
+Source: <https://unc0ver.dev/>
+
 ## History of OWASP Top 10
 
 Source: <https://www.hahwul.com/cullinan/history-of-owasp-top-10/>.
@@ -42,6 +44,8 @@ Rank in 2021, 2017, 2013, 2010, 2007, 2003.
 ## Cybersecurity Skills
 
 ![The fastest-growing cybersecurity skills in 2021.](img/cybersecurity-skills.jpg){fig-align="center"}
+
+Source: <https://www.forbes.com/sites/louiscolumbus/2020/11/01/what-are-the-fastest-growing-cybersecurity-skills-in-2021/>
 
 ## System / Application Cybersecurity
 

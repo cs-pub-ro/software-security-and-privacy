@@ -36,6 +36,8 @@ format:
 
 ![Software verification procedure.](img/software-verification-procedure.png){fig-align="center"}
 
+Source: Survey of Approaches for Security Verification of Hardware/Software Systems
+
 ## System Representation
 
 * HDL (for hardware)
@@ -146,9 +148,13 @@ format:
 
 ![Soundness vs. completeness.](img/sound-vs-complete.png){fig-align="center"}
 
+Source: <https://steemit.com/software/@cpuu/the-difference-between-soundness-and-completeness>
+
 ## Soundness and Completeness (3)
 
 ![Sound and complete.](img/sound-and-complete.png){fig-align="center"}
+
+Source: <https://steemit.com/software/@cpuu/the-difference-between-soundness-and-completeness>
 
 # Summary
 

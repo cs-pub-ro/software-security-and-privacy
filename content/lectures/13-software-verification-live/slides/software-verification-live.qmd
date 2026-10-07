@@ -25,6 +25,8 @@ Question: where does verification sit next to code analysis, fuzzing, testing an
 
 ![Software verification procedure.](img/software-verification-procedure.png){fig-align="center"}
 
+Source: Survey of Approaches for Security Verification of Hardware/Software Systems
+
 Question: why is it hard to show the model matches the implementation?
 
 ## Security properties
@@ -58,6 +60,8 @@ Question: what would you write as `requires` and `ensures` for a function that c
 ## Soundness vs completeness
 
 ![Soundness vs. completeness.](img/sound-vs-complete.png){fig-align="center"}
+
+Source: <https://steemit.com/software/@cpuu/the-difference-between-soundness-and-completeness>
 
 Question: would you rather have a verifier that misses no bugs or one that reports no false alarms?
 

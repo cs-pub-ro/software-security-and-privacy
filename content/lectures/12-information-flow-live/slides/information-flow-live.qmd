@@ -46,6 +46,8 @@ Question: which of complete mediation, tamperproof and verifiable is hardest to 
 
 ![Information flow graph (Jaeger, *Operating System Security*, Ch. 5).](img/information-flow-graph.png){fig-align="center"}
 
+Source: Trent Jaeger, *Operating System Security*, Chapter 5. Verifiable Security Goals.
+
 Question: which edges in the graph would you cut, and what breaks?
 
 ## Bell-LaPadula vs Biba

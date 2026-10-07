@@ -33,11 +33,15 @@ The detailed slides are ported from the previous edition's Beamer deck
 
 ![Reference monitor mediating access requests.](img/reference-monitor.png){fig-align="center"}
 
+Source: <https://www.researchgate.net/publication/2390175_Secure_Information_Flow_in_Mobile_Bootstrapping_Process>
+
 Question: why must it always be invoked, be tamperproof and be validated?
 
 ## Mechanism and policy
 
 ![Isolation mechanisms and policies.](img/isolation-mechanism-policy.png){fig-align="center"}
+
+Source: Rui Shu et al.: A Study of Security Isolation Techniques
 
 Question: which part is implementation, and which part is configuration?
 
@@ -46,11 +50,16 @@ Question: which part is implementation, and which part is configuration?
 ![Normal world versus secure world.](img/normal-secure-world.png){fig-align="center" width="48%"}
 ![Arm TrustZone secure and non-secure worlds.](img/arm-trustzone.jpg){fig-align="center" width="48%"}
 
+Source (left): <https://resources.infosecinstitute.com/topic/understanding-ios-security-part-1/>
+Source (right): <https://blog.quarkslab.com/introduction-to-trusted-execution-environment-arms-trustzone.html>
+
 Question: why keep security-specialized code out of the rich OS?
 
 ## Apple SEP
 
 ![Apple Secure Enclave Processor architecture.](img/apple-sep.png){fig-align="center"}
+
+Source: <https://support.apple.com/en-ke/guide/security/sec59b0b31ff/web>
 
 Question: why are biometrics and keys handled only by the SEP?
 
@@ -58,12 +67,17 @@ Question: why are biometrics and keys handled only by the SEP?
 
 ![Virtualization and hypervisor layers.](img/virtualization.png){fig-align="center"}
 
+Source: Rui Shu et al.: A Study of Security Isolation Techniques
+
 Question: what can a side channel between two VMs reveal?
 
 ## Library OS and unikernels
 
 ![Library OS architecture.](img/library-os.png){fig-align="center" width="48%"}
 ![Unikraft build process.](img/unikraft.svg){fig-align="center" width="48%"}
+
+Source (left): Rui Shu et al.: A Study of Security Isolation Techniques
+Source (right): <https://unikraft.org/docs/concepts/build-process/>
 
 Question: why does dropping the user/kernel transition reduce the attack surface?
 
@@ -78,5 +92,7 @@ Question: the VM is isolated from the host; what about the host reading the VM?
 ## Containers
 
 ![Container isolation using namespaces and cgroups.](img/container.png){fig-align="center"}
+
+Source: Rui Shu et al.: A Study of Security Isolation Techniques
 
 Question: containers or hypervisors, which is more secure, and why?

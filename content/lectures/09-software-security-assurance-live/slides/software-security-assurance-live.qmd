@@ -23,17 +23,24 @@ format:
 ![CVEs per year.](img/cves-per-year.jpg){fig-align="center" width="32%"}
 ![Malware per year.](img/malware-per-year.png){fig-align="center" width="32%"}
 
+Source (left): <https://www.bankmycell.com/blog/number-of-google-play-store-apps/>
+Source (centre, right): <https://thehackernews.com/2025/05/beyond-vulnerability-management-cves.html>
+
 Question: Debian went from 848 packages (1.2) to about 70k (13); what does that do to the attack surface?
 
 ## Software security assurance
 
 ![Software security framework.](img/ssf.png){fig-align="center"}
 
+Source: <https://www.researchgate.net/publication/239522618_Cyber_Security_Technology_Initiatives>
+
 Question: which of design analysis, code review, security testing would you do first?
 
 ## Secure software development life cycle
 
 ![Secure software development life cycle (SSDLC).](img/ssdlc.png){fig-align="center"}
+
+Source: <https://codesigningstore.com/secure-software-development-life-cycle-sdlc>
 
 Question: where would you plug static analysis and fuzzing into CI / CD?
 

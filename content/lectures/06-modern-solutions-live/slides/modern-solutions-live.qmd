@@ -69,6 +69,8 @@ Question: which mitigation, if any, stops a data-oriented attack?
 
 ![Overview of microarchitectural attacks.](img/microarchitectural-attacks.png){fig-align="center"}
 
+Source: <https://thecustomizewindows.com/2024/06/what-are-microarchitectural-attacks/>
+
 ## Web
 
 * connection downgrade and POODLE
@@ -76,6 +78,8 @@ Question: which mitigation, if any, stops a data-oriented attack?
 * question: how does HTTPS everywhere help against downgrade?
 
 ![Evolution of the OWASP Top 10.](img/owasp-top10.png){fig-align="center"}
+
+Source: <https://owasp.org/www-project-top-ten/>
 
 ## Summary
 

@@ -191,6 +191,8 @@ format:
 
 ![Penetration testing phases.](img/pentest-phases.png){fig-align="center"}
 
+Source: <https://www.oreilly.com/library/view/network-vulnerability-assessment/9781788627252/a984c010-3c90-4b38-87b9-36926278e514.xhtml>
+
 ## Attack Phases
 
 * Reconnaissance

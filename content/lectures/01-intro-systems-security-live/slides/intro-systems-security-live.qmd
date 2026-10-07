@@ -21,6 +21,8 @@ format:
 
 ![Screenshot of the unc0ver iOS jailbreak tool.](img/unc0ver-jailbreak-screenshot.png){fig-align="center"}
 
+Source: <https://unc0ver.dev/>
+
 Question: what does it take to get from a tapped button to full control of a device?
 
 ## The more things change

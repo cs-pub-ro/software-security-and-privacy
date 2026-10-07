@@ -21,6 +21,8 @@ format:
 
 ![ROP: return-oriented programming meme.](img/rop.jpg){fig-align="center"}
 
+Source: <https://x.com/__L4w__/status/1719684484969152841>
+
 ## Attack and Defense
 
 * attack: exploit vulnerabilities

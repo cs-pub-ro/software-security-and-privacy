@@ -21,6 +21,8 @@ format:
 
 ![Number of apps on Google Play over time.](img/apps-on-google-play.png){fig-align="center"}
 
+Source: <https://www.bankmycell.com/blog/number-of-google-play-store-apps/>
+
 ## Debian Packages
 
 | Debian Version | Number of Packages |
@@ -37,9 +39,13 @@ format:
 
 ![Number of CVEs published per year.](img/cves-per-year.jpg){fig-align="center"}
 
+Source: <https://thehackernews.com/2025/05/beyond-vulnerability-management-cves.html>
+
 ## Malware per Year
 
 ![Amount of malware per year.](img/malware-per-year.png){fig-align="center"}
+
+Source: <https://thehackernews.com/2025/05/beyond-vulnerability-management-cves.html>
 
 ## Papers
 
@@ -67,9 +73,13 @@ format:
 
 ![Software security framework.](img/ssf.png){fig-align="center"}
 
+Source: <https://www.researchgate.net/publication/239522618_Cyber_Security_Technology_Initiatives>
+
 ## Secure Software Development Life Cycle (SSDLC)
 
 ![Secure software development life cycle (SSDLC).](img/ssdlc.png){fig-align="center"}
+
+Source: <https://codesigningstore.com/secure-software-development-life-cycle-sdlc>
 
 ## Software Penetration Testing
 

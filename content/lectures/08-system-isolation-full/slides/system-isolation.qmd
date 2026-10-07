@@ -43,6 +43,8 @@ The detailed slides are ported from the previous edition's Beamer deck
 
 ![Apple Secure Enclave Processor architecture.](img/apple-sep.png){fig-align="center"}
 
+Source: <https://support.apple.com/en-ke/guide/security/sec59b0b31ff/web>
+
 # Confinement
 
 ## Run Untrusted Code
@@ -78,6 +80,8 @@ The detailed slides are ported from the previous edition's Beamer deck
 
 ![Reference monitor mediating access requests.](img/reference-monitor.png){fig-align="center"}
 
+Source: <https://www.researchgate.net/publication/2390175_Secure_Information_Flow_in_Mobile_Bootstrapping_Process>
+
 # System Isolation. Trusted Computing Base
 
 ## Principles and Goals
@@ -98,6 +102,8 @@ The detailed slides are ported from the previous edition's Beamer deck
 ## Mechanisms and Policies
 
 ![Isolation mechanisms and policies.](img/isolation-mechanism-policy.png){fig-align="center"}
+
+Source: Rui Shu et al.: A Study of Security Isolation Techniques
 
 ## System Isolation
 
@@ -131,6 +137,8 @@ The detailed slides are ported from the previous edition's Beamer deck
 
 ![Normal world versus secure world in ARM TrustZone.](img/normal-secure-world.png){fig-align="center"}
 
+Source: <https://resources.infosecinstitute.com/topic/understanding-ios-security-part-1/>
+
 ## Intel TXT
 
 * Trusted eXecution Technology.
@@ -147,6 +155,8 @@ The detailed slides are ported from the previous edition's Beamer deck
 ## Arm TrustZone (2)
 
 ![Arm TrustZone secure and non-secure worlds.](img/arm-trustzone.jpg){fig-align="center"}
+
+Source: <https://blog.quarkslab.com/introduction-to-trusted-execution-environment-arms-trustzone.html>
 
 ## Intel SGX
 
@@ -169,6 +179,8 @@ The detailed slides are ported from the previous edition's Beamer deck
 ## Virtualization
 
 ![Virtualization and hypervisor layers.](img/virtualization.png){fig-align="center"}
+
+Source: Rui Shu et al.: A Study of Security Isolation Techniques
 
 ## Virtual Machine
 
@@ -199,6 +211,8 @@ The detailed slides are ported from the previous edition's Beamer deck
 
 ![Library OS architecture.](img/library-os.png){fig-align="center"}
 
+Source: Rui Shu et al.: A Study of Security Isolation Techniques
+
 ## Library OS Characteristics
 
 * Also called a unikernel.
@@ -219,11 +233,15 @@ The detailed slides are ported from the previous edition's Beamer deck
 
 ![Unikraft build process.](img/unikraft.svg){fig-align="center"}
 
+Source: <https://unikraft.org/docs/concepts/build-process/>
+
 # Confidential Computing
 
 ## Cloud Computing
 
 ![Architecture of cloud computing.](img/architecture-of-cloud-computing.jpg){fig-align="center"}
+
+Source: <https://www.infosectrain.com/blog/what-is-cloud-computing-architecture-and-its-components/>
 
 ## Security of Cloud Computing
 
@@ -252,6 +270,8 @@ The detailed slides are ported from the previous edition's Beamer deck
 ## Containers
 
 ![Container isolation using namespaces and cgroups.](img/container.png){fig-align="center"}
+
+Source: Rui Shu et al.: A Study of Security Isolation Techniques
 
 ## Container
 
