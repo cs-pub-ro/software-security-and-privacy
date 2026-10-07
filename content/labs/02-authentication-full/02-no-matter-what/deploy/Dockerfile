@@ -9,9 +9,19 @@ RUN apt-get -y update \
         ssh sudo \
  && rm -rf /var/lib/apt/lists/*
 
-# The flag is split across eight files; setup moves them to /usr/local (root
-# only) and allows ctf to sha256sum them via sudo.
-COPY deploy/O deploy/W deploy/A deploy/S deploy/P deploy/C deploy/T deploy/F deploy/setup /
+# Flag fragments and SSH password are injected at build time via build args.
+# FLAG_PATHS is a pipe-separated list of paths; FLAG_VALUES is the matching values.
+ARG FLAG_PATHS="/O|/W|/A|/S|/P|/C|/T|/F"
+ARG FLAG_VALUES="For|tun|e_f|avo|rs_|the|_bo|ld"
+ARG PASSWORD="CTF_PASSWORD"
+RUN set -e; \
+    IFS='|' read -ra _p <<< "${FLAG_PATHS}"; \
+    IFS='|' read -ra _v <<< "${FLAG_VALUES}"; \
+    for _i in "${!_p[@]}"; do \
+        mkdir -p "$(dirname "${_p[$_i]}")"; \
+        printf '%s' "${_v[$_i]}" > "${_p[$_i]}"; \
+    done
+COPY deploy/setup /
 RUN /setup && rm -f /O /W /A /S /P /C /T /F /setup
 
 RUN mkdir -p /run/sshd && ssh-keygen -A

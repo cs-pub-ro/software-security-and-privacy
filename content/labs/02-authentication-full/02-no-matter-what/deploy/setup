@@ -4,7 +4,7 @@
 # CTF_PASSWORD (authentication session)
 #
 
-password="CTF_PASSWORD"
+password="${PASSWORD}"
 
 if test $(id -u) -ne 0; then
     echo "You must run this script as root." 1>&2

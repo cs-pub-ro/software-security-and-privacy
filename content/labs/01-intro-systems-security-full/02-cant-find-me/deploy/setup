@@ -6,7 +6,7 @@
 # The flag is located in one out of 1000 * 1000 files. Use locate instead of find to find it.
 #
 
-password="CTF_PASSWORD"
+password="${PASSWORD}"
 
 if test $(id -u) -ne 0; then
     echo "You must run this script as root." 1>&2

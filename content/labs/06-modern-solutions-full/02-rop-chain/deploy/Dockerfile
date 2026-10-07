@@ -2,13 +2,20 @@ FROM debian:13
 
 ARG CHALLENGE_NAME="02-rop-chain"
 ARG EXEC_NAME="vuln"
-ARG FLAG="SSP{placeholder}"
+ARG FLAG_PATHS="/home/ctf/02-rop-chain/flag"
+ARG FLAG_VALUES="SSP{placeholder}"
 
 RUN set -xe; apt-get -yqq update; apt-get -yqq install xinetd
 
 RUN useradd -m -d /home/ctf -s /bin/bash ctf
 RUN mkdir /home/ctf/${CHALLENGE_NAME}
-RUN printf '%s\n' "${FLAG}" > /home/ctf/${CHALLENGE_NAME}/flag
+RUN set -e; \
+    IFS='|' read -ra _p <<< "${FLAG_PATHS}"; \
+    IFS='|' read -ra _v <<< "${FLAG_VALUES}"; \
+    for _i in "${!_p[@]}"; do \
+        mkdir -p "$(dirname "${_p[$_i]}")"; \
+        printf '%s' "${_v[$_i]}" > "${_p[$_i]}"; \
+    done
 COPY ./publish/${EXEC_NAME} /home/ctf/${CHALLENGE_NAME}/${EXEC_NAME}
 COPY ./deploy/wrapper.sh /home/ctf/${CHALLENGE_NAME}/wrapper.sh
 

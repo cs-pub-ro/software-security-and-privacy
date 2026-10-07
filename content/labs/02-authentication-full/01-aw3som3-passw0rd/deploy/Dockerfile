@@ -9,7 +9,18 @@ RUN apt-get -y update \
         ssh sudo libcap2-bin \
  && rm -rf /var/lib/apt/lists/*
 
-COPY flag deploy/setup /
+# Flag and SSH password are injected at build time via build args.
+ARG FLAG_PATHS="/flag"
+ARG FLAG_VALUES="SSP{placeholder}"
+ARG PASSWORD="CTF_PASSWORD"
+RUN set -e; \
+    IFS='|' read -ra _p <<< "${FLAG_PATHS}"; \
+    IFS='|' read -ra _v <<< "${FLAG_VALUES}"; \
+    for _i in "${!_p[@]}"; do \
+        mkdir -p "$(dirname "${_p[$_i]}")"; \
+        printf '%s' "${_v[$_i]}" > "${_p[$_i]}"; \
+    done
+COPY deploy/setup /
 RUN /setup && rm -f /flag /setup
 
 RUN mkdir -p /run/sshd && ssh-keygen -A
