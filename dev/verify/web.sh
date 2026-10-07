@@ -40,6 +40,7 @@ proj="ssp-web-${name}-$$"
 solver_img="$proj-solver"
 net="${proj}_default"
 
+# shellcheck disable=SC2329  # invoked via trap
 cleanup() {
 	[ "$keep" = 1 ] && { warn "--keep: leaving compose project $proj up"; return; }
 	FLAG="$flag" DB_PASSWORD="verifypw" \

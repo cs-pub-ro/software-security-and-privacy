@@ -27,7 +27,8 @@ Everything published lives under `content/`, one directory per part of the class
 Inside a section, each session lives in two sibling directories:
 
 * `NN-<session-name>-live/` — what is used while the session runs. For a lab: skeletons with `TODO` markers, task descriptions, hints; never a complete solution. For a lecture: a one-pager with the plan of the lecture and the points to capture.
-* `NN-<session-name>-full/` — reference solutions, full explanations, reference command output, the exploits and the Docker files that build and deploy the challenges, and the `prompt.txt` notes the exercises were generated from. Used by students after the session and by assistants before it. A lecture's `-full/` half holds subdirectories exactly the way a lab's does, and the site renders them the same way.
+* `NN-<session-name>-full/` — reference solutions, full explanations, reference command output, the exploits and the Docker files that build and deploy the challenges, and the `prompt.txt` notes the exercises were generated from.
+Used by students after the session and by assistants before it. A lecture's `-full/` half holds subdirectories exactly the way a lab's does, and the site renders them the same way.
 
 The website publishes the two halves as two separate views, and the view is the first part of the URL, so `content/labs/03-exploit-app-live/` is served at `/live/labs/03-exploit-app/` and its `-full/` sibling at `/full/labs/03-exploit-app/`.
 A section with no halves stays at the top level: `content/assignments/` is `/assignments/`.

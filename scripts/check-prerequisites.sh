@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2329  # check_session_NN functions are invoked dynamically by name
 #
 # Check that the tools the lab sessions need are installed.
 #

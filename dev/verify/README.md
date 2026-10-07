@@ -25,10 +25,10 @@ dev/verify/ctf-all.sh                                                   # every 
 For one challenge, `ctf.sh`:
 
 1. **build** — compiles the 32-bit binary in the `build/` image (`make`).
-2. **publish** — copies the artifact to `publish/`, where `deploy/` expects it.
-3. **deploy** — builds the `deploy/` image with a freshly generated `--build-arg FLAG`
+1. **publish** — copies the artifact to `publish/`, where `deploy/` expects it.
+1. **deploy** — builds the `deploy/` image with a freshly generated `--build-arg FLAG`
    and runs it on a private, per-run bridge network under the alias `deploy`.
-4. **solve** — builds the `solve/` image and runs `solve/exploit.py REMOTE HOST=deploy PORT=<port>`
+1. **solve** — builds the `solve/` image and runs `solve/exploit.py REMOTE HOST=deploy PORT=<port>`
    against the deployment.
 
 The **exploit is authoritative**: it asserts its own success and exits 0 when

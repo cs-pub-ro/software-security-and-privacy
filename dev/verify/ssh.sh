@@ -51,6 +51,7 @@ if grep -q 'setcap' "$chal/deploy/setup" 2>/dev/null; then
 	caps=(--cap-add=cap_dac_read_search)
 fi
 
+# shellcheck disable=SC2329  # invoked via trap
 cleanup() {
 	[ "$keep" = 1 ] && { warn "--keep: leaving $ctr/$net up; context in $tmp"; return; }
 	docker rm -f "$ctr" >/dev/null 2>&1 || true

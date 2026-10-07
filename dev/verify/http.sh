@@ -39,6 +39,7 @@ run="http-$name-$$"; net="$run-net"; img="$run-img"; ctr="$run-ctr"
 solver="ssp-http-solver"
 tmp=$(mktemp -d)
 
+# shellcheck disable=SC2329  # invoked via trap
 cleanup() {
 	[ "$keep" = 1 ] && { warn "--keep: leaving $ctr/$net up; context in $tmp"; return; }
 	docker rm -f "$ctr" >/dev/null 2>&1 || true

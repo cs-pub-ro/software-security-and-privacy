@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 # Shared helpers for the containerised verification harness.
 #
 # Sourced, not executed. Everything here runs through Docker, so the only host
