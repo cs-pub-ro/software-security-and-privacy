@@ -17,9 +17,53 @@ format:
 
 # Software Verification
 
-## Plan
+## Securing Software
 
-This is the thin, in-room deck: diagrams, demo results, and the questions to put to the room.
+Question: where does verification sit next to code analysis, fuzzing, testing and monitoring?
 
-The detailed slides are ported from the previous edition's Beamer deck
-(`sis-internal/12-software-verification/slides/slides.tex`); see the full deck.
+## Verification procedure
+
+> **TODO (figure):** software verification procedure — from slides.tex
+
+Question: why is it hard to show the model matches the implementation?
+
+## Security properties
+
+* confidentiality, integrity, availability
+* non-interference, isolation, information flow
+* type and memory safety, memory and code integrity
+
+Question: which of these can you state as a formula about a program?
+
+## Algorithm vs implementation
+
+Question: what does a proof about an algorithm not tell you about its implementation (language, OS, hardware)?
+
+## Deductive vs algorithmic
+
+Question: when would you prefer a general property proof over verifying each system individually?
+
+## Model checking and its limits
+
+Question: why do state and path explosion hit software (loops) much harder than hardware?
+
+## Bounded model checking
+
+Question: what do you give up by cutting off the traversal depth, and how do you recover some of it?
+
+## Pre and post-conditions
+
+Question: what would you write as `requires` and `ensures` for a function that copies a buffer?
+
+## Soundness vs completeness
+
+> **TODO (figure):** soundness vs completeness — from slides.tex
+
+Question: would you rather have a verifier that misses no bugs or one that reports no false alarms?
+
+## Keywords
+
+* verification, system model, security properties
+* deductive and algorithmic approaches
+* model checking, bounded model checking, SMT solvers
+* pre and post-conditions, soundness, completeness
