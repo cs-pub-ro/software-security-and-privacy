@@ -17,9 +17,52 @@ format:
 
 # Information Flow Security
 
-## Plan
+## Secure information flow
 
-This is the thin, in-room deck: diagrams, demo results, and the questions to put to the room.
+Question: what does it mean for a flow to be secure if the attacker only sees outputs?
 
-The detailed slides are ported from the previous edition's Beamer deck
-(`sis-internal/11-information-flow/slides/slides.tex`); see the full deck.
+Question: why is access control (or crypto) not enough once data has been read (or decrypted)?
+
+## Explicit vs implicit flows
+
+```text
+x := 0
+if b then
+    x := 1
+end
+```
+
+Question: what does an observer of `x` learn about `b`?
+
+## DIFC vs SIFC
+
+Question: what is "scope creep" in dynamic tracking, and why does static checking avoid it?
+
+## Reference monitor
+
+Question: which of complete mediation, tamperproof and verifiable is hardest to get in practice?
+
+## Information flow graph
+
+> **TODO (figure):** information flow graph (Jaeger, Operating System Security, Ch. 5) — from slides.tex
+
+Question: which edges in the graph would you cut, and what breaks?
+
+## Bell-LaPadula vs Biba
+
+* Bell-LaPadula (confidentiality): no read down, no write up.
+* Biba (integrity): no read up, no write down.
+
+Question: why are the two rules mirror images, and can one system enforce both?
+
+## Covert channels
+
+Question: why can a storage channel be removed but not a timing channel?
+
+## Decentralized IFC and taint tracking
+
+* DIFC: labels annotate code, checked by the compiler.
+* OS-level: Asbestos, HiStar, Flume.
+* Taint tracking: Perl taint mode, TaintDroid, FlowDroid.
+
+Question: where would you put taint sources and sinks in a web application?
