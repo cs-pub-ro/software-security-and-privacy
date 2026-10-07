@@ -19,7 +19,7 @@ format:
 
 ## Rop Meme
 
-> **TODO (figure):** ROP meme tweet (https://x.com/__L4w__/status/1719684484969152841), from slides.tex (img/rop)
+![ROP: return-oriented programming meme.](img/rop.jpg){fig-align="center"}
 
 ## Attack and Defense
 

@@ -44,7 +44,7 @@ Question: which of complete mediation, tamperproof and verifiable is hardest to 
 
 ## Information flow graph
 
-> **TODO (figure):** information flow graph (Jaeger, Operating System Security, Ch. 5) — from slides.tex
+![Information flow graph (Jaeger, *Operating System Security*, Ch. 5).](img/information-flow-graph.png){fig-align="center"}
 
 Question: which edges in the graph would you cut, and what breaks?
 

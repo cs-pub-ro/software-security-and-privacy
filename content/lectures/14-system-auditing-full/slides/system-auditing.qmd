@@ -189,7 +189,7 @@ format:
 
 ## PenTest Phases
 
-> **TODO (figure):** penetration testing phases — from slides.tex (source: <https://www.oreilly.com/library/view/network-vulnerability-assessment/9781788627252/a984c010-3c90-4b38-87b9-36926278e514.xhtml>)
+![Penetration testing phases.](img/pentest-phases.png){fig-align="center"}
 
 ## Attack Phases
 

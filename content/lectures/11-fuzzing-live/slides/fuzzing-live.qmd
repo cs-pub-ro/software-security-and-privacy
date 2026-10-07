@@ -24,33 +24,33 @@ format:
 
 ## The SSDLC
 
-> **TODO (figure):** secure software development life cycle (SSDLC) — from slides.tex
+![Secure software development life cycle.](img/ssdlc.png){fig-align="center"}
 
 Question: where in this cycle does fuzzing fit?
 
 ## Property-based testing vs. fuzzing
 
-> **TODO (figure):** property-based testing compared to fuzzing — from slides.tex
+![Property-based testing compared to fuzzing.](img/property-based-testing.png){fig-align="center"}
 
 ## Fuzzer architecture
 
-> **TODO (figure):** fuzzer architecture — from slides.tex
+![Fuzzer architecture.](img/fuzzing.png){fig-align="center"}
 
 Question: which component decides what the next input is?
 
 ## Blackbox vs whitebox
 
-> **TODO (figure):** blackbox vs whitebox fuzzing types — from slides.tex
+![Blackbox vs whitebox fuzzing types.](img/fuzzing-types.png){fig-align="center"}
 
 ## Mutation vs generation
 
-> **TODO (figure):** mutation-based vs generation-based fuzzing — from slides.tex
+![Mutation-based vs generation-based fuzzing.](img/mutation-vs-generation.jpg){fig-align="center"}
 
 Question: when would you pick generation over mutation?
 
 ## Coverage-guided fuzzing
 
-> **TODO (figure):** coverage-based fuzzing process — from slides.tex
+![Coverage-based fuzzing process.](img/coverage-based-fuzzing-process.png){fig-align="center"}
 
 Question: why does coverage feedback beat purely random inputs?
 
@@ -62,19 +62,19 @@ Question: why does coverage feedback beat purely random inputs?
 
 ## Restler
 
-> **TODO (figure):** Restler full workflow — from slides.tex
+![Restler full workflow.](img/restler-full.jpg){fig-align="center"}
 
 ## Syzkaller
 
-> **TODO (figure):** Syzkaller architecture — from slides.tex
+![Syzkaller architecture.](img/syzkaller.png){fig-align="center"}
 
 Question: how do you capture coverage inside a kernel?
 
 ## kAFL and Nyx
 
-> **TODO (figure):** kAFL architecture — from slides.tex
+![kAFL architecture.](img/kafl.png){fig-align="center"}
 
-> **TODO (figure):** Nyx architecture — from slides.tex
+![Nyx architecture.](img/nyx.png){fig-align="center"}
 
 ## Cyber-reasoning systems
 

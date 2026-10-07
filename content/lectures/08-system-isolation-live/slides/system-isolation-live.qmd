@@ -31,48 +31,52 @@ The detailed slides are ported from the previous edition's Beamer deck
 
 ## Reference monitor
 
-> **TODO (figure):** reference monitor mediating access requests — from slides.tex
+![Reference monitor mediating access requests.](img/reference-monitor.png){fig-align="center"}
 
 Question: why must it always be invoked, be tamperproof and be validated?
 
 ## Mechanism and policy
 
-> **TODO (figure):** isolation mechanisms and policies — from slides.tex
+![Isolation mechanisms and policies.](img/isolation-mechanism-policy.png){fig-align="center"}
 
 Question: which part is implementation, and which part is configuration?
 
 ## Trusted Execution Environment
 
-> **TODO (figure):** normal world versus secure world, Arm TrustZone — from slides.tex
+![Normal world versus secure world.](img/normal-secure-world.png){fig-align="center" width="48%"}
+![Arm TrustZone secure and non-secure worlds.](img/arm-trustzone.jpg){fig-align="center" width="48%"}
 
 Question: why keep security-specialized code out of the rich OS?
 
 ## Apple SEP
 
-> **TODO (figure):** Apple Secure Enclave Processor architecture — from slides.tex
+![Apple Secure Enclave Processor architecture.](img/apple-sep.png){fig-align="center"}
 
 Question: why are biometrics and keys handled only by the SEP?
 
 ## Virtualization
 
-> **TODO (figure):** virtualization and hypervisor — from slides.tex
+![Virtualization and hypervisor layers.](img/virtualization.png){fig-align="center"}
 
 Question: what can a side channel between two VMs reveal?
 
 ## Library OS and unikernels
 
-> **TODO (figure):** library OS and Unikraft build process — from slides.tex
+![Library OS architecture.](img/library-os.png){fig-align="center" width="48%"}
+![Unikraft build process.](img/unikraft.svg){fig-align="center" width="48%"}
 
 Question: why does dropping the user/kernel transition reduce the attack surface?
 
 ## Confidential computing
 
-> **TODO (figure):** confidential computing, Arm CCA, AMD SEV — from slides.tex
+![Confidential computing.](img/confidential-computing.png){fig-align="center" width="32%"}
+![Arm CCA architecture.](img/arm-cca-arch.png){fig-align="center" width="32%"}
+![AMD SEV architecture.](img/amd-sev-arch.png){fig-align="center" width="32%"}
 
 Question: the VM is isolated from the host; what about the host reading the VM?
 
 ## Containers
 
-> **TODO (figure):** containers (namespaces and cgroups) — from slides.tex
+![Container isolation using namespaces and cgroups.](img/container.png){fig-align="center"}
 
 Question: containers or hypervisors, which is more secure, and why?

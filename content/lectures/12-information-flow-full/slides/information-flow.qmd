@@ -81,7 +81,7 @@ format:
 
 ## Information Flow Graph
 
-> **TODO (figure):** information flow graph (Trent Jaeger, Operating System Security, Chapter 5, Verifiable Security Goals) — from slides.tex
+![Information flow graph (Jaeger, *Operating System Security*, Ch. 5).](img/information-flow-graph.png){fig-align="center"}
 
 Source: Trent Jaeger, *Operating System Security*, Chapter 5. Verifiable Security Goals.
 

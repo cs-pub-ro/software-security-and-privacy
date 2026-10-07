@@ -19,19 +19,21 @@ format:
 
 ## Growth of software
 
-> **TODO (figure):** apps on Google Play, CVEs per year, malware per year --- from slides.tex
+![Apps on Google Play over time.](img/apps-on-google-play.png){fig-align="center" width="32%"}
+![CVEs per year.](img/cves-per-year.jpg){fig-align="center" width="32%"}
+![Malware per year.](img/malware-per-year.png){fig-align="center" width="32%"}
 
 Question: Debian went from 848 packages (1.2) to about 70k (13); what does that do to the attack surface?
 
 ## Software security assurance
 
-> **TODO (figure):** software security framework --- from slides.tex
+![Software security framework.](img/ssf.png){fig-align="center"}
 
 Question: which of design analysis, code review, security testing would you do first?
 
 ## Secure software development life cycle
 
-> **TODO (figure):** SSDLC --- from slides.tex
+![Secure software development life cycle (SSDLC).](img/ssdlc.png){fig-align="center"}
 
 Question: where would you plug static analysis and fuzzing into CI / CD?
 

@@ -34,7 +34,7 @@ format:
 
 ## Software Verification: Procedure
 
-> **TODO (figure):** software verification procedure (Survey of Approaches for Security Verification of Hardware/Software Systems) — from slides.tex
+![Software verification procedure.](img/software-verification-procedure.png){fig-align="center"}
 
 ## System Representation
 
@@ -144,11 +144,11 @@ format:
 
 ## Soundness and Completeness (2)
 
-> **TODO (figure):** soundness vs completeness (https://steemit.com/software/@cpuu/the-difference-between-soundness-and-completeness) — from slides.tex
+![Soundness vs. completeness.](img/sound-vs-complete.png){fig-align="center"}
 
 ## Soundness and Completeness (3)
 
-> **TODO (figure):** sound and complete (https://steemit.com/software/@cpuu/the-difference-between-soundness-and-completeness) — from slides.tex
+![Sound and complete.](img/sound-and-complete.png){fig-align="center"}
 
 # Summary
 

@@ -67,7 +67,7 @@ Question: which mitigation, if any, stops a data-oriented attack?
 * KPTI separates kernel address space
 * question: if the hardware is in the TCB, who can you trust?
 
-> **TODO (figure):** microarchitectural attacks overview, from slides.tex (img/microarchitectural-attacks.png)
+![Overview of microarchitectural attacks.](img/microarchitectural-attacks.png){fig-align="center"}
 
 ## Web
 
@@ -75,7 +75,7 @@ Question: which mitigation, if any, stops a data-oriented attack?
 * blind SQL injection: content-based and time-based
 * question: how does HTTPS everywhere help against downgrade?
 
-> **TODO (figure):** evolution of the OWASP Top 10, from slides.tex (img/owasp-top10.png)
+![Evolution of the OWASP Top 10.](img/owasp-top10.png){fig-align="center"}
 
 ## Summary
 

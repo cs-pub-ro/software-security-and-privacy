@@ -23,7 +23,7 @@ Question: where does verification sit next to code analysis, fuzzing, testing an
 
 ## Verification procedure
 
-> **TODO (figure):** software verification procedure — from slides.tex
+![Software verification procedure.](img/software-verification-procedure.png){fig-align="center"}
 
 Question: why is it hard to show the model matches the implementation?
 
@@ -57,7 +57,7 @@ Question: what would you write as `requires` and `ensures` for a function that c
 
 ## Soundness vs completeness
 
-> **TODO (figure):** soundness vs completeness — from slides.tex
+![Soundness vs. completeness.](img/sound-vs-complete.png){fig-align="center"}
 
 Question: would you rather have a verifier that misses no bugs or one that reports no false alarms?
 

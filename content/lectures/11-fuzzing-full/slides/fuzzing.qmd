@@ -24,7 +24,7 @@ format:
 
 ## SSDLC
 
-> **TODO (figure):** secure software development life cycle (SSDLC) — from slides.tex
+![Secure software development life cycle.](img/ssdlc.png){fig-align="center"}
 
 # Overview
 
@@ -36,7 +36,7 @@ format:
 
 ## Types of Testing
 
-> **TODO (figure):** types of software testing — from slides.tex
+![Types of software testing.](img/types-of-software-testing.png){fig-align="center"}
 
 ## Blackbox / Interface Testing
 
@@ -53,7 +53,7 @@ format:
 
 ## Property-based Testing vs. Fuzzing
 
-> **TODO (figure):** property-based testing compared to fuzzing — from slides.tex
+![Property-based testing compared to fuzzing.](img/property-based-testing.png){fig-align="center"}
 
 ## Fuzzing (as testing)
 
@@ -94,7 +94,7 @@ format:
 
 ## Fuzzer Architecture
 
-> **TODO (figure):** fuzzer architecture — from slides.tex
+![Fuzzer architecture.](img/fuzzing.png){fig-align="center"}
 
 ## Dumb vs Smart Fuzzing
 
@@ -105,7 +105,7 @@ format:
 
 ## Blackbox vs Whitebox Fuzzing
 
-> **TODO (figure):** blackbox vs whitebox fuzzing types — from slides.tex
+![Blackbox vs whitebox fuzzing types.](img/fuzzing-types.png){fig-align="center"}
 
 ## Fuzzer Harness
 
@@ -115,7 +115,7 @@ format:
 
 ## Mutation vs Generational Fuzzing
 
-> **TODO (figure):** mutation-based vs generation-based fuzzing — from slides.tex
+![Mutation-based vs generation-based fuzzing.](img/mutation-vs-generation.jpg){fig-align="center"}
 
 ## Payload Fuzzing vs API Fuzzing
 
@@ -127,11 +127,11 @@ format:
 
 ## Coverage-based Fuzzing
 
-> **TODO (figure):** coverage-based fuzzing — from slides.tex
+![Coverage-based fuzzing.](img/coverage-based-fuzzing.png){fig-align="center"}
 
 ## Coverage-based Fuzzing Process
 
-> **TODO (figure):** coverage-based fuzzing process — from slides.tex
+![Coverage-based fuzzing process.](img/coverage-based-fuzzing-process.png){fig-align="center"}
 
 ## GCOV, KCOV
 
@@ -180,7 +180,7 @@ format:
 
 ## Restler (2)
 
-> **TODO (figure):** Restler full workflow — from slides.tex
+![Restler full workflow.](img/restler-full.jpg){fig-align="center"}
 
 ## OS Fuzzing
 
@@ -191,7 +191,7 @@ format:
 
 ## Syzkaller
 
-> **TODO (figure):** Syzkaller architecture — from slides.tex
+![Syzkaller architecture.](img/syzkaller.png){fig-align="center"}
 
 ## kAFL / Nyx
 
@@ -201,11 +201,11 @@ format:
 
 ## kAFL
 
-> **TODO (figure):** kAFL architecture — from slides.tex
+![kAFL architecture.](img/kafl.png){fig-align="center"}
 
 ## Nyx
 
-> **TODO (figure):** Nyx architecture — from slides.tex
+![Nyx architecture.](img/nyx.png){fig-align="center"}
 
 ## k/FX
 

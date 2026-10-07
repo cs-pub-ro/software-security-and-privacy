@@ -60,7 +60,7 @@ Question: where in this flow are the rules applied?
 
 ## PenTest phases
 
-> **TODO (figure):** penetration testing phases — from slides.tex
+![Penetration testing phases.](img/pentest-phases.png){fig-align="center"}
 
 Question: how do the attack phases map to the pentest phases?
 

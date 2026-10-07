@@ -19,7 +19,7 @@ format:
 
 ## Why we are here
 
-> **TODO (figure):** screenshot of the unc0ver iOS jailbreak tool (<https://unc0ver.dev/>), from slides.tex.
+![Screenshot of the unc0ver iOS jailbreak tool.](img/unc0ver-jailbreak-screenshot.png){fig-align="center"}
 
 Question: what does it take to get from a tapped button to full control of a device?
 
@@ -32,7 +32,7 @@ Question: why do they survive two decades?
 
 ## System / application cybersecurity
 
-> **TODO (figure):** dependencies in system / application cybersecurity, from slides.tex (`cybersecurity-deps.pdf`).
+![Dependencies in system and application cybersecurity.](img/cybersecurity-deps.svg){fig-align="center"}
 
 ## Scenarios
 

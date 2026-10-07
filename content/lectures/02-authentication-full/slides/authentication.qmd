@@ -19,19 +19,19 @@ format:
 
 ## Password Statistics
 
-> **TODO (figure):** password statistics overview, from slides.tex (img/password-stats.png).
+![Password statistics overview.](img/password-stats.png){fig-align="center"}
 
 Source: <https://spacelift.io/blog/password-statistics>
 
 ## Cause of Lost Passwords
 
-> **TODO (figure):** causes of lost passwords, from slides.tex (img/cause-of-lost-passwords.png).
+![Causes of lost passwords.](img/cause-of-lost-passwords.png){fig-align="center"}
 
 Source: <https://www.huntress.com/blog/password-statistics>
 
 ## Password Cracking Time
 
-> **TODO (figure):** time needed to crack passwords by length and charset, from slides.tex (img/password-cracking-time.png).
+![Time needed to crack passwords by length and character set.](img/password-cracking-time.png){fig-align="center"}
 
 Source: <https://www.hivesystems.com/blog/are-your-passwords-in-the-green>
 
@@ -101,13 +101,13 @@ Source: <https://www.hivesystems.com/blog/are-your-passwords-in-the-green>
 
 ## Password Cracking Context (1)
 
-> **TODO (figure):** xkcd 936, password strength, from slides.tex (img/password-strength.png).
+![xkcd 936: password strength.](img/password-strength.png){fig-align="center"}
 
 Source: <http://xkcd.com/936/>
 
 ## Password Cracking Context (2)
 
-> **TODO (figure):** password complexity and its effect on cracking effort, from slides.tex (img/password-complexity.png).
+![Password complexity and its effect on cracking effort.](img/password-complexity.png){fig-align="center"}
 
 Source: <http://hitachi-id.com/password-manager/docs/password-management-best-practices.pdf>
 
@@ -170,7 +170,7 @@ Source: <http://hitachi-id.com/password-manager/docs/password-management-best-pr
 
 ## Rainbow Tables (2)
 
-> **TODO (figure):** rainbow table structure: chains of hash and reduction steps, from slides.tex (img/rainbow-table.png).
+![Rainbow table structure: chains of hash and reduction steps.](img/rainbow-table.png){fig-align="center"}
 
 Source: <http://en.wikipedia.org/wiki/Rainbow_table>
 
@@ -242,7 +242,7 @@ Source: <http://en.wikipedia.org/wiki/Rainbow_table>
 
 ## Rubber-hose Technique
 
-> **TODO (figure):** xkcd 538, security (the wrench), from slides.tex (img/security-wrench.png).
+![xkcd 538: security.](img/security-wrench.png){fig-align="center"}
 
 Source: <http://xkcd.com/538/>
 

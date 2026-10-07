@@ -19,7 +19,7 @@ format:
 
 ## Applications on Google Play
 
-> **TODO (figure):** number of apps on Google Play over time (source: bankmycell.com) --- from slides.tex
+![Number of apps on Google Play over time.](img/apps-on-google-play.png){fig-align="center"}
 
 ## Debian Packages
 
@@ -35,11 +35,11 @@ format:
 
 ## CVEs per Year
 
-> **TODO (figure):** number of CVEs published per year (source: thehackernews.com, 2025) --- from slides.tex
+![Number of CVEs published per year.](img/cves-per-year.jpg){fig-align="center"}
 
 ## Malware per Year
 
-> **TODO (figure):** amount of malware per year (source: thehackernews.com, 2025) --- from slides.tex
+![Amount of malware per year.](img/malware-per-year.png){fig-align="center"}
 
 ## Papers
 
@@ -65,11 +65,11 @@ format:
 
 ## Software Security Framework
 
-> **TODO (figure):** software security framework (source: researchgate.net, Cyber Security Technology Initiatives) --- from slides.tex
+![Software security framework.](img/ssf.png){fig-align="center"}
 
 ## Secure Software Development Life Cycle (SSDLC)
 
-> **TODO (figure):** secure software development life cycle (source: codesigningstore.com) --- from slides.tex
+![Secure software development life cycle (SSDLC).](img/ssdlc.png){fig-align="center"}
 
 ## Software Penetration Testing
 

@@ -41,7 +41,7 @@ The detailed slides are ported from the previous edition's Beamer deck
 
 ## Apple SEP (2)
 
-> **TODO (figure):** Apple Secure Enclave Processor architecture (source: support.apple.com security guide) — from slides.tex
+![Apple Secure Enclave Processor architecture.](img/apple-sep.png){fig-align="center"}
 
 # Confinement
 
@@ -76,7 +76,7 @@ The detailed slides are ported from the previous edition's Beamer deck
 
 ## Reference Monitor (2)
 
-> **TODO (figure):** reference monitor mediating access requests (source: Secure Information Flow in Mobile Bootstrapping Process) — from slides.tex
+![Reference monitor mediating access requests.](img/reference-monitor.png){fig-align="center"}
 
 # System Isolation. Trusted Computing Base
 
@@ -97,7 +97,7 @@ The detailed slides are ported from the previous edition's Beamer deck
 
 ## Mechanisms and Policies
 
-> **TODO (figure):** isolation mechanisms and policies (source: Rui Shu et al., A Study of Security Isolation Techniques) — from slides.tex
+![Isolation mechanisms and policies.](img/isolation-mechanism-policy.png){fig-align="center"}
 
 ## System Isolation
 
@@ -129,7 +129,7 @@ The detailed slides are ported from the previous edition's Beamer deck
 
 ## TEE (2)
 
-> **TODO (figure):** normal world versus secure world (source: infosecinstitute, understanding iOS security) — from slides.tex
+![Normal world versus secure world in ARM TrustZone.](img/normal-secure-world.png){fig-align="center"}
 
 ## Intel TXT
 
@@ -146,7 +146,7 @@ The detailed slides are ported from the previous edition's Beamer deck
 
 ## Arm TrustZone (2)
 
-> **TODO (figure):** Arm TrustZone secure and non-secure worlds (source: Quarkslab) — from slides.tex
+![Arm TrustZone secure and non-secure worlds.](img/arm-trustzone.jpg){fig-align="center"}
 
 ## Intel SGX
 
@@ -168,7 +168,7 @@ The detailed slides are ported from the previous edition's Beamer deck
 
 ## Virtualization
 
-> **TODO (figure):** virtualization (source: Rui Shu et al., A Study of Security Isolation Techniques) — from slides.tex
+![Virtualization and hypervisor layers.](img/virtualization.png){fig-align="center"}
 
 ## Virtual Machine
 
@@ -197,7 +197,7 @@ The detailed slides are ported from the previous edition's Beamer deck
 
 ## Library OS
 
-> **TODO (figure):** library OS (source: Rui Shu et al., A Study of Security Isolation Techniques) — from slides.tex
+![Library OS architecture.](img/library-os.png){fig-align="center"}
 
 ## Library OS Characteristics
 
@@ -217,13 +217,13 @@ The detailed slides are ported from the previous edition's Beamer deck
 
 ## Unikraft
 
-> **TODO (figure):** Unikraft build process (source: unikraft.org docs) — from slides.tex
+![Unikraft build process.](img/unikraft.svg){fig-align="center"}
 
 # Confidential Computing
 
 ## Cloud Computing
 
-> **TODO (figure):** architecture of cloud computing (source: infosectrain) — from slides.tex
+![Architecture of cloud computing.](img/architecture-of-cloud-computing.jpg){fig-align="center"}
 
 ## Security of Cloud Computing
 
@@ -233,25 +233,25 @@ The detailed slides are ported from the previous edition's Beamer deck
 
 ## Confidential (Cloud) Computing
 
-> **TODO (figure):** confidential computing (img/confidential-computing.png) — from slides.tex
+![Confidential computing.](img/confidential-computing.png){fig-align="center"}
 
 ## Arm CCA
 
-> **TODO (figure):** Arm CCA architecture (img/arm-cca-arch.png) — from slides.tex
+![Arm CCA architecture.](img/arm-cca-arch.png){fig-align="center"}
 
 ## Arm CCA Technologies
 
-> **TODO (figure):** Arm CCA technologies (img/arm-cca-tech.png) — from slides.tex
+![Arm CCA technologies.](img/arm-cca-tech.png){fig-align="center"}
 
 ## AMD SEV
 
-> **TODO (figure):** AMD SEV architecture (img/amd-sev-arch.png) — from slides.tex
+![AMD SEV architecture.](img/amd-sev-arch.png){fig-align="center"}
 
 # Containerization
 
 ## Containers
 
-> **TODO (figure):** containers (source: Rui Shu et al., A Study of Security Isolation Techniques) — from slides.tex
+![Container isolation using namespaces and cgroups.](img/container.png){fig-align="center"}
 
 ## Container
 

@@ -285,7 +285,7 @@ format:
 
 ## Microarchitectural Attacks
 
-> **TODO (figure):** overview of microarchitectural attacks, from slides.tex (img/microarchitectural-attacks.png)
+![Overview of microarchitectural attacks.](img/microarchitectural-attacks.png){fig-align="center"}
 
 Source: <https://thecustomizewindows.com/2024/06/what-are-microarchitectural-attacks/>
 
@@ -325,7 +325,7 @@ Source: <https://thecustomizewindows.com/2024/06/what-are-microarchitectural-att
 
 ## Evolution of OWASP Top 10
 
-> **TODO (figure):** evolution of the OWASP Top 10 across editions, from slides.tex (img/owasp-top10.png)
+![Evolution of the OWASP Top 10 across editions.](img/owasp-top10.png){fig-align="center"}
 
 Source: <https://owasp.org/www-project-top-ten/>
 
