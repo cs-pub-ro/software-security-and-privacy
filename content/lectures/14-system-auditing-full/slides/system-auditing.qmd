@@ -15,11 +15,229 @@ format:
     slide-level: 2
 ---
 
-# System Auditing
+# Security Auditing
 
-## Plan
+## Cloud Computing Risks
 
-This is the thin, in-room deck: diagrams, demo results, and the questions to put to the room.
+> **TODO (figure):** cloud computing risks — from slides.tex
 
-The detailed slides are ported from the previous edition's Beamer deck
-(`sis-internal/12-system-auditing/slides/slides.tex`); see the full deck.
+## Security Audit Costs
+
+> **TODO (figure):** security audit costs — from slides.tex
+
+## Security Auditing
+
+* review / examination or infrastructure resources and procedures
+* compliance
+* typically independent auditor
+* report, recommendations
+
+## Security Review
+
+* personnel
+* infrastructure
+* hardware
+* software
+* physical access
+* encryption
+* processes
+
+## Test, Assess, Audit
+
+* test: validate if it works or not (unit testing, pen testing)
+* assess: match against expectation (vulnerability, risk assessment)
+* audit: validate procedures, policies; compliance
+
+## Types of Security Audits
+
+* Penetration Test
+* Compliance Audit
+* Risk Assessment
+* Vulnerability Test
+* Due Dilligence Questionnaires
+
+## Audit Targets
+
+* data security
+* operational security
+* network security
+* system security
+* physical security
+
+## Audit Types
+
+* regular audit
+* event-triggered audit
+* external audit
+
+## Purpose
+
+* roadmap of weaknesses
+* develop risk assessment plans
+* snapshot of security state
+* compliance audit (for certifications, attestations)
+
+## Phases
+
+* preliminary audit assessment
+* planning and preparation
+* establishing objectives
+* performing review
+* preparing report
+* issuing review report
+
+# System Security Auditing
+
+## System Auditing Targets
+
+* filesystem
+* databases
+* accounts & passwords
+* network services
+* applications (executables, processes)
+* kernel
+* hardware
+
+## Filesystem
+
+* ownership, permissions, capabilities
+* timestamps
+* partitions, disks, filesystems
+
+## Databases
+
+* access permissions
+* data encryption, password encryption
+* remote accessibility
+* replication
+
+## Accounts & Passwords
+
+* access history
+* password age
+* failed attempts
+* session lenghts
+* origin of access
+
+## Applications
+
+* static & dynamic analysis, vulnerability assessment
+* checksum
+* resource access, monitoring
+
+## Network Services
+
+* open ports
+* connection history
+* access monitoring
+
+## Kernel
+
+* <https://github.com/a13xp0p0v/linux-kernel-defence-map>
+* system call monitoring
+* secure boot
+
+## Hardware
+
+* connected devices
+* firmware version, contents
+* bootloader, boot firmware
+* side channels
+
+# auditd
+
+## auditd
+
+* Linux auditing daemon
+* event collection of system activities
+* available as logs to be investigated subsequently
+
+## auditd flow
+
+> **TODO (figure):** Linux audit flow — from slides.tex
+
+## auditd Use Cases
+
+* file access
+* system calls
+* run commands
+* execution of system pathnames
+* security events
+* network access
+
+## Components
+
+* `auditd` service
+* `auditctl` to define rules: system calls, files, users, pids
+* `augenrules` generate rules
+* `ausearch`, `aureport`: process logs
+
+## Event Viewer (Windows)
+
+* collection of event logs in Windows
+* Security Logs for security audits
+* Event Viewer used to view them in GUI
+
+# Penetration Testing
+
+## Penetration Testing
+
+* detect vulnerabilities
+* exploit vulnerabilities
+* from the position of the attacker
+* ethical hacking
+
+## PenTest Phases
+
+> **TODO (figure):** penetration testing phases — from slides.tex (source: <https://www.oreilly.com/library/view/network-vulnerability-assessment/9781788627252/a984c010-3c90-4b38-87b9-36926278e514.xhtml>)
+
+## Attack Phases
+
+* Reconnaissance
+* Weaponization
+* Delivery
+* Exploitation
+* Installation
+* Command and Control
+* Action on Objectives
+
+## Pentesting Distros
+
+* Kali Linux: <https://www.kali.org/>
+* Parrot: <https://www.parrotsec.org/>
+
+## Tools of the Trade
+
+* nmap, shodan, whois
+* Nessus
+* OpenVAS
+* nikto
+* Metasploit, pupy
+* Burp
+* XSSer
+* SQLmap
+
+## Ethical Hacking
+
+* security testing of system, application, network
+* same tools as black hat hackers
+* approval from owner of targeted system
+
+# Summary
+
+## Keywords
+
+* auditing
+* compliance
+* test
+* assess
+* auditd
+* penetration testing
+* ethical hacking
+
+## Resources
+
+* <https://www.techtarget.com/searchcio/definition/security-audit>
+* <https://www.getastra.com/blog/security-audit/it-security-audit/>
+* <https://github.com/a13xp0p0v/linux-kernel-defence-map>
+* <https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/security_hardening/auditing-the-system_security-hardening>
