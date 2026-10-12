@@ -19,6 +19,15 @@ Because the buffer's address shifts with the environment, the exploit pads with 
 1. In GDB, read the approximate buffer address (`$esp` after the `reader` prologue), and update the guess address in `exploit.py`.
 1. Run `exploit.py` and let the NOP-sled randomisation land a hit.
 
+## Setup
+
+Clone the repository and change into this challenge's directory:
+
+```console
+git clone https://github.com/cs-pub-ro/software-security-and-privacy.git
+cd software-security-and-privacy/content/labs/05-defense-live/01-use-shellcode
+```
+
 ## Build & Run
 
 ```console

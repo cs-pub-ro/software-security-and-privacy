@@ -19,6 +19,15 @@ The dictionaries are in `dict/`.
 1. Fill `extended_breaking.py` to also try trailing punctuation (`.`, `...`, `!`, `?`).
 1. Fill `salt_breaking.py` and `extended_salt_breaking.py` for the salted entries (salt stored prefixed or suffixed).
 
+## Setup
+
+Clone the repository and change into this challenge's directory:
+
+```console
+git clone https://github.com/cs-pub-ro/software-security-and-privacy.git
+cd software-security-and-privacy/content/labs/02-authentication-live/04-password-breaking
+```
+
 ## Build & Run
 
 ```console

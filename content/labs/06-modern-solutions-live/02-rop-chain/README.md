@@ -17,6 +17,15 @@ To call it correctly you have to initialise `RDI` (first argument) and `RSI` (se
 1. Find gadgets to set `RDI` and `RSI`.
 1. Assemble the chain in `exploit.py` so both messages print.
 
+## Setup
+
+Clone the repository and change into this challenge's directory:
+
+```console
+git clone https://github.com/cs-pub-ro/software-security-and-privacy.git
+cd software-security-and-privacy/content/labs/06-modern-solutions-live/02-rop-chain
+```
+
 ## Build & Run
 
 ```console

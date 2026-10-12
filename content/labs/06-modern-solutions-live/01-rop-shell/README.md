@@ -18,6 +18,15 @@ To call `system("/bin/sh")` on x86-64 you must place the address of a `"sh"` str
 1. Find the address of a `"sh"` string (for example with `find` in GDB), and a `pop rdi; ret` gadget with `ROPgadget --binary vuln`.
 1. Build the ROP payload in `exploit.py`, modelled on the demo, and get a shell.
 
+## Setup
+
+Clone the repository and change into this challenge's directory:
+
+```console
+git clone https://github.com/cs-pub-ro/software-security-and-privacy.git
+cd software-security-and-privacy/content/labs/06-modern-solutions-live/01-rop-shell
+```
+
 ## Build & Run
 
 ```console

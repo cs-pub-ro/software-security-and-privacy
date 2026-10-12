@@ -17,6 +17,15 @@ The overflow still lets you redirect execution, so you reuse existing code inste
 1. Find the offset and the code to reuse to spawn a shell.
 1. Complete `exploit.py`.
 
+## Setup
+
+Clone the repository and change into this challenge's directory:
+
+```console
+git clone https://github.com/cs-pub-ro/software-security-and-privacy.git
+cd software-security-and-privacy/content/labs/05-defense-live/02-bypass-dep
+```
+
 ## Build & Run
 
 ```console

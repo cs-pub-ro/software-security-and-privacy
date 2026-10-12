@@ -18,6 +18,15 @@ The closer your guess is to the secret, the longer the comparison runs before it
 1. Build the target with `make`, or use the shipped `sidechannel` binary.
 1. Complete `break_sidechannel.py` to recover the passphrase one word at a time, choosing at each step the dictionary word that makes the program run longest.
 
+## Setup
+
+Clone the repository and change into this challenge's directory:
+
+```console
+git clone https://github.com/cs-pub-ro/software-security-and-privacy.git
+cd software-security-and-privacy/content/labs/02-authentication-live/03-sidechannel
+```
+
 ## Build & Run
 
 ```console

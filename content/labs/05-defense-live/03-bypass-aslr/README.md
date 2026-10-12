@@ -17,6 +17,15 @@ There are two ways through: leak an address at run time and compute the rest fro
 1. Decide whether a leak or brute force fits this binary.
 1. Complete `exploit.py` to get a shell with ASLR on.
 
+## Setup
+
+Clone the repository and change into this challenge's directory:
+
+```console
+git clone https://github.com/cs-pub-ro/software-security-and-privacy.git
+cd software-security-and-privacy/content/labs/05-defense-live/03-bypass-aslr
+```
+
 ## Build & Run
 
 ```console
