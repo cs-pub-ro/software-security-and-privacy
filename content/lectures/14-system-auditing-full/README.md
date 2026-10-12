@@ -6,7 +6,8 @@ The detailed material is being ported from the previous edition's Beamer deck (`
 
 ## Slides
 
-See [`slides/system-auditing.qmd`](slides/).
+* [`slides/system-auditing.qmd`](slides/) — source
+* [`slides/system-auditing.html`](slides/system-auditing.html) — rendered deck, published with the website
 
 ## References
 

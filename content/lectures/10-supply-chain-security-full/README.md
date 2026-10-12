@@ -6,7 +6,8 @@ The detailed material is being ported from the previous edition's Beamer deck (`
 
 ## Slides
 
-See [`slides/supply-chain-security.qmd`](slides/).
+* [`slides/supply-chain-security.qmd`](slides/) — source
+* [`slides/supply-chain-security.html`](slides/supply-chain-security.html) — rendered deck, published with the website
 
 ## References
 

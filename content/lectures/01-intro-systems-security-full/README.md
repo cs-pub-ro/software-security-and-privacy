@@ -6,7 +6,8 @@ The detailed material is being ported from the previous edition's Beamer deck (`
 
 ## Slides
 
-See [`slides/intro-systems-security.qmd`](slides/).
+* [`slides/intro-systems-security.qmd`](slides/) — source
+* [`slides/intro-systems-security.html`](slides/intro-systems-security.html) — rendered deck, published with the website
 
 ## References
 

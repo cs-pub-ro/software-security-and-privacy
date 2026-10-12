@@ -6,7 +6,8 @@ The detailed material is being ported from the previous edition's Beamer deck (`
 
 ## Slides
 
-See [`slides/defense.qmd`](slides/).
+* [`slides/defense.qmd`](slides/) — source
+* [`slides/defense.html`](slides/defense.html) — rendered deck, published with the website
 
 ## References
 

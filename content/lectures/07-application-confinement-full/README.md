@@ -6,7 +6,8 @@ The detailed material is being ported from the previous edition's Beamer deck (`
 
 ## Slides
 
-See [`slides/application-confinement.qmd`](slides/).
+* [`slides/application-confinement.qmd`](slides/) — source
+* [`slides/application-confinement.html`](slides/application-confinement.html) — rendered deck, published with the website
 
 ## References
 

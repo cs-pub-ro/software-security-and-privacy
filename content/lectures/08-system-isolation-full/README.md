@@ -6,7 +6,8 @@ The detailed material is being ported from the previous edition's Beamer deck (`
 
 ## Slides
 
-See [`slides/system-isolation.qmd`](slides/).
+* [`slides/system-isolation.qmd`](slides/) — source
+* [`slides/system-isolation.html`](slides/system-isolation.html) — rendered deck, published with the website
 
 ## References
 

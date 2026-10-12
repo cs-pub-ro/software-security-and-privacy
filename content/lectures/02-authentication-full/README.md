@@ -6,7 +6,8 @@ The detailed material is being ported from the previous edition's Beamer deck (`
 
 ## Slides
 
-See [`slides/authentication.qmd`](slides/).
+* [`slides/authentication.qmd`](slides/) — source
+* [`slides/authentication.html`](slides/authentication.html) — rendered deck, published with the website
 
 ## References
 

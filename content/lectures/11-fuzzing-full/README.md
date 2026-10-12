@@ -6,7 +6,8 @@ The detailed material is being ported from the previous edition's Beamer deck (`
 
 ## Slides
 
-See [`slides/fuzzing.qmd`](slides/).
+* [`slides/fuzzing.qmd`](slides/) — source
+* [`slides/fuzzing.html`](slides/fuzzing.html) — rendered deck, published with the website
 
 ## References
 

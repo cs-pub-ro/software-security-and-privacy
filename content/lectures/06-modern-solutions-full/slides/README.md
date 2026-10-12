@@ -1,6 +1,30 @@
 # Slides
 
-The in-room deck, in [Quarto](https://quarto.org/docs/presentations/), rendered to reveal.js.
+The deck for this lecture, written in [Quarto](https://quarto.org/docs/presentations/) and rendered to [reveal.js](https://revealjs.com/).
 
-`make` renders the HTML, `make pdf` the beamer PDF; see [Get Started](https://quarto.org/docs/get-started/).
-The detailed content is ported from `sis-internal/06-modern-solutions/slides/slides.tex`.
+* [`modern-solutions.qmd`](modern-solutions.qmd) — the source
+* [`modern-solutions.html`](modern-solutions.html) — the rendered deck, published with the website
+
+## Building
+
+```console
+make            # HTML, via reveal.js — what the website publishes
+make pdf        # PDF, via beamer — published elsewhere
+make clean
+```
+
+Quarto has to be installed; see [Get Started](https://quarto.org/docs/get-started/).
+The PDF target also needs LaTeX; the easiest way to get it is:
+
+```console
+quarto install tinytex
+```
+
+Alternatively, open the rendered `.html` with `?print-pdf` appended to the URL and print to PDF from the browser — this preserves the reveal.js appearance.
+
+## Publishing
+
+The `.github/workflows/pages.yml` workflow renders every `slides/*.qmd` under `content/` before building the site, and `scripts/gen_pages.py` copies the resulting `.html` next to the lecture page.
+Nothing has to be registered anywhere: a new deck in a `slides/` directory is picked up because it is there.
+
+The rendered output is generated, so it is not committed; `.gitignore` covers it.

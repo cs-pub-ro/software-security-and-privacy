@@ -6,7 +6,8 @@ The detailed material is being ported from the previous edition's Beamer deck (`
 
 ## Slides
 
-See [`slides/software-verification.qmd`](slides/).
+* [`slides/software-verification.qmd`](slides/) — source
+* [`slides/software-verification.html`](slides/software-verification.html) — rendered deck, published with the website
 
 ## References
 

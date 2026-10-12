@@ -6,7 +6,8 @@ The detailed material is being ported from the previous edition's Beamer deck (`
 
 ## Slides
 
-See [`slides/information-flow.qmd`](slides/).
+* [`slides/information-flow.qmd`](slides/) — source
+* [`slides/information-flow.html`](slides/information-flow.html) — rendered deck, published with the website
 
 ## References
 

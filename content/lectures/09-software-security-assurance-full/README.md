@@ -6,7 +6,8 @@ The detailed material is being ported from the previous edition's Beamer deck (`
 
 ## Slides
 
-See [`slides/software-security-assurance.qmd`](slides/).
+* [`slides/software-security-assurance.qmd`](slides/) — source
+* [`slides/software-security-assurance.html`](slides/software-security-assurance.html) — rendered deck, published with the website
 
 ## References
 

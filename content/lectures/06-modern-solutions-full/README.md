@@ -6,7 +6,8 @@ The detailed material is being ported from the previous edition's Beamer deck (`
 
 ## Slides
 
-See [`slides/modern-solutions.qmd`](slides/).
+* [`slides/modern-solutions.qmd`](slides/) — source
+* [`slides/modern-solutions.html`](slides/modern-solutions.html) — rendered deck, published with the website
 
 ## References
 
