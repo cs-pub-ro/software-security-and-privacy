@@ -12,7 +12,7 @@ passed as a hex literal to avoid quoting.
 ```console
 docker build -t 04-webshop-solver .
 docker run --rm --network <deploy-net> -v "$(pwd):/solve" -w /solve \
-    04-webshop-solver python3 /solve/exploit.py HOST=web PORT=80
+    04-webshop-solver python3 /solve/exploit.py --host web --port 80
 ```
 
 `dev/verify/web.sh` runs the whole deploy-and-solve loop and checks the flag.
