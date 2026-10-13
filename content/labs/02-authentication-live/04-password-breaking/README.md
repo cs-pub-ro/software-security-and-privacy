@@ -2,6 +2,24 @@
 
 **Tools:** python3
 
+## Setup
+
+Clone the repository and change into this challenge's directory:
+
+```console
+git clone https://github.com/cs-pub-ro/software-security-and-privacy.git
+cd software-security-and-privacy/content/labs/02-authentication-live/04-password-breaking
+```
+
+If you already cloned the repository for this lab, just `cd` into the directory above.
+
+## Build & Run
+
+```console
+python3 cracking-scripts/dictionary_breaking.py
+./cracking-scripts/run-all
+```
+
 ## Goal
 
 Recover plaintext passwords from a file of SHA-256 hashes, with and without salt.
@@ -18,22 +36,6 @@ The dictionaries are in `dict/`.
 1. Fill `hybrid_breaking.py` to re-run it with common letter-to-symbol substitutions (`a->@`, `e->3`, `i->!`, `o->0`, `s->$`).
 1. Fill `extended_breaking.py` to also try trailing punctuation (`.`, `...`, `!`, `?`).
 1. Fill `salt_breaking.py` and `extended_salt_breaking.py` for the salted entries (salt stored prefixed or suffixed).
-
-## Setup
-
-Clone the repository and change into this challenge's directory:
-
-```console
-git clone https://github.com/cs-pub-ro/software-security-and-privacy.git
-cd software-security-and-privacy/content/labs/02-authentication-live/04-password-breaking
-```
-
-## Build & Run
-
-```console
-python3 cracking-scripts/dictionary_breaking.py
-./cracking-scripts/run-all
-```
 
 ## Check Your Work
 

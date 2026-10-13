@@ -2,6 +2,24 @@
 
 **Tools:** GDB, pwntools
 
+## Setup
+
+Clone the repository and change into this challenge's directory:
+
+```console
+git clone https://github.com/cs-pub-ro/software-security-and-privacy.git
+cd software-security-and-privacy/content/labs/05-defense-live/02-bypass-dep
+```
+
+If you already cloned the repository for this lab, just `cd` into the directory above.
+
+## Build & Run
+
+```console
+make
+python3 exploit.py
+```
+
 ## Goal
 
 Get a shell on a binary whose stack is *not* executable.
@@ -16,22 +34,6 @@ The overflow still lets you redirect execution, so you reuse existing code inste
 1. Build `vuln` with `make` and confirm with `checksec` that the stack is non-executable.
 1. Find the offset and the code to reuse to spawn a shell.
 1. Complete `exploit.py`.
-
-## Setup
-
-Clone the repository and change into this challenge's directory:
-
-```console
-git clone https://github.com/cs-pub-ro/software-security-and-privacy.git
-cd software-security-and-privacy/content/labs/05-defense-live/02-bypass-dep
-```
-
-## Build & Run
-
-```console
-make
-python3 exploit.py
-```
 
 ## Check Your Work
 

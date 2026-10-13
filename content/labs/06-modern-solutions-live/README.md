@@ -2,6 +2,17 @@
 
 When the stack is not executable, exploitation moves to reusing the program's own code: return-oriented programming (ROP) and data-oriented programming (DOP), and the defences aimed at them.
 
+## Getting the Files
+
+Clone the repository to get the challenge source files:
+
+```console
+git clone https://github.com/cs-pub-ro/software-security-and-privacy.git
+cd software-security-and-privacy/content/labs/06-modern-solutions-live
+```
+
+Challenges that need local files have a Setup section pointing to the exact subdirectory.
+
 ## Learning Objectives
 
 After this session you should be able to:

@@ -2,6 +2,25 @@
 
 **Tools:** GDB, ROPgadget, pwntools
 
+## Setup
+
+Clone the repository and change into this challenge's directory:
+
+```console
+git clone https://github.com/cs-pub-ro/software-security-and-privacy.git
+cd software-security-and-privacy/content/labs/06-modern-solutions-live/01-rop-shell
+```
+
+If you already cloned the repository for this lab, just `cd` into the directory above.
+
+## Build & Run
+
+```console
+make
+```
+
+The deployed challenge is on the CTF platform, in this session's category.
+
 ## Goal
 
 Open a shell by returning into `system("/bin/sh")`, with no injected code.
@@ -17,23 +36,6 @@ To call `system("/bin/sh")` on x86-64 you must place the address of a `"sh"` str
 1. Build `vuln` with `make`.
 1. Find the address of a `"sh"` string (for example with `find` in GDB), and a `pop rdi; ret` gadget with `ROPgadget --binary vuln`.
 1. Build the ROP payload in `exploit.py`, modelled on the demo, and get a shell.
-
-## Setup
-
-Clone the repository and change into this challenge's directory:
-
-```console
-git clone https://github.com/cs-pub-ro/software-security-and-privacy.git
-cd software-security-and-privacy/content/labs/06-modern-solutions-live/01-rop-shell
-```
-
-## Build & Run
-
-```console
-make
-```
-
-The deployed challenge is on the CTF platform, in this session's category.
 
 ## Check Your Work
 

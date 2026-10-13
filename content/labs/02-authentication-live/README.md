@@ -2,6 +2,17 @@
 
 How systems check who you are, and how that check is defeated: reading a flag off a machine you log in to, breaking a timing side channel, and cracking password hashes.
 
+## Getting the Files
+
+Clone the repository to get the challenge source files:
+
+```console
+git clone https://github.com/cs-pub-ro/software-security-and-privacy.git
+cd software-security-and-privacy/content/labs/02-authentication-live
+```
+
+Challenges that need local files have a Setup section pointing to the exact subdirectory.
+
 ## Learning Objectives
 
 After this session you should be able to:

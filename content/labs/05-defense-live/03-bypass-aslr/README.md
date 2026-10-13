@@ -2,6 +2,24 @@
 
 **Tools:** GDB, pwntools
 
+## Setup
+
+Clone the repository and change into this challenge's directory:
+
+```console
+git clone https://github.com/cs-pub-ro/software-security-and-privacy.git
+cd software-security-and-privacy/content/labs/05-defense-live/03-bypass-aslr
+```
+
+If you already cloned the repository for this lab, just `cd` into the directory above.
+
+## Build & Run
+
+```console
+make
+python3 exploit.py
+```
+
 ## Goal
 
 Exploit a binary with address-space randomisation enabled.
@@ -16,22 +34,6 @@ There are two ways through: leak an address at run time and compute the rest fro
 1. Build `vuln` with `make`.
 1. Decide whether a leak or brute force fits this binary.
 1. Complete `exploit.py` to get a shell with ASLR on.
-
-## Setup
-
-Clone the repository and change into this challenge's directory:
-
-```console
-git clone https://github.com/cs-pub-ro/software-security-and-privacy.git
-cd software-security-and-privacy/content/labs/05-defense-live/03-bypass-aslr
-```
-
-## Build & Run
-
-```console
-make
-python3 exploit.py
-```
 
 ## Check Your Work
 
