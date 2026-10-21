@@ -1,4 +1,5 @@
 FROM debian:13
+SHELL ["/bin/bash", "-c"]
 
 ARG CHALLENGE_NAME="03-bypass-aslr"
 ARG EXEC_NAME="vuln"

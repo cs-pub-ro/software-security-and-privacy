@@ -1,4 +1,5 @@
 FROM debian:13
+SHELL ["/bin/bash", "-c"]
 
 ARG CHALLENGE_NAME="02-rop-chain"
 ARG EXEC_NAME="vuln"

@@ -1,4 +1,5 @@
 FROM debian:13
+SHELL ["/bin/bash", "-c"]
 
 ARG CHALLENGE_NAME="01-use-shellcode"
 ARG EXEC_NAME="vuln"
