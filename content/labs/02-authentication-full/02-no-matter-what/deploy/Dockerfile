@@ -3,6 +3,7 @@
 # run:   docker run -d -p <host-port>:22 --name 02-no-matter-what-container \
 #            02-no-matter-what-deploy
 FROM ubuntu:20.04
+SHELL ["/bin/bash", "-c"]
 
 RUN apt-get -y update \
  && DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \

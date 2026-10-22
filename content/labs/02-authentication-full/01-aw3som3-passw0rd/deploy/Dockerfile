@@ -3,6 +3,7 @@
 # run:   docker run -d -p <host-port>:22 --cap-add=cap_dac_read_search \
 #            --name 01-aw3som3-passw0rd-container 01-aw3som3-passw0rd-deploy
 FROM ubuntu:20.04
+SHELL ["/bin/bash", "-c"]
 
 RUN apt-get -y update \
  && DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \

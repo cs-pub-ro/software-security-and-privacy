@@ -4,6 +4,7 @@
 #            --name 04-reverse-kitten-container 04-reverse-kitten-deploy
 # (the capability is only needed by challenges whose setup grants a file one)
 FROM ubuntu:20.04
+SHELL ["/bin/bash", "-c"]
 
 RUN apt-get -y update \
  && DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
