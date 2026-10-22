@@ -1,5 +1,5 @@
-IMAGE     = 01-rop-shell-local
-CONTAINER = 01-rop-shell-local
+IMAGE     = ssp-lab06-01_rop-shell-local
+CONTAINER = ssp-lab06-01_rop-shell-local
 PORT      = 3601
 EXEC      = vuln
 FLAG     ?= SSP{placeholder}
