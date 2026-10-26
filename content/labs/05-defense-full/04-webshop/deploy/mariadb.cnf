@@ -1,0 +1,4 @@
+[mysqld]
+# Allow LOAD_FILE() to read any file the server process can access (needed so
+# the SQL injection exploit can read /flag via LOAD_FILE('/flag')).
+secure_file_priv=

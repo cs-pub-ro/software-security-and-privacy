@@ -1,0 +1,18 @@
+-- Switch root from unix_socket to password auth so the PHP app can connect,
+-- then create the products database.  CTF_DB_PASSWORD is replaced at build time.
+ALTER USER 'root'@'localhost' IDENTIFIED VIA mysql_native_password
+    USING PASSWORD('CTF_DB_PASSWORD');
+FLUSH PRIVILEGES;
+
+CREATE DATABASE products;
+USE products;
+CREATE TABLE products (ID int NOT NULL AUTO_INCREMENT, name VARCHAR(20), PRICE INT NOT NULL, description VARCHAR(64), PRIMARY KEY(ID));
+
+INSERT INTO products VALUES(NULL,"Ikea 1", 100, "This is the first Ikea product");
+INSERT INTO products VALUES(NULL,"Dedeman 1", 120, "this is a great product");
+INSERT INTO products VALUES(NULL,"Lidl 1", 50, "now i am hungry");
+INSERT INTO products VALUES(NULL,"Lidl 2", 40, "and also thirsty");
+INSERT INTO products VALUES(NULL,"Dedeman 2", 150, "not as good as the first one, but still great!");
+INSERT INTO products VALUES(NULL,"Ikea 2", 1000, "how do they name their products?");
+INSERT INTO products VALUES(NULL,"Ikea 3", 250, "apparently so: https://www.youtube.com/watch?v=t9m4EJlb83A");
+INSERT INTO products VALUES(NULL,"Ikea 4", 10, "who doesnt like Ikea meatballs?");

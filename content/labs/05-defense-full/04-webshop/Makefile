@@ -1,16 +1,22 @@
-PORT        = 8080
-FLAG       ?= SSP{placeholder}
-DB_PASSWORD ?= CTF_DB_PASSWORD
+IMAGE     = ssp-lab05-04_webshop-local
+CONTAINER = ssp-lab05-04_webshop-local
+PORT      = 8080
+FLAG     ?= SSP{placeholder}
 
-.PHONY: run stop clean
+.PHONY: build run stop clean
 
-run:
-	FLAG='$(FLAG)' DB_PASSWORD='$(DB_PASSWORD)' \
-	    docker compose -f deploy/docker-compose.yml up --build -d
+build:
+	docker build -f deploy/Dockerfile \
+	    --build-arg FLAG='$(FLAG)' \
+	    -t $(IMAGE) .
+
+run: build
+	@docker rm -f $(CONTAINER) 2>/dev/null || true
+	docker run -d --rm -p 127.0.0.1:$(PORT):80 --name $(CONTAINER) $(IMAGE)
 	@echo "http://127.0.0.1:$(PORT)"
 
 stop:
-	docker compose -f deploy/docker-compose.yml down
+	-docker stop $(CONTAINER)
 
 clean: stop
-	docker compose -f deploy/docker-compose.yml down --rmi local
+	-docker rmi $(IMAGE)
