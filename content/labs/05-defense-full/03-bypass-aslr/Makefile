@@ -1,6 +1,6 @@
 IMAGE     = ssp-lab05-03_bypass-aslr-local
 CONTAINER = ssp-lab05-03_bypass-aslr-local
-PORT      = 3503
+PORT      = 10017
 EXEC      = vuln
 FLAG     ?= SSP{placeholder}
 

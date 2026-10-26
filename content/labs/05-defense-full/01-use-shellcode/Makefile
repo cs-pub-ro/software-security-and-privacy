@@ -1,6 +1,6 @@
 IMAGE     = ssp-lab05-01_use-shellcode-local
 CONTAINER = ssp-lab05-01_use-shellcode-local
-PORT      = 3501
+PORT      = 10015
 EXEC      = vuln
 FLAG     ?= SSP{placeholder}
 

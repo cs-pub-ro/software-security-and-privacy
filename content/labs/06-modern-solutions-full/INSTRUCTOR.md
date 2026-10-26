@@ -5,7 +5,7 @@ The reference exploits in each `solve/exploit.py` come from the previous edition
 
 ## Deploy ports
 
-Internal xinetd port 31337, mapped per challenge: `01-rop-shell` 31060, `02-rop-chain` 31061.
+Internal xinetd port 31337, mapped per challenge: `01-rop-shell` 10019, `02-rop-chain` 10020.
 `03-dop` is local only; it prints a message rather than serving a flag.
 
 ## Shape

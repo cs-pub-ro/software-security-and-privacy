@@ -27,5 +27,5 @@ To run manually, mount the binary so `ELF("./vuln")` resolves (it is called at m
 ```console
 docker run --rm -it --network host \
     -v "$(pwd):/solve" -v "$(pwd)/../publish:/publish" -w /publish \
-    01-rop-shell-solver python3 /solve/exploit.py --host 127.0.0.1 --port 31060
+    01-rop-shell-solver python3 /solve/exploit.py --host 127.0.0.1 --port 10019
 ```

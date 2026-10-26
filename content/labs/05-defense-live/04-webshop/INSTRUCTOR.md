@@ -2,7 +2,7 @@
 
 ## Deployment
 
-Service port: **40004** (HTTP, internal 80).
+Service port: **10018** (HTTP, internal 80).
 Deployed via `ctf-challenge-deployer` as container `ssp-lab05-04_webshop`.
 
 The real flag is at `/flag` (world-readable) on the container filesystem.

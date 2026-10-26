@@ -1,6 +1,6 @@
 IMAGE     = ssp-lab05-04_webshop-local
 CONTAINER = ssp-lab05-04_webshop-local
-PORT      = 8080
+PORT      = 10018
 FLAG     ?= SSP{placeholder}
 
 .PHONY: build run stop clean

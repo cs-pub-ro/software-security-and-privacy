@@ -4,7 +4,7 @@ Build verification owed: ported without a verified build/deploy/solve loop.
 
 ## Binary challenges
 
-32-bit; deploy ports: `01-use-shellcode` 31050, `02-bypass-dep` 31051, `03-bypass-aslr` 31052 (internal xinetd 31337).
+32-bit; deploy ports: `01-use-shellcode` 10015, `02-bypass-dep` 10016, `03-bypass-aslr` 10017 (internal xinetd 31337).
 The reference exploits come from the previous edition; `use-shellcode` needs a per-machine stack address tuned in `exploit.py`, and `bypass-aslr` relies on brute force, so both can be slow. Re-verify against fresh builds.
 
 ## Webshop

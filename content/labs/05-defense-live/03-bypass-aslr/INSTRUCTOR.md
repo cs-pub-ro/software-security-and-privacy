@@ -2,7 +2,7 @@
 
 ## Deployment
 
-Service port: **3503** (xinetd, internal 31337).
+Service port: **10017** (xinetd, internal 31337).
 Deployed via `ctf-challenge-deployer` as container `ssp-lab05-03_bypass-aslr`.
 
 ## Key points to convey

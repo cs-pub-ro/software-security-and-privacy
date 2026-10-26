@@ -1,6 +1,6 @@
 IMAGE     = ssp-lab06-02_rop-chain-local
 CONTAINER = ssp-lab06-02_rop-chain-local
-PORT      = 3602
+PORT      = 10020
 EXEC      = vuln
 FLAG     ?= SSP{placeholder}
 
