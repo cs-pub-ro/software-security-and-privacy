@@ -2,40 +2,26 @@
 
 **Tools:** GDB, pwntools
 
-## Setup
-
-Clone the repository and change into this challenge's directory:
-
-```console
-git clone https://github.com/cs-pub-ro/software-security-and-privacy.git
-cd software-security-and-privacy/content/labs/05-defense-live/03-bypass-aslr
-```
-
-If you already cloned the repository for this lab, just `cd` into the directory above.
-
-## Build & Run
-
-```console
-make
-python3 exploit.py
-```
-
 ## Goal
 
-Exploit a binary with address-space randomisation enabled.
+Exploit a binary with both DEP and ASLR enabled.
 
 ## Background
 
-ASLR randomises where the stack and libraries land, so hardcoded addresses fail.
-There are two ways through: leak an address at run time and compute the rest from it, or brute-force a small amount of entropy by retrying.
+With ASLR on, library addresses are randomised at each run, so hardcoded addresses fail.
+However, the binary itself is not position-independent (PIE is off), so its own code segment is at a fixed address.
+`system()` has an entry in the PLT at a known, stable address; the string `sh` appears inside the binary itself.
+A return-to-PLT attack uses these fixed-address gadgets instead of libc directly.
 
 ## Your Task
 
-1. Build `vuln` with `make`.
-1. Decide whether a leak or brute force fits this binary.
-1. Complete `exploit.py` to get a shell with ASLR on.
+1. Download the binary from the archive.
+1. Confirm the protections: `checksec vuln`.
+1. In GDB, locate the PLT entry for `system` and the `sh` string inside the binary.
+1. Craft a payload in `exploit.py` that calls `system@plt("sh")` by overwriting the return address.
+1. Connect to the service listed on the CTF platform and run `exploit.py`.
 
 ## Check Your Work
 
 You should get a shell with randomisation enabled.
-Be ready to explain how you obtained a valid address despite ASLR.
+Be ready to explain why PLT addresses are stable even when ASLR is on, and what happens when PIE is also enabled.

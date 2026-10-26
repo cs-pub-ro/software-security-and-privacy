@@ -2,38 +2,24 @@
 
 **Tools:** GDB, pwntools
 
-## Setup
-
-Clone the repository and change into this challenge's directory:
-
-```console
-git clone https://github.com/cs-pub-ro/software-security-and-privacy.git
-cd software-security-and-privacy/content/labs/05-defense-live/02-bypass-dep
-```
-
-If you already cloned the repository for this lab, just `cd` into the directory above.
-
-## Build & Run
-
-```console
-make
-python3 exploit.py
-```
-
 ## Goal
 
-Get a shell on a binary whose stack is *not* executable.
+Get a shell on a binary whose stack is *not* executable (DEP/NX enabled).
 
 ## Background
 
-With DEP/NX, injected shellcode will not run.
-The overflow still lets you redirect execution, so you reuse existing code instead (as in the return-to-libc and ROP exercises).
+With DEP, bytes on the stack cannot be executed, so injected shellcode is stopped.
+The buffer overflow still lets you redirect execution, but you have to reuse code that is already in the process — this is a return-to-libc attack.
+The environment has ASLR disabled, so library addresses are fixed.
 
 ## Your Task
 
-1. Build `vuln` with `make` and confirm with `checksec` that the stack is non-executable.
-1. Find the offset and the code to reuse to spawn a shell.
-1. Complete `exploit.py`.
+1. Download the binary from the archive.
+1. Confirm DEP is on: `checksec vuln`.
+1. Find the overflow offset and identify a useful gadget (e.g. `system()`).
+   In GDB, look up the address of `system()` and the string `/bin/sh` (or `sh`) in libc.
+1. Craft a payload in `exploit.py` that overwrites the return address of `reader()` to call `system("/bin/sh")`.
+1. Connect to the service listed on the CTF platform and run `exploit.py`.
 
 ## Check Your Work
 
