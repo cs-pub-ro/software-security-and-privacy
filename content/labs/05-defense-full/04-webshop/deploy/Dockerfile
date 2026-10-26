@@ -16,14 +16,23 @@ ARG DB_PASSWORD="CTF_DB_PASSWORD"
 # World-readable so the MariaDB process (running as mysql) can read it too.
 RUN printf '%s\n' "${FLAG}" > /flag && chmod 644 /flag
 
+# Only the PHP pages go in the web root; the SQL files (one holds the DB root
+# password) live outside it, readable by root only.
+RUN rm -f /var/www/html/index.html
 COPY deploy/app/ /var/www/html/
-COPY deploy/init.sql /var/www/html/init.sql
+RUN rm -f /var/www/html/schema.sql
+COPY deploy/init.sql /usr/local/share/ctf/init.sql
 COPY deploy/mariadb.cnf /etc/mysql/conf.d/webshop.cnf
 COPY deploy/start.sh /usr/local/bin/start.sh
 
-RUN sed -i "s|CTF_DB_PASSWORD|${DB_PASSWORD}|g" /var/www/html/init.sql \
+# The web-root flag is a decoy: the real one is /flag, reached via LOAD_FILE.
+RUN printf 'SSP{decoy_the_real_flag_is_in_/flag_on_the_db_via_LOAD_FILE}\n' \
+        > /var/www/html/flag
+
+RUN sed -i "s|CTF_DB_PASSWORD|${DB_PASSWORD}|g" /usr/local/share/ctf/init.sql \
  && sed -i "s|CTF_DB_PASSWORD|${DB_PASSWORD}|g" /usr/local/bin/start.sh \
  && sed -i "s|CTF_DB_PASSWORD|${DB_PASSWORD}|g" /var/www/html/index.php \
+ && chmod 600 /usr/local/share/ctf/init.sql \
  && chmod +x /usr/local/bin/start.sh
 
 EXPOSE 80

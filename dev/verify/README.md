@@ -58,6 +58,8 @@ had left broken:
 
 ## Not yet wired up
 
-`web.sh` (webshop / sqlinject, once ported off `mysql_*`) and `docs.sh` (mkdocs
-`--strict`, Quarto render, markdownlint / shellcheck / checkpatch) are described
-in the plan and will land as the corresponding content work is verified.
+`docs.sh` (mkdocs `--strict`, Quarto render, markdownlint / shellcheck /
+checkpatch) is described in the plan and will land as the corresponding content
+work is verified.
+The web challenges (webshop, sqlinject) are single-container deployments,
+verified with `ssp-deploy.py check-solution` from `ctf-challenge-deployer`.

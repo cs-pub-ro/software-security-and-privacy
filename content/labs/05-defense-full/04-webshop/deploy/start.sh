@@ -10,5 +10,5 @@ for _ in $(seq 1 60); do
     sleep 1
 done
 mariadb -u root -pCTF_DB_PASSWORD -e 'USE products' >/dev/null 2>&1 || \
-    mariadb -u root < /var/www/html/init.sql
+    mariadb -u root < /usr/local/share/ctf/init.sql
 exec apache2ctl -D FOREGROUND

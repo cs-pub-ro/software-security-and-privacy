@@ -1,25 +1,21 @@
 # Deploy
 
-Serves the webshop over HTTP with its MariaDB database, through Docker Compose.
-The front end (`Dockerfile`, PHP 7.4 + `mysqli`) and the database
-(`db.Dockerfile`, MariaDB) come up together on one network.
+Serves the webshop over HTTP from one container that runs both Apache/PHP and MariaDB (`Dockerfile`, `start.sh`).
 
-The real flag is a UNIX file `/flag` on the **database** server, reached through
-the SQL injection with `LOAD_FILE`; the file served from the web root is a decoy.
+The real flag is the UNIX file `/flag`, reached through the SQL injection with `LOAD_FILE`; the file served from the web root is a decoy.
+`mariadb.cnf` sets `secure_file_priv=` so that `LOAD_FILE('/flag')` is allowed; this is deliberate and is what the challenge exploits.
 
-Pass this deployment's real flag and database password (the committed defaults
-are placeholders, rotated per deployment):
+Pass this deployment's real flag and database password (the committed defaults are placeholders, rotated per deployment):
 
 ```console
-FLAG='SSP{...}' DB_PASSWORD='...' docker compose up --build -d
-curl 'http://localhost:8080/index.php?id=1'
+docker build -f deploy/Dockerfile --build-arg FLAG='SSP{...}' --build-arg DB_PASSWORD='...' -t 04-webshop-deploy .
+docker run -d --rm -p 10018:80 --name 04-webshop-container 04-webshop-deploy
+curl 'http://localhost:10018/index.php?id=1'
 ```
 
-The app reads its database host and credentials from the environment
-(`DB_HOST`, `DB_USER`, `DB_PASSWORD`), wired up in `docker-compose.yml`.
-The database is started with `--secure-file-priv=` so that `LOAD_FILE('/flag')`
-is allowed; this is deliberate and is what the challenge exploits.
+Run both commands from the challenge directory, which is the build context.
+`ssp-deploy.py` deploys it as `ssp-lab05-04_webshop` on host port 10018.
 
 ```console
-docker compose down -v
+docker stop 04-webshop-container
 ```

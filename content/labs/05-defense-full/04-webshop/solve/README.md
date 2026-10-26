@@ -5,14 +5,14 @@ The webshop has a SQL injection in the product listing: `index.php` concatenates
 
 `exploit.py` is the reference solution. The `products` table has four columns,
 so a `UNION SELECT 1, LOAD_FILE('/flag'), 3, 4` appends a row whose "name" cell
-is echoed back; `LOAD_FILE` reads the UNIX `/flag` on the database server, which
+is echoed back; `LOAD_FILE` reads the UNIX `/flag` on the server, which
 is the flag the challenge hides (the web-root `flag` is a decoy). `/flag` is
 passed as a hex literal to avoid quoting.
 
 ```console
 docker build -t 04-webshop-solver .
-docker run --rm --network <deploy-net> -v "$(pwd):/solve" -w /solve \
-    04-webshop-solver python3 /solve/exploit.py --host web --port 80
+docker run --rm --network host -v "$(pwd):/solve" -w /solve \
+    04-webshop-solver python3 /solve/exploit.py --host 127.0.0.1 --port 10018
 ```
 
-`dev/verify/web.sh` runs the whole deploy-and-solve loop and checks the flag.
+`ssp-deploy.py check-solution` runs the same exploit against a deployment.
