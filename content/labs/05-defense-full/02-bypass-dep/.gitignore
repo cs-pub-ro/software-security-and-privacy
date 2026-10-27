@@ -1,4 +1,7 @@
 build/vuln
 build/*.o
 publish/vuln
+publish/libc.so.6
 publish/*.zip
+solve/vuln
+solve/libc.so.6
