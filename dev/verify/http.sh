@@ -1,17 +1,18 @@
 #!/usr/bin/env bash
 #
-# Verify an HTTP CTF challenge end to end, in containers:
+# Verify one HTTP CTF challenge end to end, entirely in containers:
 #
-#   deploy -> build the web image (flag planted) and run it
-#   solve  -> run solve/extract against it; the script recovers the flag over
-#             HTTP and asserts success itself (exit 0 and prints SSP{...}).
+#   deploy -> build deploy/Dockerfile (challenge-root context) with a fresh
+#             random flag and DB passwords, and run it on a throwaway network
+#   solve  -> run solve/exploit.py in the solve/ image against it
 #
-# The deploy builds from the challenge-root context with -f deploy/Dockerfile.
-# A fresh flag (and DB password, where used) is planted into a throwaway copy,
-# so committed files are untouched.
+# The flag and passwords go in as the same build args ssp-deploy.py passes
+# (FLAG_PATHS/FLAG_VALUES, DB_ROOT_PASSWORD, DB_PASSWORD), so committed files
+# are untouched. Because the flag is random, a pass proves the exploit really
+# pulled it out of the deployment.
 #
-# Usage: dev/verify/http.sh <challenge-dir> [--keep]
-# Exit status: 0 if the solve recovered the flag, 1 otherwise.
+# Usage: dev/verify/http.sh <challenge-dir> [--flag 'SSP{...}'] [--keep]
+# Exit status: 0 if the exploit recovered the planted flag, 1 otherwise.
 
 set -euo pipefail
 HERE=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
@@ -19,9 +20,12 @@ HERE=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 . "$HERE/lib.sh"
 
 keep=0; chal_arg=""
+flag="SSP{verify_$(date +%s)_$RANDOM}"
 while [ $# -gt 0 ]; do
 	case "$1" in
 	--keep) keep=1; shift ;;
+	--flag) flag=$2; shift 2 ;;
+	-h|--help) sed -n '2,15p' "$0"; exit 0 ;;
 	-*) fail "unknown option: $1"; exit 2 ;;
 	*) chal_arg=$1; shift ;;
 	esac
@@ -30,70 +34,68 @@ done
 require_docker
 
 chal=$(cd "$chal_arg" && pwd); name=$(basename "$chal")
-[ -f "$chal/deploy/Dockerfile" ] || { fail "$name: no deploy/Dockerfile"; exit 2; }
-[ -x "$chal/solve/extract" ] || { fail "$name: no executable solve/extract"; exit 2; }
+for f in deploy/Dockerfile solve/Dockerfile solve/exploit.py; do
+	[ -f "$chal/$f" ] || { fail "$name: missing $f"; exit 2; }
+done
 
-flag="SSP{verify_$(date +%s)_$RANDOM}"
 dbpw="verifypw_$RANDOM"
-run="http-$name-$$"; net="$run-net"; img="$run-img"; ctr="$run-ctr"
-solver="ssp-http-solver"
-tmp=$(mktemp -d)
+run="ssp-http-$name-$$"; net="$run-net"; ctr="$run-ctr"
+deploy_img="$run-deploy"; solver_img="$run-solver"
 
 # shellcheck disable=SC2329  # invoked via trap
 cleanup() {
-	[ "$keep" = 1 ] && { warn "--keep: leaving $ctr/$net up; context in $tmp"; return; }
+	[ "$keep" = 1 ] && { warn "--keep: leaving $ctr on $net"; return; }
 	docker rm -f "$ctr" >/dev/null 2>&1 || true
 	docker network rm "$net" >/dev/null 2>&1 || true
-	docker rmi "$img" >/dev/null 2>&1 || true
-	rm -rf "$tmp"
+	docker rmi "$deploy_img" "$solver_img" >/dev/null 2>&1 || true
 }
 trap cleanup EXIT
 
 log ""
-step "$name (http): planting flag and building"
-cp -r "$chal/." "$tmp/"
-printf '%s\n' "$flag" > "$tmp/flag"
-# Challenges that keep the flag in a seeded database or page carry a
-# placeholder; plant the real flag there too.
-for f in $(grep -rl 'SSP{placeholder}' "$tmp/deploy" 2>/dev/null || true); do
-	sed -i "s/SSP{placeholder}/$flag/g" "$f"
-done
-# Plant deployment secrets where the challenge uses them.
-for f in "$tmp"/deploy/setup "$tmp"/deploy/sql "$tmp"/deploy/login.php "$tmp"/deploy/Dockerfile; do
-	[ -f "$f" ] && sed -i "s/CTF_DB_ROOT_PASSWORD/$dbpw/g; s/CTF_DB_PASSWORD/$dbpw/g" "$f"
-done
-docker build -q -t "$img" -f "$tmp/deploy/Dockerfile" "$tmp" >/dev/null
+step "$name (http): building the deployment with a planted flag"
+docker build -q -t "$deploy_img" -f "$chal/deploy/Dockerfile" \
+	--build-arg FLAG_PATHS=/flag --build-arg FLAG_VALUES="$flag" \
+	--build-arg DB_ROOT_PASSWORD="$dbpw" --build-arg DB_PASSWORD="$dbpw" \
+	"$chal" >/dev/null
 
 step "deploy: starting the web container"
 docker network create "$net" >/dev/null
-docker run -d --rm --name "$ctr" --network "$net" --network-alias web "$img" >/dev/null
+docker run -d --name "$ctr" --network "$net" --network-alias web "$deploy_img" >/dev/null
 
-docker build -q -t "$solver" - >/dev/null <<'DF'
-FROM debian:12-slim
-RUN apt-get -yqq update && apt-get -yqq install --no-install-recommends curl ca-certificates >/dev/null && rm -rf /var/lib/apt/lists/*
-DF
+step "solve: building the solve image"
+docker build -q -t "$solver_img" "$chal/solve" >/dev/null
 
 step "waiting for the app"
 ready=0
 for _ in $(seq 1 40); do
-	if docker run --rm --network "$net" "$solver" curl -fs -o /dev/null "http://web:80/"; then
+	if docker run --rm --network "$net" "$solver_img" python3 -c \
+		'import urllib.request; urllib.request.urlopen("http://web:80/", timeout=3)' \
+		>/dev/null 2>&1; then
 		ready=1; break
 	fi
 	sleep 2
 done
 [ "$ready" = 1 ] || { fail "$name: the app did not come up"; exit 1; }
 
-step "solve: running the reference extract"
-set +e
-out=$(docker run --rm --network "$net" -v "$chal/solve:/solve" -w /solve \
-	-e CTF_HOST=web -e CTF_PORT=80 "$solver" bash /solve/extract 2>&1)
-rc=$?
-set -e
+# A web server can answer before its database is up, so retry a few times.
+step "solve: running the reference exploit"
+rc=1; out=""
+for attempt in 1 2 3 4 5; do
+	set +e
+	out=$(docker run --rm --network "$net" -v "$chal/solve:/solve:ro" -w /solve \
+		"$solver_img" python3 /solve/exploit.py --host web --port 80 2>&1)
+	rc=$?
+	set -e
+	if [ "$rc" -eq 0 ] && printf '%s' "$out" | grep -qF "$flag"; then
+		break
+	fi
+	[ "$attempt" -lt 5 ] && sleep 3
+done
 printf '%s\n' "$out" >&2
 
 if [ "$rc" -eq 0 ] && printf '%s' "$out" | grep -qF "$flag"; then
-	pass "$name: extract recovered the planted flag"
+	pass "$name: exploit recovered the planted flag"
 	exit 0
 fi
-fail "$name: extract did not recover the flag (exit $rc)"
+fail "$name: exploit did not recover the planted flag (exit $rc)"
 exit 1

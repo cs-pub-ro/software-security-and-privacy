@@ -56,10 +56,37 @@ had left broken:
   (Locally it is masked, because pwntools `process()` uses a PTY, which is
   line-buffered.)
 
+## Web CTFs
+
+```console
+dev/verify/http.sh content/labs/04-exploit-web-os-full/04-sqlinject     # one challenge
+for c in content/labs/04-exploit-web-os-full/0[1-4]-* content/labs/05-defense-full/04-webshop; do
+    dev/verify/http.sh "$c"
+done
+```
+
+A web challenge is a single container (Apache/PHP, plus MariaDB where the
+challenge needs a database) built from `deploy/Dockerfile` with the challenge
+directory as context.
+For one challenge, `http.sh`:
+
+1. **deploy** — builds the `deploy/` image with a fresh random flag and database
+   passwords, passed as the same build args `ssp-deploy.py` uses
+   (`FLAG_PATHS`/`FLAG_VALUES`, `DB_ROOT_PASSWORD`, `DB_PASSWORD`), and runs it on
+   a private network under the alias `web`.
+1. **solve** — builds the `solve/` image and runs `solve/exploit.py --host web --port 80`,
+   retrying a few times because the web server can answer before the database is up.
+
+It passes only if the exploit exits 0 **and** prints the exact planted flag, so
+an exploit that matches a fixed string cannot pass by accident.
+`--flag 'SSP{…}'` plants a specific flag; `--keep` leaves the container up.
+
+`ssp-deploy.py check-solution` (in `ctf-challenge-deployer`) runs the same
+exploits against a real deployment; `http.sh` is the self-contained check that
+needs no deployer config.
+
 ## Not yet wired up
 
 `docs.sh` (mkdocs `--strict`, Quarto render, markdownlint / shellcheck /
 checkpatch) is described in the plan and will land as the corresponding content
 work is verified.
-The web challenges (webshop, sqlinject) are single-container deployments,
-verified with `ssp-deploy.py check-solution` from `ctf-challenge-deployer`.
