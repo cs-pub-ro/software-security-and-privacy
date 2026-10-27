@@ -117,12 +117,12 @@ A CTF task follows `operating-systems/content/labs/05-memory-security-*`, which 
 Rules that are specific to this class:
 
 * **Flags are placeholders.** A `flag` file holds `SSP{placeholder}`; `deploy/` takes the real flag through the build arguments `ssp-deploy.py` passes, `ARG FLAG_PATHS` and `ARG FLAG_VALUES` (`|`-separated, one value per path, so a flag can be split across files), and writes each value where the challenge reads it.
+  Real flags are set when a deployment is made and rotated every year; they are never committed.
 * **Who can read the flag follows from the intended bug**, and there are two kinds of challenge:
   * *Access-control challenges*: the player's normal access cannot read the flag; the bug grants the access that does.
     So the flag is mode 400, owned by root, when the bug borrows root's read access (a file capability, a sudo rule); 440 `root:ctf` when the bug gives code execution as `ctf`, the user xinetd runs the binary as; and world-readable inside the container, but outside the web root, when the reader is a service (Apache through file inclusion or command injection, MariaDB through `LOAD_FILE`).
   * *Discovery challenges*: the flag is readable through normal access but hidden, and finding it is the task (among decoy files, in a world-readable backup, under unlisted web paths).
   Making a service-read flag root-only makes the challenge unsolvable; check which process the exploit reads it as.
-  Real flags are set when a deployment is made and rotated every year; they are never committed.
 * **No flag in a binary.** A challenge reads its flag at runtime; a shipped binary must be safe to hand out.
 * **No server addresses in a README.** A `-live/` README says the challenge is reachable at the address listed on the CTF platform, in the session's category; addresses and ports are in the `deploy/README.md` and the session `INSTRUCTOR.md`.
 * `solve/` checks that what it captured starts with `SSP{`, not that it equals a literal, so it works with whatever flag a deployment was given.
