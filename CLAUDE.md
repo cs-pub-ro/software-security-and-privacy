@@ -84,6 +84,8 @@ Exercise `README.md` in `-live/`:
 ## Check Your Work
 ```
 
+When the exercise has a *Setup* section (cloning the repository and changing into the task directory), it comes first and the `**Tools:**` line moves to the end of it, so getting the files and the tools needed are read together.
+
 Demo `README.md` in `-live/` is deliberately minimal: a short paragraph on the aim, and a note that the work is done together with the teaching assistant on the files in the directory.
 
 Exercise `README.md` in `-full/` is a tutorial: Goal, Background, Build & Run, Results and Explanations, Going Further, References.

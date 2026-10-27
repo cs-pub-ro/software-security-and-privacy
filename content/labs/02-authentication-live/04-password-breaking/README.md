@@ -1,7 +1,5 @@
 # Exercise: Password Breaking
 
-**Tools:** python3
-
 ## Setup
 
 Clone the repository and change into this challenge's directory:
@@ -12,6 +10,8 @@ cd software-security-and-privacy/content/labs/02-authentication-live/04-password
 ```
 
 If you already cloned the repository for this lab, just `cd` into the directory above.
+
+**Tools:** python3
 
 ## Build & Run
 

@@ -1,7 +1,5 @@
 # Exercise: Side Channel
 
-**Tools:** python3, g++
-
 ## Setup
 
 Clone the repository and change into this challenge's directory:
@@ -12,6 +10,8 @@ cd software-security-and-privacy/content/labs/02-authentication-live/03-sidechan
 ```
 
 If you already cloned the repository for this lab, just `cd` into the directory above.
+
+**Tools:** python3, g++
 
 ## Build & Run
 

@@ -1,7 +1,5 @@
 # Exercise: ROP Chain
 
-**Tools:** GDB, ROPgadget, pwntools
-
 ## Setup
 
 Clone the repository and change into this challenge's directory:
@@ -12,6 +10,8 @@ cd software-security-and-privacy/content/labs/06-modern-solutions-live/02-rop-ch
 ```
 
 If you already cloned the repository for this lab, just `cd` into the directory above.
+
+**Tools:** GDB, ROPgadget, pwntools
 
 ## Build & Run
 
