@@ -7,7 +7,7 @@ FLAG     ?= SSP{placeholder}
 
 build:
 	docker build -f deploy/Dockerfile \
-	    --build-arg FLAG='$(FLAG)' \
+	    --build-arg FLAG_VALUES='$(FLAG)' \
 	    -t $(IMAGE) .
 
 run: build

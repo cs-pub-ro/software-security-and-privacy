@@ -8,7 +8,7 @@ The real flag is the UNIX file `/flag`, reached through the SQL injection with `
 Pass this deployment's real flag and database password (the committed defaults are placeholders, rotated per deployment):
 
 ```console
-docker build -f deploy/Dockerfile --build-arg FLAG='SSP{...}' --build-arg DB_PASSWORD='...' -t 04-webshop-deploy .
+docker build -f deploy/Dockerfile --build-arg FLAG_VALUES='SSP{...}' --build-arg DB_PASSWORD='...' -t 04-webshop-deploy .
 docker run -d --rm -p 10018:80 --name 04-webshop-container 04-webshop-deploy
 curl 'http://localhost:10018/index.php?id=1'
 ```

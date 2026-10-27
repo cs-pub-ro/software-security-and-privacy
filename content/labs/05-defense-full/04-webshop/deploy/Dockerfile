@@ -2,6 +2,7 @@
 # build: docker build -f deploy/Dockerfile -t 04-webshop-deploy ..
 # run:   docker run -d -p <host-port>:80 --name 04-webshop-container 04-webshop-deploy
 FROM debian:12
+SHELL ["/bin/bash", "-c"]
 
 RUN apt-get -y update \
  && DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
@@ -9,12 +10,20 @@ RUN apt-get -y update \
  && rm -rf /var/lib/apt/lists/*
 
 # Inject flag and DB password at build time.
-ARG FLAG="SSP{placeholder}"
+ARG FLAG_PATHS="/flag"
+ARG FLAG_VALUES="SSP{placeholder}"
 ARG DB_PASSWORD="CTF_DB_PASSWORD"
 
 # The real flag lives at /flag; LOAD_FILE('/flag') via SQL injection reads it.
 # World-readable so the MariaDB process (running as mysql) can read it too.
-RUN printf '%s\n' "${FLAG}" > /flag && chmod 644 /flag
+RUN set -e; \
+    IFS='|' read -ra _p <<< "${FLAG_PATHS}"; \
+    IFS='|' read -ra _v <<< "${FLAG_VALUES}"; \
+    for _i in "${!_p[@]}"; do \
+        mkdir -p "$(dirname "${_p[$_i]}")"; \
+        printf '%s\n' "${_v[$_i]}" > "${_p[$_i]}"; \
+        chmod 644 "${_p[$_i]}"; \
+    done
 
 # Only the PHP pages go in the web root; the SQL files (one holds the DB root
 # password) live outside it, readable by root only.
