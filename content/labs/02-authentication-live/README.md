@@ -13,14 +13,6 @@ cd software-security-and-privacy/content/labs/02-authentication-live
 
 Challenges that need local files have a Setup section pointing to the exact subdirectory.
 
-## Learning Objectives
-
-After this session you should be able to:
-
-* reason about where a credential check can leak information;
-* mount a timing side-channel attack against a character-by-character comparison;
-* crack password hashes with dictionary, rule-based and salted attacks.
-
 ## Prerequisites and Required Tools
 
 * An SSH client.
@@ -28,6 +20,14 @@ After this session you should be able to:
 * A C++ toolchain to build the side-channel target.
 
 Run `./scripts/check-prerequisites.sh 02` to check.
+
+## Learning Objectives
+
+After this session you should be able to:
+
+* reason about where a credential check can leak information;
+* mount a timing side-channel attack against a character-by-character comparison;
+* crack password hashes with dictionary, rule-based and salted attacks.
 
 ## Tasks
 

@@ -13,6 +13,13 @@ cd software-security-and-privacy/content/labs/05-defense-live
 
 Challenges that need local files have a Setup section pointing to the exact subdirectory.
 
+## Prerequisites and Required Tools
+
+* An x86-64 Linux machine with 32-bit support, `gdb`, `pwntools`, `checksec`.
+* A web browser and `curl` for the webshop.
+
+Run `./scripts/check-prerequisites.sh 05` to check.
+
 ## Learning Objectives
 
 After this session you should be able to:
@@ -20,13 +27,6 @@ After this session you should be able to:
 * explain what NX/DEP, ASLR and stack hardening each prevent;
 * bypass a single defence: inject code when the stack is executable, defeat ASLR with a leak or brute force;
 * recognise that defences are meant to be layered, because any one alone can be worked around.
-
-## Prerequisites and Required Tools
-
-* An x86-64 Linux machine with 32-bit support, `gdb`, `pwntools`, `checksec`.
-* A web browser and `curl` for the webshop.
-
-Run `./scripts/check-prerequisites.sh 05` to check.
 
 ## Tasks
 

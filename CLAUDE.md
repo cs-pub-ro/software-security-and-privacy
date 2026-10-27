@@ -68,6 +68,7 @@ Per task, up to four Markdown files, with a strict division of labour:
 ## README conventions
 
 Session-level `README.md` (both directories): learning objectives, prerequisites and required tools, and a task-order table (order, task, type, objective).
+When a `-live/` session README has a *Getting the Files* section, *Prerequisites and Required Tools* comes right after it, before *Learning Objectives*, so the setup steps are read together.
 
 Exercise `README.md` in `-live/`:
 

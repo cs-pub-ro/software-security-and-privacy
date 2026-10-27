@@ -13,6 +13,13 @@ cd software-security-and-privacy/content/labs/06-modern-solutions-live
 
 Challenges that need local files have a Setup section pointing to the exact subdirectory.
 
+## Prerequisites and Required Tools
+
+* An x86-64 Linux machine, `gdb`, `ROPgadget`, `pwntools`.
+* `clang`/LLVM for the DOP task's SafeStack build.
+
+Run `./scripts/check-prerequisites.sh 06` to check.
+
 ## Learning Objectives
 
 After this session you should be able to:
@@ -20,13 +27,6 @@ After this session you should be able to:
 * chain existing instruction sequences (gadgets) into a ROP payload that calls a function of your choosing;
 * set up argument registers through gadgets to call a function with arguments;
 * understand data-oriented programming, and why control-flow defences do not stop it.
-
-## Prerequisites and Required Tools
-
-* An x86-64 Linux machine, `gdb`, `ROPgadget`, `pwntools`.
-* `clang`/LLVM for the DOP task's SafeStack build.
-
-Run `./scripts/check-prerequisites.sh 06` to check.
 
 ## Tasks
 
