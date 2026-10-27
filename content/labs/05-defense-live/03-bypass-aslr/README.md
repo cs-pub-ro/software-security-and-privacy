@@ -1,5 +1,17 @@
 # Exercise: Bypass ASLR
 
+## Setup
+
+Clone the repository and change into this challenge's directory:
+
+```console
+git clone https://github.com/cs-pub-ro/software-security-and-privacy.git
+cd software-security-and-privacy/content/labs/05-defense-live/03-bypass-aslr
+```
+
+If you already cloned the repository for this lab, just `cd` into the directory above.
+The challenge binary `vuln` is in this directory, alongside its source `vuln.c`.
+
 **Tools:** GDB, pwntools
 
 ## Goal
@@ -15,7 +27,6 @@ A return-to-PLT attack uses these fixed-address gadgets instead of libc directly
 
 ## Your Task
 
-1. Download the binary from the archive.
 1. Confirm the protections: `checksec vuln`.
 1. In GDB, locate the PLT entry for `system` and the `sh` string inside the binary.
 1. Craft a payload in `exploit.py` that calls `system@plt("sh")` by overwriting the return address.

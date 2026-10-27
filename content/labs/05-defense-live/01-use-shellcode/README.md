@@ -1,5 +1,17 @@
 # Exercise: Use Shellcode
 
+## Setup
+
+Clone the repository and change into this challenge's directory:
+
+```console
+git clone https://github.com/cs-pub-ro/software-security-and-privacy.git
+cd software-security-and-privacy/content/labs/05-defense-live/01-use-shellcode
+```
+
+If you already cloned the repository for this lab, just `cd` into the directory above.
+The challenge binary `vuln` is in this directory, alongside its source `vuln.c`.
+
 **Tools:** GDB, pwntools
 
 ## Goal
@@ -16,7 +28,7 @@ This task comes pre-solved: the point is to understand the technique and tune th
 
 ## Your Task
 
-1. Download the binary from the archive and disassemble it — find the overflow and the offset to the return address.
+1. Disassemble the provided `vuln` — find the overflow and the offset to the return address.
 1. Disable ASLR locally: `setarch $(uname -m) -R /bin/bash`.
 1. In GDB, break at `reader` and read `$esp` after the prologue to get the approximate buffer address.
 1. Update the guess address in `exploit.py`.

@@ -14,6 +14,8 @@ Two more generate things a session needs before the site can be built, and are r
 
 A fifth script, `check-prerequisites.sh`, generates nothing: it checks that the [tools a session needs](#prerequisites-check) are installed.
 
+A sixth, `gen_publish.sh`, rebuilds the [compiled artifacts students receive](#student-binaries) and copies them into the `-live/` tree, which is where the labs ship them now.
+
 ## The content tree
 
 Everything published lives under `content/`, and the tree there is the whole specification:
@@ -211,7 +213,27 @@ It exits 0 when everything the checked sessions need is there, and 1 otherwise, 
 
 When a session's prerequisites change, the list to update is the `check_session_NN` function of that session, next to the README section it mirrors.
 
+## Student binaries
+
+Binary challenges ship their compiled artifacts to students through the git tree: the executable (and, where the exploit needs it, the target `libc.so.6`) lives in the `-live/` task directory, so a plain `git clone` delivers it.
+
+`gen_publish.sh` regenerates those artifacts so they match the deployment:
+
+```console
+scripts/gen_publish.sh                                   # every binary challenge
+scripts/gen_publish.sh content/labs/05-defense-full/02-bypass-dep   # one challenge
+```
+
+For each `-full/` task with `build/`, `publish/` and `deploy/`, it compiles the challenge in its `build/` image (exactly as a deployment does), copies the executable into `publish/`, the sibling `-live/` task and the reference `solve/`, and — for a challenge whose `publish/` already carries a `libc.so.6` — extracts the 32-bit `libc.so.6` from the deploy image's base, the same library the deployed binary runs against.
+
+Why the libc matters: a return-to-libc exploit (e.g. `05-defense/02-bypass-dep`) needs the offsets of `system()` and `/bin/sh` inside the *target's* libc, which differ between builds, so a mismatched libc makes the exploit fail.
+
+The `-live/` executables are tracked even though each task's `.gitignore` lists the built binary; add a freshly regenerated one with `git add -f`.
+Run `gen_publish.sh` whenever a challenge's source or build image changes, and commit the result.
+
 ## Lab archives
+
+> The archive flow below is being retired in favour of shipping through the git tree (see [Student binaries](#student-binaries)); it is kept here until the website and workflow are updated.
 
 Every lab session's `-live/` half is packed into one zip archive of its exercises, published on the `lab-archives` branch, which holds nothing else.
 The archives are what students download, so they contain the exercises and nothing more: the `NN-<name>-full/` reference material — solutions, exploits and the files that build and deploy the challenges — is never packed, and neither is anything outside `content/labs/`.

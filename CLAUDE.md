@@ -130,6 +130,7 @@ Rules that are specific to this class:
 * **No server addresses in a README.** A `-live/` README says the challenge is reachable at the address listed on the CTF platform, in the session's category; addresses and ports are in the `deploy/README.md` and the session `INSTRUCTOR.md`.
 * `solve/` checks that what it captured starts with `SSP{`, not that it equals a literal, so it works with whatever flag a deployment was given.
 * Most exploitation challenges are 32-bit x86 (`-m32`); their `build/` image installs `gcc-multilib`, and the challenge ships the libc and loader it was linked against when the layout depends on them.
+* **Students receive the compiled artifacts through the git tree, not a download:** the executable, and a `libc.so.6` where the exploit needs the target's exact offsets (e.g. a return-to-libc), are committed in the `-live/` task directory so a `git clone` delivers them. `scripts/gen_publish.sh` rebuilds them from `build/` and copies them into `publish/`, `-live/` and `solve/` so all three match the deployment; the `-live/` binary is force-added past the task's `.gitignore`. Regenerate and commit whenever the source or build image changes.
 
 ## Commands
 
@@ -148,6 +149,7 @@ Site and archives:
 pip install -r dev/requirements.txt
 ./scripts/render_slides.sh        # content/**/slides/*.qmd -> self-contained HTML
 ./scripts/gen_media.sh            # content/**/media/*.pdf -> SVG, committed
+./scripts/gen_publish.sh          # rebuild challenge binaries + libc into -live/, committed
 mkdocs serve                      # http://localhost:8000, rebuilds on change
 mkdocs build                      # into _site/
 python3 scripts/gen_zip.py        # student archives into archives/ (git-ignored)
