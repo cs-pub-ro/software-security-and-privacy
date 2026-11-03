@@ -35,9 +35,10 @@ missing_optional=()
 
 usage() {
 	cat <<'EOF'
-Usage: check-prerequisites.sh [OPTION]...
+Usage: check-prerequisites.sh [OPTION]... [SESSION]
 
 Check that the tools needed by the lab sessions are installed.
+SESSION is a session number (1-14); with none, every session is checked.
 
   -q, --quiet       report only what is missing
   -h, --help        show this message
@@ -60,9 +61,14 @@ while [[ $# -gt 0 ]]; do
 		exit 0
 		;;
 	*)
-		echo "error: unknown argument: $1" >&2
-		usage >&2
-		exit 2
+		if [[ $1 =~ ^[0-9]{1,2}$ ]] && ((10#$1 >= 1 && 10#$1 <= LAST_SESSION)); then
+			session=$((10#$1))
+			shift
+		else
+			echo "error: unknown argument: $1" >&2
+			usage >&2
+			exit 2
+		fi
 		;;
 	esac
 done
@@ -259,10 +265,10 @@ check_session_05() {
 check_session_06() {
 	heading "Session 06 -- Modern Exploitation"
 	check_arch
-	check_multilib
 	check_command gdb
 	check_command ROPgadget
 	check_pwntools
+	check_command clang optional "needed by the DOP task's SafeStack build"
 }
 
 check_session_07() {
