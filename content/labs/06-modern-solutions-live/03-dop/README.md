@@ -1,6 +1,6 @@
 # Exercise: Data-Oriented Programming
 
-**Tools:** GCC, Clang/LLVM
+**Tools:** Clang/LLVM, binutils (`nm`)
 
 ## Goal
 
@@ -16,14 +16,18 @@ By corrupting that data you steer the program's behaviour while every `ret` stil
 
 1. Read `dop.c` and find the overflow and the interpreter loop.
 1. Study `payload.c`; fill in the missing addresses so `dop` prints `End of program: FAILAA!`.
-1. Devise a payload that makes it print `End of program: SISPWN!`.
-1. Rebuild `dop` with `-fsanitize=safe-stack` and run the exploit again. Explain what happens and why.
+1. Devise a payload that makes it print `End of program: SSPPWN!`.
+1. Rebuild `dop` with `-fsanitize=safe-stack` (`make safestack`) and run the exploit again. Explain what happens and why.
 
 ## Build & Run
 
+`dop` is built non-PIE, so `vulbuf` and `zone1` are at fixed addresses you can read with `nm`:
+
 ```console
 make
-./dop < pl
+nm dop | grep -E ' vulbuf| zone1'   # fill these into payload.c, then rebuild it
+make payload
+./payload > pl && ./dop < pl
 ```
 
 ## Check Your Work

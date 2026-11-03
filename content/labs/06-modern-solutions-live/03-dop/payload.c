@@ -104,16 +104,15 @@ static void make_payload(void)
     payload[i] = 0; /* p1 = don't care */
 }
 
-static void print_payload(void)
+static void write_payload(void)
 {
   size_t i;
-  for (i = 0; i < PAYLOAD_SIZE; i++) {
-    printf("\\x%02x", payload[i]);
-  }
+  for (i = 0; i < PAYLOAD_SIZE; i++)
+    putchar(payload[i]); /* raw bytes, so `./payload > pl; ./dop < pl` works */
 }
 
 int main(void)
 {
   make_payload();
-  print_payload();
+  write_payload();
 }
