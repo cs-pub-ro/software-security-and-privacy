@@ -21,7 +21,7 @@ docker run --rm -it \
 
 ## Against a deployment
 
-`ssp-deploy.py check-solution` handles this automatically.
+`ctf-deploy.py check-solution` handles this automatically.
 To run manually, mount the binary so `ELF("./vuln")` and `ELF("./libc.so.6")` resolve
 (both are called at module load; `libc.so.6` is shipped in `publish/`):
 

@@ -21,7 +21,7 @@ docker run --rm -it \
 
 ## Against a deployment
 
-`ssp-deploy.py check-solution` handles this automatically.
+`ctf-deploy.py check-solution` handles this automatically.
 To run manually, mount the binary so `ELF("./vuln")` resolves (it is called at module load):
 
 ```console

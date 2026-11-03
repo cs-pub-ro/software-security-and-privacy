@@ -14,7 +14,7 @@ curl 'http://localhost:10018/index.php?id=1'
 ```
 
 Run both commands from the challenge directory, which is the build context.
-`ssp-deploy.py` deploys it as `ssp-lab05-04_webshop` on host port 10018.
+`ctf-deploy.py` deploys it as `ssp-lab05-04_webshop` on host port 10018.
 
 ```console
 docker stop 04-webshop-container

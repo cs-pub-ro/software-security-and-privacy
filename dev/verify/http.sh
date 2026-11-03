@@ -6,7 +6,7 @@
 #             random flag and DB passwords, and run it on a throwaway network
 #   solve  -> run solve/exploit.py in the solve/ image against it
 #
-# The flag and passwords go in as the same build args ssp-deploy.py passes
+# The flag and passwords go in as the same build args ctf-deploy.py passes
 # (FLAG_PATHS/FLAG_VALUES, DB_ROOT_PASSWORD, DB_PASSWORD), so committed files
 # are untouched. Because the flag is random, a pass proves the exploit really
 # pulled it out of the deployment.

@@ -119,7 +119,7 @@ A CTF task follows `operating-systems/content/labs/05-memory-security-*`, which 
 
 Rules that are specific to this class:
 
-* **Flags are placeholders.** A `flag` file holds `SSP{placeholder}`; `deploy/` takes the real flag through the build arguments `ssp-deploy.py` passes, `ARG FLAG_PATHS` and `ARG FLAG_VALUES` (`|`-separated, one value per path, so a flag can be split across files), and writes each value where the challenge reads it.
+* **Flags are placeholders.** A `flag` file holds `SSP{placeholder}`; `deploy/` takes the real flag through the build arguments `ctf-deploy.py` passes, `ARG FLAG_PATHS` and `ARG FLAG_VALUES` (`|`-separated, one value per path, so a flag can be split across files), and writes each value where the challenge reads it.
   Real flags are set when a deployment is made and rotated every year; they are never committed.
 * **Who can read the flag follows from the intended bug**, and there are two kinds of challenge:
   * *Access-control challenges*: the player's normal access cannot read the flag; the bug grants the access that does.

@@ -71,7 +71,7 @@ directory as context.
 For one challenge, `http.sh`:
 
 1. **deploy** — builds the `deploy/` image with a fresh random flag and database
-   passwords, passed as the same build args `ssp-deploy.py` uses
+   passwords, passed as the same build args `ctf-deploy.py` uses
    (`FLAG_PATHS`/`FLAG_VALUES`, `DB_ROOT_PASSWORD`, `DB_PASSWORD`), and runs it on
    a private network under the alias `web`.
 1. **solve** — builds the `solve/` image and runs `solve/exploit.py --host web --port 80`,
@@ -81,7 +81,7 @@ It passes only if the exploit exits 0 **and** prints the exact planted flag, so
 an exploit that matches a fixed string cannot pass by accident.
 `--flag 'SSP{…}'` plants a specific flag; `--keep` leaves the container up.
 
-`ssp-deploy.py check-solution` (in `ctf-challenge-deployer`) runs the same
+`ctf-deploy.py check-solution` (in `ctf-challenge-deployer`) runs the same
 exploits against a real deployment; `http.sh` is the self-contained check that
 needs no deployer config.
 

@@ -15,4 +15,4 @@ docker run --rm --network host -v "$(pwd):/solve" -w /solve \
     04-webshop-solver python3 /solve/exploit.py --host 127.0.0.1 --port 10018
 ```
 
-`ssp-deploy.py check-solution` runs the same exploit against a deployment.
+`ctf-deploy.py check-solution` runs the same exploit against a deployment.
