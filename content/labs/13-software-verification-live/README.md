@@ -17,7 +17,7 @@ Challenges that need local files have a Setup section pointing to the exact subd
 
 * `gcc`.
 
-Run `./scripts/check-prerequisites.sh 13` to check.
+From the repository root, run `./scripts/check-prerequisites.sh 13` to check.
 
 ## Learning Objectives
 

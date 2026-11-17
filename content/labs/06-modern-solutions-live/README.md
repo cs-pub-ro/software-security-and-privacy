@@ -18,7 +18,7 @@ Challenges that need local files have a Setup section pointing to the exact subd
 * An x86-64 Linux machine, `gdb`, `ROPgadget`, `pwntools`.
 * `clang`/LLVM for the DOP task's SafeStack build.
 
-Run `./scripts/check-prerequisites.sh 06` to check.
+From the repository root, run `./scripts/check-prerequisites.sh 06` to check.
 
 ## Learning Objectives
 

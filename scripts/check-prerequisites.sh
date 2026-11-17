@@ -235,7 +235,7 @@ check_session_01() {
 
 check_session_02() {
 	heading "Session 02 -- Authentication"
-	check_command john optional "needed by the password-breaking task"
+	check_command g++ # builds the side-channel target
 }
 
 check_session_03() {
@@ -244,6 +244,8 @@ check_session_03() {
 	check_multilib
 	check_command gdb
 	check_command objdump
+	check_command nm
+	check_command nasm
 	check_pwntools
 }
 
@@ -260,6 +262,7 @@ check_session_05() {
 	check_command gdb
 	check_command checksec
 	check_pwntools
+	check_command curl # for the webshop task
 }
 
 check_session_06() {
@@ -275,6 +278,7 @@ check_session_07() {
 	heading "Session 07 -- Application Confinement"
 	check_arch
 	check_multilib
+	check_command nasm
 	check_command strace
 	check_command aa-status optional "needed by the AppArmor task"
 }
@@ -315,8 +319,7 @@ check_session_13() {
 
 check_session_14() {
 	heading "Session 14 -- System Auditing"
-	check_docker
-	check_command nmap
+	# Lecture-led: no hands-on lab challenges in the current material.
 }
 
 # The package that provides a tool, for the package manager this machine uses.
@@ -325,8 +328,15 @@ package_for() {
 	local manager=$1 tool=$2
 
 	case "$tool" in
-	objdump | strings)
+	objdump | strings | nm)
 		echo binutils
+		;;
+	g++)
+		case "$manager" in
+		apt-get) echo g++ ;;
+		pacman) echo gcc ;;
+		*) echo gcc-c++ ;;
+		esac
 		;;
 	nc)
 		case "$manager" in

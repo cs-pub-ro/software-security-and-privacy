@@ -17,7 +17,7 @@ Challenges that need local files have a Setup section pointing to the exact subd
 
 * A Linux machine with root, Docker, and a virtualization product for the VM task.
 
-Run `./scripts/check-prerequisites.sh 08` to check.
+From the repository root, run `./scripts/check-prerequisites.sh 08` to check.
 
 ## Learning Objectives
 

@@ -18,7 +18,7 @@ Challenges that need local files have a Setup section pointing to the exact subd
 * `clang` (with libFuzzer) and a C/C++ toolchain.
 * Docker, for the AFL and KLEE tutorials.
 
-Run `./scripts/check-prerequisites.sh 11` to check.
+From the repository root, run `./scripts/check-prerequisites.sh 11` to check.
 
 ## Learning Objectives
 

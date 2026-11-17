@@ -18,7 +18,7 @@ Challenges that need local files have a Setup section pointing to the exact subd
 * An x86-64 Linux machine with 32-bit support, `gdb`, `pwntools`, `checksec`.
 * A web browser and `curl` for the webshop.
 
-Run `./scripts/check-prerequisites.sh 05` to check.
+From the repository root, run `./scripts/check-prerequisites.sh 05` to check.
 
 ## Learning Objectives
 

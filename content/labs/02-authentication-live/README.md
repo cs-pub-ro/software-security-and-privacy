@@ -19,7 +19,7 @@ Challenges that need local files have a Setup section pointing to the exact subd
 * `python3`.
 * A C++ toolchain to build the side-channel target.
 
-Run `./scripts/check-prerequisites.sh 02` to check.
+From the repository root, run `./scripts/check-prerequisites.sh 02` to check.
 
 ## Learning Objectives
 

@@ -18,7 +18,7 @@ Challenges that need local files have a Setup section pointing to the exact subd
 * `gcc` (with `-Wall -Wextra`).
 * `cppcheck`, `flawfinder`, `clang-tidy`.
 
-Run `./scripts/check-prerequisites.sh 09` to check.
+From the repository root, run `./scripts/check-prerequisites.sh 09` to check.
 
 ## Learning Objectives
 

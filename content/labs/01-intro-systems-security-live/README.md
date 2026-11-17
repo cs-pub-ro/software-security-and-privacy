@@ -19,7 +19,7 @@ Challenges that need local files have a Setup section pointing to the exact subd
 * An SSH client, and `sshpass` or `expect` for scripting a login.
 * `tar`, `find` and the usual shell tools.
 
-Run `./scripts/check-prerequisites.sh 01` to check.
+From the repository root, run `./scripts/check-prerequisites.sh 01` to check.
 
 ## Learning Objectives
 

@@ -18,7 +18,7 @@ Challenges that need local files have a Setup section pointing to the exact subd
 * An x86-64 Linux machine with 32-bit support, `nasm`, `strace`.
 * `apparmor` utilities (task 2) and `libseccomp-dev:i386` (task 4).
 
-Run `./scripts/check-prerequisites.sh 07` to check.
+From the repository root, run `./scripts/check-prerequisites.sh 07` to check.
 
 ## Learning Objectives
 

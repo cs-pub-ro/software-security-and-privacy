@@ -18,7 +18,7 @@ Challenges that need local files have a Setup section pointing to the exact subd
 * Docker and a Docker Hub account.
 * `cosign`.
 
-Run `./scripts/check-prerequisites.sh 10` to check.
+From the repository root, run `./scripts/check-prerequisites.sh 10` to check.
 
 ## Learning Objectives
 
