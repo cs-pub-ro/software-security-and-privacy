@@ -2,13 +2,16 @@
 
 A first contact with the tools and the mindset of the class: inspect a binary's defences, and get onto a remote machine to recover a flag it was not meant to give up.
 
-## Learning Objectives
+## Getting the Files
 
-After this session you should be able to:
+Clone the repository to get the challenge source files:
 
-* read the security properties of an executable with `checksec`, and set them with GCC options;
-* connect to a challenge over SSH and move around an unfamiliar filesystem;
-* recover a file you are not meant to read, by going around the restriction rather than through it.
+```console
+git clone https://github.com/cs-pub-ro/software-security-and-privacy.git
+cd software-security-and-privacy/content/labs/01-intro-systems-security-live
+```
+
+Challenges that need local files have a Setup section pointing to the exact subdirectory.
 
 ## Prerequisites and Required Tools
 
@@ -17,6 +20,14 @@ After this session you should be able to:
 * `tar`, `find` and the usual shell tools.
 
 Run `./scripts/check-prerequisites.sh 01` to check.
+
+## Learning Objectives
+
+After this session you should be able to:
+
+* read the security properties of an executable with `checksec`, and set them with GCC options;
+* connect to a challenge over SSH and move around an unfamiliar filesystem;
+* recover a file you are not meant to read, by going around the restriction rather than through it.
 
 ## Tasks
 

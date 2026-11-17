@@ -2,13 +2,16 @@
 
 Trusting what you ship and what you depend on: signing container images and verifying signatures, so a consumer can tell a genuine artifact from a tampered one.
 
-## Learning Objectives
+## Getting the Files
 
-After this session you should be able to:
+Clone the repository to get the challenge source files:
 
-* verify a signed container image with `cosign`, checking identity and issuer;
-* build, push and sign your own image using keyless signing;
-* explain what a signature does and does not guarantee about a supply chain.
+```console
+git clone https://github.com/cs-pub-ro/software-security-and-privacy.git
+cd software-security-and-privacy/content/labs/10-supply-chain-security-live
+```
+
+Challenges that need local files have a Setup section pointing to the exact subdirectory.
 
 ## Prerequisites and Required Tools
 
@@ -16,6 +19,14 @@ After this session you should be able to:
 * `cosign`.
 
 Run `./scripts/check-prerequisites.sh 10` to check.
+
+## Learning Objectives
+
+After this session you should be able to:
+
+* verify a signed container image with `cosign`, checking identity and issuer;
+* build, push and sign your own image using keyless signing;
+* explain what a signature does and does not guarantee about a supply chain.
 
 ## Tasks
 

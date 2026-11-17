@@ -2,6 +2,23 @@
 
 The boundaries that separate workloads from each other and from the host --- chroot jails, containers and virtual machines --- and what it takes to break out of, or recover from, each.
 
+## Getting the Files
+
+Clone the repository to get the challenge source files:
+
+```console
+git clone https://github.com/cs-pub-ro/software-security-and-privacy.git
+cd software-security-and-privacy/content/labs/08-system-isolation-live
+```
+
+Challenges that need local files have a Setup section pointing to the exact subdirectory.
+
+## Prerequisites and Required Tools
+
+* A Linux machine with root, Docker, and a virtualization product for the VM task.
+
+Run `./scripts/check-prerequisites.sh 08` to check.
+
 ## Learning Objectives
 
 After this session you should be able to:
@@ -9,12 +26,6 @@ After this session you should be able to:
 * escape a chroot jail you entered as root, and explain why chroot is not a security boundary;
 * build a container image and reason about what a command-injection bug inside it can reach;
 * place containers and virtual machines on the isolation spectrum, and recover a broken VM from a snapshot.
-
-## Prerequisites and Required Tools
-
-* A Linux machine with root, Docker, and a virtualization product for the VM task.
-
-Run `./scripts/check-prerequisites.sh 08` to check.
 
 ## Tasks
 

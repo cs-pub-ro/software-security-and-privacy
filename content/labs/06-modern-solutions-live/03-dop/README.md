@@ -1,5 +1,16 @@
 # Exercise: Data-Oriented Programming
 
+## Setup
+
+Clone the repository and change into this challenge's directory:
+
+```console
+git clone https://github.com/cs-pub-ro/software-security-and-privacy.git
+cd software-security-and-privacy/content/labs/06-modern-solutions-live/03-dop
+```
+
+If you already cloned the repository for this lab, just `cd` into the directory above.
+
 **Tools:** Clang/LLVM, binutils (`nm`)
 
 ## Goal

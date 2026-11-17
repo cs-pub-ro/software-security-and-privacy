@@ -1,5 +1,16 @@
 # Exercise: seccomp
 
+## Setup
+
+Clone the repository and change into this challenge's directory:
+
+```console
+git clone https://github.com/cs-pub-ro/software-security-and-privacy.git
+cd software-security-and-privacy/content/labs/07-application-confinement-live/04-seccomp
+```
+
+If you already cloned the repository for this lab, just `cd` into the directory above.
+
 **Tools:** GCC, libseccomp, strace
 
 ## Goal

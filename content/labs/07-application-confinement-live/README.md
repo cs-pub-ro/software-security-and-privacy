@@ -2,13 +2,16 @@
 
 Keeping a program from doing more than it should, even when it is compromised: shellcode that opens files, then AppArmor, chroot and seccomp each stopping some of those opens.
 
-## Learning Objectives
+## Getting the Files
 
-After this session you should be able to:
+Clone the repository to get the challenge source files:
 
-* write shellcode that makes system calls such as `open`;
-* confine a program with an AppArmor profile, a chroot jail, and a seccomp filter;
-* explain what each mechanism can and cannot restrict.
+```console
+git clone https://github.com/cs-pub-ro/software-security-and-privacy.git
+cd software-security-and-privacy/content/labs/07-application-confinement-live
+```
+
+Challenges that need local files have a Setup section pointing to the exact subdirectory.
 
 ## Prerequisites and Required Tools
 
@@ -16,6 +19,14 @@ After this session you should be able to:
 * `apparmor` utilities (task 2) and `libseccomp-dev:i386` (task 4).
 
 Run `./scripts/check-prerequisites.sh 07` to check.
+
+## Learning Objectives
+
+After this session you should be able to:
+
+* write shellcode that makes system calls such as `open`;
+* confine a program with an AppArmor profile, a chroot jail, and a seccomp filter;
+* explain what each mechanism can and cannot restrict.
 
 ## Tasks
 
